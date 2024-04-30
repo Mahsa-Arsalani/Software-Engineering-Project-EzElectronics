@@ -5,6 +5,7 @@ Date:
 Version: V1 - description of EZElectronics in CURRENT form (as received by teachers)
 
 | Version number | Change |
+| :------------: | :-----:|
 |       1.0      |        |
 |                |        |
 
