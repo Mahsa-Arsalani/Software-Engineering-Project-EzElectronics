@@ -9,5 +9,5 @@
 | User signup page |
 | :-------------: |
 | **Usecases**: Signup |
-| ![](./Images/GUI/V1/Create Account.png) |
+| ![](./Images/GUI/V1/Create_Account.png) |
 
