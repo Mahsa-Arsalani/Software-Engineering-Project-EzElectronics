@@ -45,3 +45,23 @@
 | :-------------: |
 | **Usecases**: Get history of carts|
 | ![](./Images/GUI/V1/Old_cart.png) |
+
+| Manager interface, search product |
+| :-------------: |
+| **Usecases**: Retrieve products details, Mark product as sold, Delete a product|
+| ![](./Images/GUI/V1/Manager_Search_Product.png) |
+
+| Manager interface, add product |
+| :-------------: |
+| **Usecases**: Add product|
+| ![](./Images/GUI/V1/Manager_add_Product.png) |
+
+| Manager interface, register arrival |
+| :-------------: |
+| **Usecases**: Register arrival|
+| ![](./Images/GUI/V1/Manager_register_arrival.png) |
+
+| Manager interface, accounts management |
+| :-------------: |
+| **Usecases**: Query accounts info, Delete account|
+| ![](./Images/GUI/V1/Manager_Account_management.png) |
