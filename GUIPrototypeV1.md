@@ -2,4 +2,10 @@
 
 | User login page |
 | :-------------: |
-| ![Context Diagram](./Images/GUI/V1/Login.png) |
+| ![](./Images/GUI/V1/Login.png) |
+| Usecases: Login |
+
+| User signup page |
+| :-------------: |
+| ![](./Images/GUI/V1/Create Account.png) |
+| Usecases: Signup |
