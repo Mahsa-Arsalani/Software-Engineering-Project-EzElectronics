@@ -65,3 +65,8 @@
 | :-------------: |
 | **Usecases**: Query accounts info, Delete account|
 | ![](./Images/GUI/V1/Manager_Account_management.png) |
+
+| Manager profile section |
+| :-------------: |
+| **Usecases**: Query accounts info|
+| ![](./Images/GUI/V1/Manager_Profile_section.png) |
