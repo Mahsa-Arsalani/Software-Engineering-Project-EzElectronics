@@ -6,7 +6,7 @@ Version: V1 - description of EZElectronics in FUTURE form (as proposed by the te
 
 | Version number | Change |
 | :------------: | :----: |
-|                |        |
+|     1           |        |
 
 # Contents
 
