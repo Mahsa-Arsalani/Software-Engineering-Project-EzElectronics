@@ -93,10 +93,9 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |  FR1.1  | Account Management |
 |  FR1.1.1  | Create/Delete Account (Customer/Manager) |
 |  FR1.1.2  | Query informations about one or more accounts |
-|  FR1.2  | Restrict access to system features based on Accounts roles |
-|  FR1.3  | Session Management |
-|  FR1.3.1  | Login/Logout |
-|  FR1.3.2  | Retrieve current session details |
+|  FR1.2  | Session Management |
+|  FR1.2.1  | Login/Logout |
+|  FR1.2.2  | Retrieve current session details |
 |  FR2  | Products Management |
 |  FR2.1  | Create/Delete Product |
 |  FR2.2  | Update information of a product (Mark as sold) |
