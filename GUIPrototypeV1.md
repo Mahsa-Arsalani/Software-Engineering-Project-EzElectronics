@@ -2,4 +2,4 @@
 
 | User login page |
 | :-------------: |
-| ![Context Diagram](./Images/ContextDiagramV1.jpg) |
+| ![Context Diagram](./Images/GUI/V1/Login.png) |
