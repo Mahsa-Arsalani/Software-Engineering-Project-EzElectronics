@@ -970,7 +970,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       2        | System detects Customer's username doesn't exist |
 |       3        | System sends error |
 
-### Use case 18,Change password <!--- DONE -->
+### Use case 18, Change password <!--- DONE -->
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1013,7 +1013,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       2        |  System change Customers's password|
 
 
-### Use case 19,set product shipping status
+### Use case 19, set product shipping status
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1023,7 +1023,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 20,Create Category <!--- DONE -->
+### Use case 20, Create Category <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1056,7 +1056,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        |  System sends error|
 
 
-### Use case 21,Delete Category <!--- DONE -->
+### Use case 21, Delete Category <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1103,7 +1103,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        |  System detects category doesn’t exist|
 |       4        |  System sends error|
 
-### Use case 22,Get Categories <!--- DONE -->
+### Use case 22, Get Categories <!--- DONE -->
 
 | Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1123,7 +1123,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       1        |  User makes the request|
 |       2        |  System sends all products	|
 
-### Use case 23,Create Model
+### Use case 23, Create Model
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1133,7 +1133,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 24,Delete Model
+### Use case 24, Delete Model
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1143,7 +1143,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 25,Modify Model
+### Use case 25, Modify Model
 
 | Actors Involved  |  Menager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1153,7 +1153,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 26,Search Models
+### Use case 26, Search Models
 
 | Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1163,7 +1163,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 27,Create discount <!--- DONE -->
+### Use case 27, Create discount <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1208,7 +1208,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        |  System detect that start date or end date are < current day or start date > end date|
 |       4        |  System sends error|
 
-### Use case 28,Delete discount <!--- DONE -->
+### Use case 28, Delete discount <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1253,7 +1253,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        |  System detect discount doesn't exist|
 |       4        |  System sends error|
 
-### Use case 29,Query discounts <!--- DONE -->
+### Use case 29, Query discounts <!--- DONE -->
 
 | Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1273,7 +1273,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       1        |  User makes the request|
 |       2        |  System send all discounts	|
 
-### Use case 30,Create Review 
+### Use case 30, Create Review 
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1283,7 +1283,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 31,Delete Review 
+### Use case 31, Delete Review 
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1293,7 +1293,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 32,Get reviews of a model 
+### Use case 32, Get reviews of a model 
 
 | Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
