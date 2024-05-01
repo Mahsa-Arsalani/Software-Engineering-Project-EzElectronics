@@ -137,7 +137,7 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |   Precondition   | User not logged in, user registered |
 |  Post condition  | User logged in |
 | Nominal Scenario | 1-1 |
-|     Variants     | sNone |
+|     Variants     | None |
 |    Exceptions    | cenario 1-2, 1-3 |
 
 ##### Scenario 1-1
@@ -174,7 +174,7 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |       1        | System: Ask username, password |
 |       2        | User: Provide username, password |
 |       3        | System: Read username, password. Check cookie,  the user is already logged in |
-|       4        | System: Return an error message 401 |
+|       4        | System: Return an error message |
 
 
 ### Use case 2, Logout
@@ -208,7 +208,7 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |     Step#      |                                Description                                 |
 |       1        | User: Asks to logout |
 |       2        | System: Check that the user isn't already logged out |
-|       3        | System: User hasn't performed login yet. Show an error message 401 |
+|       3        | System: User hasn't performed login yet. Show an error message |
 
 
 ### Use case 3, Retrieve current session details
@@ -240,7 +240,7 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |     Step#      |                                Description                                 |
 |       1        | User Go to log in address |
 |       2        | System: Check that the user is already logged in |
-|       3        | System: User hasn't performed login yet. Show an error message 401 |
+|       3        | System: User hasn't performed login yet. Show an error message |
 
 
 ### Use case 4, Create Account
@@ -278,7 +278,7 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |       2        | System: Ask username, name, surname, password,role |
 |       3        | User: Provide username, name, surname, password,role |
 |       4        | System: Read username, name, surname, password,role |
-|       5        | System: Check that the provided username isn't associated with any account yet. The username has been used already, provide error 409 |
+|       5        | System: Check that the provided username isn't associated with any account yet. The username has been used already, sends error |
 
 
 ### Use case 5, Query Accounts info
@@ -334,35 +334,145 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |     Step#      |                                Description                                 |
 |       1        | User: ask user info for a certain user. Provide username |
 |       2        | System: Check that the provided username exists in the database. They don't match |
-|       3        | System: Provide error 404 |
+|       3        | System: sends error |
 
 
-### Use case x, name
+### Use case 6, Delete Account
 
-| Actors Involved  |  |
+| Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  |
-|  Post condition  |  |
-| Nominal Scenario |  |
-|     Variants     |  |
-|    Exceptions    |  |
+|   Precondition   |  User has an account|
+|  Post condition  |  The user doesn't have an account|
+| Nominal Scenario |  6-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 6-2|
 
 
-##### Scenario 13.2
+##### Scenario 6.1
 
-|  Scenario 13.2  |  |
+|  Scenario 6.1  |  Delete user|
 | :------------: | :------------------------------------------------------------------------: |
-|  Precondition  |  |
-| Post condition |  |
+|  Precondition  |  User has an account|
+| Post condition |  The user doesn't have an account|
 |     Step#      |                                Description                                 |
-|       1        |  |
-|       2        |  |
-|       3        |  |
-|       4        |  |
-|       5        |  |
-|       6        |  |
-|       7        |  |
-|       8        |  |
+|       1        |  User: Ask to delete account|
+|       2        |  System: Ask username|
+|       3        |  User: Provide username|
+|       4        |  System: Read username,Check if the provided username exists in the database.|
+|       5        |  System: find user, delete user account|
+
+##### Scenario 6.2
+
+|  Scenario 6.2  |  User doesn’t exist |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  The user doesn't have an account|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  User: Ask to delete account|
+|       2        | System: Ask username|
+|       3        |  User: Provide username|
+|       4        |  System: Read username,Check if the provided username exists in the database.|
+|       5        |  System: user does not exist in the database, Provide error message|
+
+
+
+### Use case 7, Retrieve products details
+
+| Actors Involved  |  User|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  User logged in|
+|  Post condition  |  Returns all products|
+| Nominal Scenario |  7-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 7-2|
+
+
+##### Scenario 7.1
+
+|  Scenario 7.1  |  Retrieve products details|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  User logged in|
+| Post condition |  Returns all products|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System verifies Customer authentication|
+|       3        |  System shows all products	|
+
+##### Scenario 7.2
+
+|  Scenario 7.2  |  User not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  User not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System detect customer is not logged in|
+|       3        |  System sends error|
+
+### Use case 8, Create product
+
+| Actors Involved  |  Manager|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, product doesn’t exist|
+|  Post condition  |  Product is created|
+| Nominal Scenario |  8-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 8-2, 8-3, 8-4|
+
+
+##### Scenario 8.1
+
+|  Scenario 8.1  |  Create product|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product doesn’t exist|
+| Post condition |  product is created|
+|     Step#      |                                Description                                 |
+|       1        |  Manager: Ask to create product|
+|       2        |  System: Ask code,selling price, model, category, details, arrival date|
+|       3        |  Manager: Provide code,selling price, model, category, details, arrival date|
+|       4        |  System: Read code,selling price, model, category, details, arrival date|
+|       5        |  System: Check that the provided code exists in the database. There is no match for code|
+|       6        |  System:Create a new product and store its information|
+
+##### Scenario 8.2
+
+|  Scenario 8.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager: Ask to create product|
+|       2        |  System: detects manager is not logged in|
+|       3        |  System: Provide error|
+
+##### Scenario 8.3
+
+|  Scenario 8.3  |  product already exists in the database|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product  exists|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager: Ask to create product|
+|       2        |  System: Ask code,selling price, model, category, details, arrival date|
+|       3        |  Manager: Provide code,selling price, model, category, details, arrival date|
+|       4        |  System: Read code,selling price, model, category, details, arrival date. |
+|       5        |  System: Check that the provided code exists in the database. There is a match for code.|
+|       6        |  System:Provide error message|
+
+##### Scenario 8.4
+
+|  Scenario 8.4  |  arrival date is after the current date|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager: Ask to create product|
+|       2        |  System: Ask code,selling price, model, category, details, arrival date|
+|       3        |  Manager: Provide code,selling price, model, category, details, arrival date|
+|       4        |  System: Read code,selling price, model, category, details, arrival date|
+|       5        |  System: check then the arrival date is before the current date|
+|       6        |  System: the arrival date is after the current date, provide error message|
+
 
 ### Use case 9, Delete product
 
@@ -633,9 +743,6 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |       3        |  System verifies product exists|
 |       4        |  System detects product in another cart|
 |       5        |  System sends error|
-|       6        |  |
-|       7        |  |
-|       8        |  |
 
 ##### Scenario 13.5
 
