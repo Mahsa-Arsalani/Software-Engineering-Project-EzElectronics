@@ -149,12 +149,6 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 \<concepts must be used consistently all over the document, ex in use cases, requirements etc>
 
-# System Design
-
-\<describe here system design>
-
-\<must be consistent with Context diagram>
-
 # Deployment Diagram
 
 \<describe here deployment diagram >
