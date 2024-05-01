@@ -34,7 +34,7 @@ Version: V1 - description of EZElectronics in FUTURE form (as proposed by the te
     - [Use case 9, Delete Product](#use-case-9-delete-product)
     - [Use case 10, Register arrival of products](#use-case-10-register-arrival-of-products)
     - [Use case 11, Mark product as sold](#use-case-11-mark-product-as-sold)
-    - [Use case 12, Get vontente of current cart](#use-case-12-get-content-of-current-cart)
+    - [Use case 12, Get content of current cart](#use-case-12-get-content-of-current-cart)
     - [Use case 13, Add product to current cart](#use-case-13-add-product-to-current-cart)
     - [Use case 14, Remove product from current cart](#use-case-14-remove-product-from-current-cart)
     - [Use case 15, Set current cart as paid](#use-case-15-set-current-cart-as-paid)
@@ -159,7 +159,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ![Use case diagram](./Images/UseCaseDiagramV2.png)
 
-### Use case 1, Login
+### Use case 1, Login [//]: <> (DONE)
 
 | Actors Involved  | User |
 | :--------------: | :------------------------------------------------------------------: |
@@ -206,7 +206,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       4        | System: Return an error message |
 
 
-### Use case 2, Logout
+### Use case 2, Logout [//]: <> (DONE)
 
 | Actors Involved  | User |
 | :--------------: | :------------------------------------------------------------------: |
@@ -240,7 +240,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        | System: User hasn't performed login yet. Show an error message |
 
 
-### Use case 3, Retrieve current session details
+### Use case 3, Retrieve current session details [//]: <> (DONE)
 
 | Actors Involved  | User |
 | :--------------: | :------------------------------------------------------------------: |
@@ -272,7 +272,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        | System: User hasn't performed login yet. Show an error message |
 
 
-### Use case 4, Create Account
+### Use case 4, Create Account [//]: <> (DONE)
 
 | Actors Involved  | User |
 | :--------------: | :------------------------------------------------------------------: |
@@ -310,7 +310,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       5        | System: Check that the provided username isn't associated with any account yet. The username has been used already, sends error |
 
 
-### Use case 5, Query Accounts info
+### Use case 5, Query Accounts info [//]: <> (DONE)
 
 | Actors Involved  | User |
 | :--------------: | :------------------------------------------------------------------: |
@@ -376,7 +376,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        |  System sends error|
 
 
-### Use case 6, Delete Account
+### Use case 6, Delete Account [//]: <> (DONE)
 
 | Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
@@ -426,7 +426,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       4        |  System: Read username,Check if the provided username exists in the database.|
 |       5        |  System: user doesn't have permission to delete account , Provide error message|
 
-### Use case 7, Retrieve products details
+### Use case 7, Retrieve products details [//]: <> (DONE)
 
 | Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
@@ -459,7 +459,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       2        |  System detect customer is not logged in|
 |       3        |  System sends error|
 
-### Use case 8, Create product
+### Use case 8, Create product [//]: <> (DONE)
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -524,7 +524,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       6        |  System: the arrival date is after the current date, provide error message|
 
 
-### Use case 9, Delete product
+### Use case 9, Delete product [//]: <> (DONE)
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -573,7 +573,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
-### Use case 10, Register arrival of products
+### Use case 10, Register arrival of products [//]: <> (DONE)
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -621,7 +621,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
-### Use case 11, Mark product as sold
+### Use case 11, Mark product as sold [//]: <> (DONE)
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -697,7 +697,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       6        |  System sends error|
 
 
-### Use case 12, Get content of current cart
+### Use case 12, Get content of current cart [//]: <> (DONE)
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
@@ -732,7 +732,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
-### Use case 13, Add product to current cart
+### Use case 13, Add product to current cart [//]: <> (DONE)
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
@@ -809,7 +809,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       6        |  System sends error|
 
 
-### Use case 14, Remove product from current cart
+### Use case 14, Remove product from current cart [//]: <> (DONE)
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
@@ -857,7 +857,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       4        |  System sends error|
 
 
-### Use case 15, Set current cart as paid
+### Use case 15, Set current cart as paid [//]: <> (DONE)
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
@@ -906,7 +906,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
-### Use case 16, Get history of previously paid cart
+### Use case 16, Get history of previously paid cart  [//]: <> (DONE)
 
 | Actors Involved  | Customer |
 | :--------------: | :------------------------------------------------------------------: |
@@ -939,7 +939,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       2        | System detects customer is not logged in |
 |       3        | System sends error |
 
-### Use case 17, Send email to change password
+### Use case 17, Send email to change password 
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
@@ -969,7 +969,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 20,Create Category
+### Use case 20,Create Category [//]: <> (DONE)
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -977,9 +977,32 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  Post condition  |  Category is created|
 | Nominal Scenario |  20-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario|
+|    Exceptions    |  Scenario 20-2|
 
-### Use case 21,Delete Category
+##### Scenario 20.1
+
+|  Scenario 20.1  |  Create Category|
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in|
+|  Post condition  |  Category is created|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the informations of the category|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System creates category the arrival|
+
+##### Scenario 20.2
+
+|  Scenario 20.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the informations of the category|
+|       2        |  System detects manager is not logged in|
+|       3        |  System sends error|
+
+
+### Use case 21,Delete Category [//]: <> (DONE)
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -987,7 +1010,44 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  Post condition  |  Category is deleted|
 | Nominal Scenario |  21-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario|
+|    Exceptions    |  Scenario 21-2, 21-3|
+
+
+##### Scenario 21.1
+
+|  Scenario 21.1  |  Delete Category|
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, category exists|
+|  Post condition  |  Category is deleted|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the name of the category|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies category exists|
+|       4        |  System deletes category|
+
+##### Scenario 21.2
+
+|  Scenario 21.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the name of the category|
+|       2        |  Precondition: Manager is not logged in|
+|       3        |  System detects manager is not logged in|
+|       4        |  System sends error|
+
+##### Scenario 21.3
+
+|  Scenario 21.3  |  The product doesn’t exist|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, category doesn’t exist|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the name of the category|
+|       2        |  System verifies manager is logged in|
+|       3        |  System detects category doesn’t exist|
+|       4        |  System sends error|
 
 ### Use case 22,Get Categories
 
