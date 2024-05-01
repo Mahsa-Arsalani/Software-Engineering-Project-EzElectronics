@@ -83,7 +83,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  FR1.1  | Account Management |
 |  FR1.1.1  | Create/Delete Account (Customer/Manager) |
 |  FR1.1.2  | Query informations about one or more accounts |
-|  FR1.1.3  | Send change password email |
+|  FR1.1.3  | Send email for changing password |
 |  FR1.1.4  | Change password |
 |  FR1.2  | Session Management |
 |  FR1.2.1  | Login/Logout |
@@ -92,7 +92,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  FR2.1  | Products Management |
 |  FR2.1.1  | Create/Delete Product |
 |  FR2.1.2  | Update information of a product (Mark as sold, set status) |
-|  FR2.1.3  | Register arrival of a set of products of the same model|
+|  FR2.1.3  | Register arrival of a set of products of the same model |
 |  FR2.1.4  | Query informations about one or more products |
 |  FR2.2  | Category Management |
 |  FR2.2.1  | Create/Delete Category |
@@ -101,14 +101,23 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  FR2.3.1  | Create/Delete Model |
 |  FR2.3.2  | Modify Model | 
 |  FR2.3.3  | Search Models | 
+|  FR2.4  | Discount Management |
+|  FR2.4.1  | Create/Delete discount |
+|  FR2.4.2  | Query discount |
 |  FR3  | Carts management for a logged customer |
 |  FR3.1  | Create a cart |
 |  FR3.2  | Get content of the current cart |
 |  FR3.3  | Add/Remove a product from the current cart |
 |  FR3.4  | Set current cart as paid |
 |  FR3.5  | Get history of previously paid carts |
-|  FR4  | Privacy Management |
-|  FR4.1  | Show legal constraints |
+|  FR4  | Review Management |
+|  FR4.1  | Create/Delete Review |
+|  FR4.2  | Get reviews of a model |
+|  FR5  | Payment Management |
+|  FR5.1  | Require payment informations (ask name, surname, credit card details) |
+|  FR5.2  | Manage payment information with payment service (send, ask to check card, ask to debit, ask to credit) |
+|  FR6  | Privacy Management |
+|  FR6.1  | Show legal constraints |
 
 ## Non Functional Requirements
 
