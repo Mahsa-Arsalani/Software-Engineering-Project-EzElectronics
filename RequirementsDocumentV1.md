@@ -13,6 +13,7 @@ Version: V1 - description of EZElectronics in CURRENT form (as received by teach
 - [Requirements Document - current EZElectronics](#requirements-document---current-ezelectronics)
 - [Contents](#contents)
 - [Informal description](#informal-description)
+- [Defect Table](#Defect-table)
 - [Stakeholders](#stakeholders)
 - [Context Diagram and interfaces](#context-diagram-and-interfaces)
   - [Context Diagram](#context-diagram)
