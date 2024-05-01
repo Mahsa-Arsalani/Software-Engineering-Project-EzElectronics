@@ -348,9 +348,9 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |    Exceptions    |  |
 
 
-##### Scenario x.x
+##### Scenario 13.2
 
-|  Scenario x.x  |  |
+|  Scenario 13.2  |  |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  |  |
 | Post condition |  |
@@ -359,6 +359,90 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |       2        |  |
 |       3        |  |
 |       4        |  |
+|       5        |  |
+|       6        |  |
+|       7        |  |
+|       8        |  |
+
+### Use case 13, Add product to current cart
+
+| Actors Involved  |  Customer|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Customer is logged in, the product exists, the product is not already contained in a cart, the product has not been sold yet|
+|  Post condition  |  Product added to current cart|
+| Nominal Scenario |  13-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 13-2, 13-3, 13-4, 13-5|
+
+
+##### Scenario 13.1
+
+|  Scenario 13.1  |  Add product to current cart|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, the product exists, the product is not already contained in a cart, the product has not been sold yet|
+| Post condition |  Product added to current cart|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request sending the id of the product|
+|       2        |  System verifies Customer is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System verifies product is not already contained in a cart|
+|       5        |  System verifies product has not been sold|
+|       6        |  System adds the product to the current cart|
+|       7        |  System sends success message|
+
+##### Scenario 13.2
+
+|  Scenario 13.2  |  Customer is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request sending the id of the product|
+|       2        |  System detect customer is not logged in|
+|       3        |  System sends error|
+
+##### Scenario 13.3
+
+|  Scenario 13.3  |  The product doesn’t exist|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, product doesn’t exist|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer make the request sending the id of the product|
+|       2        |  System verifies Customer logged in|
+|       3        |  System detects product doesn’t exist|
+|       4        |  System send error|
+
+##### Scenario 13.4
+
+|  Scenario 13.4  |  The product is already contained in a cart|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, product exists, product is already contained in a cart|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer make the request sending the id of the product|
+|       2        |  System verifies Customer logged in|
+|       3        |  System verifies product exists|
+|       4        |  System detects product in another cart|
+|       5        |  System sends error|
+|       6        |  |
+|       7        |  |
+|       8        |  |
+
+##### Scenario 13.5
+
+|  Scenario 13.5  |  The product has been sold|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, product exists, product has been sold|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer make the request sending the id of the product|
+|       2        |  System verifies Customer is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System verifies product is not not already contained in a cart|
+|       5        |  System detect that product has been sold|
+|       6        |  System sends error|
+
 
 ### Use case 14, Remove product from current cart
 
