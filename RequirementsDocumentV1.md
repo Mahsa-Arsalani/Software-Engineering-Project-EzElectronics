@@ -914,4 +914,4 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 
 # Deployment Diagram
 
-![DeploymentDiagram](./Images/DeploymentDiagramV1.jpg)
+![DeploymentDiagram](./Images/DeploymentDiagramV1.png)
