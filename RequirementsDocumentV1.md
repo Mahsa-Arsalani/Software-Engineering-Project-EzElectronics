@@ -522,9 +522,8 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 | Post condition |  Request not fulfilled|
 |     Step#      |                                Description                                 |
 |       1        |  Manager makes the request sending the id of the product|
-|       2        |  Precondition: Manager is not logged in|
-|       3        |  System detects manager is not logged in|
-|       4        |  System sends error|
+|       2        |  System detects manager is not logged in|
+|       3        |  System sends error|
 
 ##### Scenario 9.3
 
