@@ -115,6 +115,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  FR6  | Privacy Management |
 |  FR6.1  | Show legal constraints |
 
+
 ## Non Functional Requirements
 
 \<Describe constraints on functional requirements>
@@ -911,6 +912,146 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       1        | Customer makes the request|
 |       2        | System detects customer is not logged in |
 |       3        | System sends error |
+
+### Use case 17, Send email for changing password
+
+| Actors Involved  |  Customer|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Customer has an account and is not logged in|
+|  Post condition  |  Email is sent to customer|
+| Nominal Scenario |  17-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 18,Change password 
+
+| Actors Involved  |  Customer|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Customer has valid pin os is logged in|
+|  Post condition  |  password is changed|
+| Nominal Scenario |  18-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 19,set product status
+
+| Actors Involved  |  Manager|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, product exist, status is valid|
+|  Post condition  |  |
+| Nominal Scenario |  19-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 20,Create/Delete Category
+
+| Actors Involved  |  |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  |
+|  Post condition  |  |
+| Nominal Scenario |  -1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 21,Get Categories
+
+| Actors Involved  |  |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  |
+|  Post condition  |  |
+| Nominal Scenario |  -1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 22,Model Management
+
+| Actors Involved  |  |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  |
+|  Post condition  |  |
+| Nominal Scenario |  -1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 23,Create/Delete Model
+
+| Actors Involved  |  |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  |
+|  Post condition  |  |
+| Nominal Scenario |  -1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 24,Modify Model
+
+| Actors Involved  |  |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  |
+|  Post condition  |  |
+| Nominal Scenario |  -1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 25,Search Models
+
+| Actors Involved  |  |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  |
+|  Post condition  |  |
+| Nominal Scenario |  -1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 26,Create/Delete discount 
+
+| Actors Involved  |  |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  |
+|  Post condition  |  |
+| Nominal Scenario |  -1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 27,Query discount 
+
+| Actors Involved  |  |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  |
+|  Post condition  |  |
+| Nominal Scenario |  -1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 28,Review Management 
+
+| Actors Involved  |  |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  |
+|  Post condition  |  |
+| Nominal Scenario |  -1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 29,Create/Delete Review 
+
+| Actors Involved  |  |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  |
+|  Post condition  |  |
+| Nominal Scenario |  -1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 30,Get reviews of a model 
+
+| Actors Involved  |  |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  |
+|  Post condition  |  |
+| Nominal Scenario |  -1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
 
 # Glossary
 
