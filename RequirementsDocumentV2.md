@@ -80,28 +80,28 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  ID   | Description |
 | :---: | :---------: |
 |  FR1  | Authorization and Authentication |
-  |  FR1.1  | Account Management |
-    |  FR1.1.1  | Create/Delete Account (Customer/Manager) |
-    |  FR1.1.2  | Query informations about one or more accounts |
-    |  FR1.1.3  | Send change password email |
-    |  FR1.1.4  | Change password |
-  |  FR1.2  | Session Management |
-    |  FR1.2.1  | Login/Logout |
-    |  FR1.2.2  | Retrieve current session details |
+|  FR1.1  | Account Management |
+|  FR1.1.1  | Create/Delete Account (Customer/Manager) |
+|  FR1.1.2  | Query informations about one or more accounts |
+|  FR1.1.3  | Send change password email |
+|  FR1.1.4  | Change password |
+|  FR1.2  | Session Management |
+|  FR1.2.1  | Login/Logout |
+|  FR1.2.2  | Retrieve current session details |
 
 |  FR2  | Store Management |
-  |  FR2.1  | Products Management |
-    |  FR2.1.1  | Create/Delete Product |
-    |  FR2.1.2  | Update information of a product (Mark as sold, set status) |
-    |  FR2.1.3  | Register arrival of a set of products of the same model|
-    |  FR2.1.4  | Query informations about one or more products |
-  |  FR2.2  | Category Management |
-    |  FR2.2.1  | Create/Delete Category |
-    |  FR2.2.1  | Get Categories |
-  |FR2.3  | Model Management |
-    |  FR2.3.1  | Create/Delete Model |
-    |  FR2.3.2  | Modify Model | 
-    |  FR2.3.3  | Search Models | 
+|  FR2.1  | Products Management |
+|  FR2.1.1  | Create/Delete Product |
+|  FR2.1.2  | Update information of a product (Mark as sold, set status) |
+|  FR2.1.3  | Register arrival of a set of products of the same model|
+|  FR2.1.4  | Query informations about one or more products |
+|  FR2.2  | Category Management |
+|  FR2.2.1  | Create/Delete Category |
+|  FR2.2.1  | Get Categories |
+|  FR2.3  | Model Management |
+|  FR2.3.1  | Create/Delete Model |
+|  FR2.3.2  | Modify Model | 
+|  FR2.3.3  | Search Models | 
 
 |  FR3  | Carts management for a logged customer |
 |  FR3.1  | Create a cart |
