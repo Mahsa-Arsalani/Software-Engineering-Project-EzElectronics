@@ -360,6 +360,66 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |       3        |  |
 |       4        |  |
 
+### Use case 15, Set current cart as paid
+
+| Actors Involved  |  Customer|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Customer is logged in, current cart is not empty|
+|  Post condition  |  Customer’s current cart is paid|
+| Nominal Scenario |  15-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 15-2, 15-3|
+
+
+##### Scenario 15.1
+
+|  Scenario 15.1  |  Set current cart as paid|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, current cart is not empty|
+| Post condition |  Customer’s current cart is paid|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System verifies Customer is logged in|
+|       3        |  System verifies cart is empty|
+|       4        |  System sets customer’s current cart as paid|
+
+##### Scenario 15.2
+
+|  Scenario 15.2  |  Customer is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is not logged in|
+| Post condition |  Customer’s current cart is not paid|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System detects Customer is not logged in|
+|       3        |  System sends error|
+
+##### Scenario x.x
+
+|  Scenario x.x  |  |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  |
+| Post condition |  |
+|     Step#      |                                Description                                 |
+|       1        |  |
+|       2        |  |
+|       3        |  |
+|       4        |  |
+
+##### Scenario 15.3
+
+|  Scenario 15.3  |  Current cart is empty|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, current cart is empty|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System verifies Customer is logged in|
+|       3        |  System detects car as not empty|
+|       4        |  System sends error|
+
+
+
 ### Use case 16, Get history of previously paid cart
 
 | Actors Involved  | Customer |
