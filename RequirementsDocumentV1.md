@@ -364,6 +364,214 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |       7        |  |
 |       8        |  |
 
+### Use case 9, Delete product
+
+| Actors Involved  |  Manager|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, product exists|
+|  Post condition  |  Product is deleted|
+| Nominal Scenario |  9-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 9-2, 9-3|
+
+
+##### Scenario 9.1
+
+|  Scenario 9.1  |  Delete product|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product exists|
+| Post condition |  Product is deleted|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the product|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System deletes product|
+
+##### Scenario 9.2
+
+|  Scenario 9.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the product|
+|       2        |  Precondition: Manager is not logged in|
+|       3        |  System detects manager is not logged in|
+|       4        |  System sends error|
+
+##### Scenario 9.3
+
+|  Scenario 9.3  |  The product doesn’t exist|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product doesn’t exist|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager make the request sending the id of the product|
+|       2        |  System verifies manager is logged in|
+|       3        |  System detects product doesn’t exist|
+|       4        |  System sends error|
+
+
+
+### Use case 10, Register arrival of products
+
+| Actors Involved  |  Manager|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, selling date is valid|
+|  Post condition  |  The arrival is registered|
+| Nominal Scenario |  10-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 10-2, 10-3|
+
+
+##### Scenario 10.1
+
+|  Scenario 10.1  |  Register arrival of products|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, arrival date is valid|
+| Post condition |  The arrival is registered|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the informations of the products and the arrival date|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies that the arrival date is prior or equal to the current day|
+|       4        |  System registers the arrival|
+
+##### Scenario 10.2
+
+|  Scenario 10.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the informations of the products and the arrival date|
+|       2        |  System detects manager is not logged in|
+|       3        |  System sends error|
+
+##### Scenario 10.3
+
+|  Scenario 10.3  |  Arrival date is not valid|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, arrival date is invalid|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the informations of the products and the arrival date|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System detects that the arrival date is after the current day |
+|       4        |  System sends error|
+
+
+
+### Use case 11, Mark product as sold
+
+| Actors Involved  |  Manager|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, product exists, product has not been sold, selling date is valid|
+|  Post condition  |  Product is sold|
+| Nominal Scenario |  11-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 11-2, 11-3, 11-4, 11-5|
+
+
+##### Scenario 11.1
+
+|  Scenario 11.1  |  Mark product as sold|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product exists, product has not been sold, selling date is valid|
+| Post condition |  Product is sold|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the product and the selling date|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System verifies product has not been sold|
+|       5        |  System verifies that the selling date is prior or equal to the current day and after or equal to the arrival date|
+|       6        |  System set product as sold|
+
+##### Scenario 11.2
+
+|  Scenario 11.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the product and the selling date|
+|       2        |  System detects manager is not logged in|
+|       3        |  System sends error|
+
+##### Scenario 11.3
+
+|  Scenario 11.3  |  The product doesn’t exist|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product doesn’t exist|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager make the request sending the id of the product and the selling date|
+|       2        |  System verifies manager is logged in|
+|       3        |  System detects product doesn’t exist|
+|       4        |  System sends error|
+
+##### Scenario 11.4
+
+|  Scenario 11.4  |  The product has been sold|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product exists, product has been sold|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the product and the selling date|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System detects that the product has been sold|
+|       5        |  System sends error|
+
+##### Scenario 11.5
+
+|  Scenario 11.5  |  Selling date is not valid|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product exists, product has not been sold, selling date is invalid|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the product and the selling date|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System verifies product has not been sold|
+|       5        |  System detects that the selling date is after the current day or is prior the arrival date|
+|       6        |  System sends error|
+
+
+### Use case 12, Get content of current cart
+
+| Actors Involved  |  Customer|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Customer is logged in|
+|  Post condition  |  Customer get the list of product contained in his current cart|
+| Nominal Scenario |  12-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 12-2|
+
+
+##### Scenario 12.1
+
+|  Scenario 12.1  |  Get content of current cart|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in|
+| Post condition |  Customer get the list of product contained in his current cart|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System verifies Customer authentication|
+|       3        |  System sends the list of product contained in his current cart|
+
+##### Scenario 12.2
+
+|  Scenario 12.2  |  Customer is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System detect customer is not logged in|
+|       3        |  System sends error|
+
+
+
 ### Use case 13, Add product to current cart
 
 | Actors Involved  |  Customer|
