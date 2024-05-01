@@ -57,8 +57,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   Actor   | Logical Interface           | Physical Interface |
 | :-------: | :-------------------------: | :----------------: |
-| Customer  | GUI (Website / Application) | Smartphone / PC    |
-| Manager   | GUI (Website / Application) | PC                 |
+| User  | GUI Website | Smartphone / PC    |
+| Customer  | GUI Website | Smartphone / PC    |
+| Manager   | GUI Website | Smartphone / PC                 |
 
 # Stories and personas
 
@@ -72,16 +73,16 @@ Federica, female, 27 years old, architect, Customer. She needs a new smartphone.
 Stefano, male, 19 years old, engineering student, Customer. He needs a laptop to use in university. He wants to cart the most suitable laptop from the available laptops.
 
 ## Story 1
-Persona 1 is the manager of “Techstore” electronic store. He wants to sell the products of the store on a website. He is a new user of the website and signed in the website as a manager. He posts the information about the products on the website and he can manage the sales from the website.
+Persona 1 is the manager of “Techstore” electronic store. He wants to sell the products of the store on a website. He is a new user of the website and signed in the website as a manager. He posts the information about the products on the website and he can manage the sales from the website. 
 
 ## Story 2
 Persona 2 bought a smartphone from the website 3 years ago. Her smart phone is not working properly. She wants to buy a new one. However, she thinks that she needs a better smartphone which has a better camera for the photographs of the buildings she is designing and more storage for the project files and photographs of the buildings she is working on. She is an old customer of the website and after she entered her username and password, she got access to the available products.  She learns the details about her phone from the history of her purchases. She searches for the available smartphones on the website and carts the one which satisfies her needs from the available smartphones.
 
 ## Story 3
-Persona 3 is an electronics engineering student  in university. He needs to download such tools for his homeworks and projects. He needs a laptop convenient for him but he is a new customer and he doesn’t have an account.  He creates a new account as a customer with a username and password. He searches for laptops on the website. He compares the details about the laptops. He carts the one which is suitable for him. 
+Persona 3 is an electronics engineering student  in university. He needs to download such tools for his homeworks and projects. He needs a laptop convenient for him but he is a new customer and he doesn’t have an account.  He creates a new account as a customer with a username and password. He searches for laptops on the website. He compares the details about the laptops. He carts the one which is suitable for him. He buys the laptop in the cart. He sets the cart as paid.
 
 ## Story 4
-Persona 1 sold all products that were previously created by him. He deletes this product because there is no product left in stock.
+Persona 1 sells one product and marks it as sold. After selling all products that were previously created by him, he deletes this product because there is no product left in stock.
 
 
 # Functional and non functional requirements
@@ -115,14 +116,12 @@ Persona 1 sold all products that were previously created by him. He deletes this
 
 |   ID    | Type (efficiency, reliability, ..) | Description | Refers to |
 | :-----: | :--------------------------------: | :---------: | :-------: |
-|  NFR1   | Usability | User should be able to use mobile app with no training in less than 2 minutes (marketing reasons) | All FR |
+|  NFR1   | Usability | User should be able to use website with no training in less than 2 minutes (marketing reasons) | All FR |
 |  NFR2   | Usability | Manager should be able to use the website with training in less than 30 minutes | All FR |
-|  NFR3   | Efficiency | All functions on the mobile app must be completed in <0.1 sec (excluding network latency) | All FR |
-|  NFR4   | Efficiency | The app should require < 100Mb disk space for user | All FR |
-|  NFR5   | Reliability | No more than three defect per year per user | All FR |
-|  NFR6   | Portability | The app should be available IOS from release 15 and Android from release 9 |  |
-|  NFR7   | Security | The app and the website should work with password to prevent account theft | FR1.3 |
-
+|  NFR3   | Efficiency | All functions on the website must be completed in <0.1 sec (excluding network latency) | All FR |
+|  NFR4   | Reliability | No more than three defect per year per user | All FR |
+|  NFR5   | Portability | Web app should be available on chrome from version… |  |
+|  NFR6   | Security | The website should work with password to prevent account theft | FR1.3 |
 
 
 # Use case diagram and use cases
