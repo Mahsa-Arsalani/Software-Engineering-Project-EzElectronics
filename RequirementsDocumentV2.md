@@ -928,22 +928,52 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   |  Customer has valid pin os is logged in|
-|  Post condition  |  password is changed|
+|  Post condition  |  Password is changed|
 | Nominal Scenario |  18-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 19,set product status
+### Use case 19,set product shipping status
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   |  Manager is logged in, product exist, status is valid|
-|  Post condition  |  |
+|  Post condition  |  Status is changed|
 | Nominal Scenario |  19-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 20,Create/Delete Category
+### Use case 20,Create Category
+
+| Actors Involved  |  Manager|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in|
+|  Post condition  |  |
+| Nominal Scenario |  20-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 21,Delete Category
+
+| Actors Involved  |  Manager|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in|
+|  Post condition  |  |
+| Nominal Scenario |  20-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 22,Get Categories
+
+| Actors Involved  |  User|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  User want to get all categories|
+|  Post condition  |  |
+| Nominal Scenario |  -1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario|
+
+### Use case 23,Create Model
 
 | Actors Involved  |  |
 | :--------------: | :------------------------------------------------------------------: |
@@ -953,7 +983,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 21,Get Categories
+### Use case 24,Delete Model
 
 | Actors Involved  |  |
 | :--------------: | :------------------------------------------------------------------: |
@@ -963,7 +993,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 22,Model Management
+### Use case 25,Modify Model
 
 | Actors Involved  |  |
 | :--------------: | :------------------------------------------------------------------: |
@@ -973,7 +1003,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 23,Create/Delete Model
+### Use case 26,Search Models
 
 | Actors Involved  |  |
 | :--------------: | :------------------------------------------------------------------: |
@@ -983,7 +1013,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 24,Modify Model
+### Use case 27,Create discount 
 
 | Actors Involved  |  |
 | :--------------: | :------------------------------------------------------------------: |
@@ -993,7 +1023,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 25,Search Models
+### Use case 28,Delete discount 
 
 | Actors Involved  |  |
 | :--------------: | :------------------------------------------------------------------: |
@@ -1003,7 +1033,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 26,Create/Delete discount 
+### Use case 29,Query discount 
 
 | Actors Involved  |  |
 | :--------------: | :------------------------------------------------------------------: |
@@ -1013,7 +1043,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 27,Query discount 
+### Use case 30,Create Review 
 
 | Actors Involved  |  |
 | :--------------: | :------------------------------------------------------------------: |
@@ -1023,7 +1053,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 28,Review Management 
+### Use case 31,Delete Review 
 
 | Actors Involved  |  |
 | :--------------: | :------------------------------------------------------------------: |
@@ -1033,17 +1063,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 29,Create/Delete Review 
-
-| Actors Involved  |  |
-| :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  |
-|  Post condition  |  |
-| Nominal Scenario |  -1|
-|     Variants     |  None|
-|    Exceptions    |  Scenario|
-
-### Use case 30,Get reviews of a model 
+### Use case 32,Get reviews of a model 
 
 | Actors Involved  |  |
 | :--------------: | :------------------------------------------------------------------: |
