@@ -948,7 +948,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   |  Manager is logged in|
-|  Post condition  |  |
+|  Post condition  |  Category is created|
 | Nominal Scenario |  20-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
@@ -957,9 +957,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  Manager is logged in|
-|  Post condition  |  |
-| Nominal Scenario |  20-1|
+|   Precondition   |  Manager is logged in, category exists|
+|  Post condition  |  Category is deleted|
+| Nominal Scenario |  21-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
@@ -968,108 +968,108 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   |  User want to get all categories|
-|  Post condition  |  |
-| Nominal Scenario |  -1|
+|  Post condition  |  User get all categories|
+| Nominal Scenario |  22-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
 ### Use case 23,Create Model
 
-| Actors Involved  |  |
+| Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  |
-|  Post condition  |  |
-| Nominal Scenario |  -1|
+|   Precondition   |  Manager is logged in|
+|  Post condition  |  Model is created|
+| Nominal Scenario |  23-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
 ### Use case 24,Delete Model
 
-| Actors Involved  |  |
+| Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  |
-|  Post condition  |  |
-| Nominal Scenario |  -1|
+|   Precondition   |  Manager is logged in, model exist|
+|  Post condition  |  Model is deleted|
+| Nominal Scenario |  24-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
 ### Use case 25,Modify Model
 
-| Actors Involved  |  |
+| Actors Involved  |  Menager|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  |
-|  Post condition  |  |
-| Nominal Scenario |  -1|
+|   Precondition   |  Manager is logged in|
+|  Post condition  |  Model is modified|
+| Nominal Scenario |  25-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
 ### Use case 26,Search Models
 
-| Actors Involved  |  |
+| Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  |
-|  Post condition  |  |
-| Nominal Scenario |  -1|
+|   Precondition   |  The user want to retrieve a list of model given a search string|
+|  Post condition  |  User gets a list of models|
+| Nominal Scenario |  26-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
 ### Use case 27,Create discount 
 
-| Actors Involved  |  |
+| Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  |
-|  Post condition  |  |
-| Nominal Scenario |  -1|
+|   Precondition   |  Manager is logged in|
+|  Post condition  |  Discount is created, start date and end date are valid|
+| Nominal Scenario |  27-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
 ### Use case 28,Delete discount 
 
-| Actors Involved  |  |
+| Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  |
-|  Post condition  |  |
-| Nominal Scenario |  -1|
+|   Precondition   |  Manager is logged in, discount exists|
+|  Post condition  |  Discount is deleted|
+| Nominal Scenario |  28-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
 ### Use case 29,Query discount 
 
-| Actors Involved  |  |
+| Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  |
-|  Post condition  |  |
-| Nominal Scenario |  -1|
+|   Precondition   |  User wants a list of discounts|
+|  Post condition  |  User receive a list of discounts|
+| Nominal Scenario |  29-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
 ### Use case 30,Create Review 
 
-| Actors Involved  |  |
+| Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  |
-|  Post condition  |  |
-| Nominal Scenario |  -1|
+|   Precondition   |  Custoemer is logged in|
+|  Post condition  |  Review is created|
+| Nominal Scenario |  30-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
 ### Use case 31,Delete Review 
 
-| Actors Involved  |  |
+| Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  |
-|  Post condition  |  |
-| Nominal Scenario |  -1|
+|   Precondition   |  Customer is logged in, custumer own the review|
+|  Post condition  |  Review is deleted|
+| Nominal Scenario |  31-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
 ### Use case 32,Get reviews of a model 
 
-| Actors Involved  |  |
+| Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  |
-|  Post condition  |  |
-| Nominal Scenario |  -1|
+|   Precondition   |  User wants a list of the reviws of a model|
+|  Post condition  |  User gets a list of reviews|
+| Nominal Scenario |  32-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
