@@ -35,7 +35,7 @@ Version: V1 - description of EZElectronics in CURRENT form (as received by teach
     - [Use case 9, Delete Product](#use-case-9-delete-product)
     - [Use case 10, Register arrival of products](#use-case-10-register-arrival-of-products)
     - [Use case 11, Mark product as sold](#use-case-11-mark-product-as-sold)
-    - [Use case 12, Get vontente of current cart](#use-case-12-get-content-of-current-cart)
+    - [Use case 12, Get content of current cart](#use-case-12-get-content-of-current-cart)
     - [Use case 13, Add product to current cart](#use-case-13-add-product-to-current-cart)
     - [Use case 14, Remove product from current cart](#use-case-14-remove-product-from-current-cart)
     - [Use case 15, Set current cart as paid](#use-case-15-set-current-cart-as-paid)
