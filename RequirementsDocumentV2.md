@@ -79,8 +79,8 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |  ID   | Description |
 | :---: | :---------: |
-|  FR1  | Authorization and Authentication |
-|  FR1.1  | Account Management |
+|  -FR1  | Authorization and Authentication |
+|   -FR1.1  | Account Management |
 |  FR1.1.1  | Create/Delete Account (Customer/Manager) |
 |  FR1.1.2  | Query informations about one or more accounts |
 |  FR1.1.3  | Send email for changing password |
