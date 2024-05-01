@@ -357,7 +357,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  Post condition  |  The user doesn't have an account|
 | Nominal Scenario |  6-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario 6-2|
+|    Exceptions    |  Scenario 6-2, 6-3|
 
 
 ##### Scenario 6.1
@@ -386,7 +386,18 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       4        |  System: Read username,Check if the provided username exists in the database.|
 |       5        |  System: user does not exist in the database, Provide error message|
 
+##### Scenario 6.3
 
+|  Scenario 6.3  |  User is not a manager and try to delete someone else account|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  |
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  User: Ask to delete account|
+|       2        | System: Ask username|
+|       3        |  User: Provide username|
+|       4        |  System: Read username,Check if the provided username exists in the database.|
+|       5        |  System: user doesn't have permission to delete account , Provide error message|
 
 ### Use case 7, Retrieve products details
 
