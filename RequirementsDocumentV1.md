@@ -128,7 +128,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 
 ## Use case diagram
 
-![Use case diagram](./Images/UseCaseDiagramV1.jpg)
+![Use case diagram](./Images/UseCaseDiagramV1.png)
 
 ### Use case 1, Login
 
