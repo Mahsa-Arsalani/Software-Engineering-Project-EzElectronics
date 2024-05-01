@@ -130,9 +130,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ## Use case diagram
 
-\<define here UML Use case diagram UCD summarizing all use cases, and their relationships>
-
-\<next describe here each use case in the UCD>
+![Use case diagram](./Images/UseCaseDiagramV2.png)
 
 ### Use case 1, UC1
 
