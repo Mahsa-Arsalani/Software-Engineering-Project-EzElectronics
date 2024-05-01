@@ -13,7 +13,7 @@ Version: V1 - description of EZElectronics in CURRENT form (as received by teach
 - [Requirements Document - current EZElectronics](#requirements-document---current-ezelectronics)
 - [Contents](#contents)
 - [Informal description](#informal-description)
-- [Defect Table](#Defect-table)
+- [Defect Table](#defect-table)
 - [Stakeholders](#stakeholders)
 - [Context Diagram and interfaces](#context-diagram-and-interfaces)
   - [Context Diagram](#context-diagram)
@@ -38,9 +38,7 @@ Version: V1 - description of EZElectronics in CURRENT form (as received by teach
 
 EZElectronics (read EaSy Electronics) is a software application designed to help managers of electronics stores to manage their products and offer them to customers through a dedicated website. Managers can assess the available products, record new ones, and confirm purchases. Customers can see available products, add them to a cart and see the history of their past purchases.
 
-# Defect table
-
-
+# Defect table {defect-table}
 
 |Defect|Description|
 | :--: | :--: |
