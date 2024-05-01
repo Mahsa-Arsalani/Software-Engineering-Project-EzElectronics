@@ -132,46 +132,774 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ![Use case diagram](./Images/UseCaseDiagramV2.png)
 
-### Use case 1, UC1
+### Use case 1, Login
 
-| Actors Involved  |                                                                      |
+| Actors Involved  | User |
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   | \<Boolean expression, must evaluate to true before the UC can start> |
-|  Post condition  |  \<Boolean expression, must evaluate to true after UC is finished>   |
-| Nominal Scenario |         \<Textual description of actions executed by the UC>         |
-|     Variants     |                      \<other normal executions>                      |
-|    Exceptions    |                        \<exceptions, errors >                        |
+|   Precondition   | User not logged in, user registered |
+|  Post condition  | User logged in |
+| Nominal Scenario | 1-1 |
+|     Variants     | None |
+|    Exceptions    | cenario 1-2, 1-3 |
 
-##### Scenario 1.1
+##### Scenario 1-1
 
-\<describe here scenarios instances of UC1>
-
-\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
-
-\<a scenario is a more formal description of a story>
-
-\<only relevant scenarios should be described>
-
-|  Scenario 1.1  |                                                                            |
+|  Scenario 1-1  | Login |
 | :------------: | :------------------------------------------------------------------------: |
-|  Precondition  | \<Boolean expression, must evaluate to true before the scenario can start> |
-| Post condition |  \<Boolean expression, must evaluate to true after scenario is finished>   |
+|  Precondition  | User not logged in, user registered |
+| Post condition | Logged in |
 |     Step#      |                                Description                                 |
-|       1        |                                                                            |
-|       2        |                                                                            |
-|      ...       |                                                                            |
+|       1        | System: Ask username, password |
+|       2        | User: Provide username, password |
+|       3        | System: Read username, password |
+|       4        | System: Retrieve password, compare with the one provided. Passwords match, user is authorised |
 
-##### Scenario 1.2
+##### Scenario 1-2
 
-##### Scenario 1.x
+|  Scenario 1-2  | User not registered |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User not logged in, user not registered |
+| Post condition | Not logged in |
+|     Step#      |                                Description                                 |
+|       1        | System: Ask username, password |
+|       2        | User: Provide username, password |
+|       3        | System: Read username, password. Check cookie,  the user is not logged in |
+|       4        | System: Given username, find the user. User is not found. User not authorised |
 
-### Use case 2, UC2
+##### Scenario 1-3
 
-..
+|  Scenario 1-3  | User already logged in |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User logged in, User registered |
+| Post condition | User logged in |
+|     Step#      |                                Description                                 |
+|       1        | System: Ask username, password |
+|       2        | User: Provide username, password |
+|       3        | System: Read username, password. Check cookie,  the user is already logged in |
+|       4        | System: Return an error message |
 
-### Use case x, UCx
 
-..
+### Use case 2, Logout
+
+| Actors Involved  | User |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User logged in |
+|  Post condition  | User not logged in |
+| Nominal Scenario | 2-1 |
+|     Variants     | None |
+|    Exceptions    | Scenario 2-2 |
+
+
+##### Scenario 2-1, Logout
+
+|  Scenario 2-1  | Logout |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User logged in |
+| Post condition | User not logged in |
+|     Step#      |                                Description                                 |
+|       1        | User: Asks to logout |
+|       2        | System: Find user, check cookie, the user is logged in |
+|       3        | System: Remove authorization to the user device |
+
+##### Scenario 2-2
+
+|  Scenario 2-2  | User already logged out |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User not logged in |
+| Post condition | User not logged in |
+|     Step#      |                                Description                                 |
+|       1        | User: Asks to logout |
+|       2        | System: Check that the user isn't already logged out |
+|       3        | System: User hasn't performed login yet. Show an error message |
+
+
+### Use case 3, Retrieve current session details
+
+| Actors Involved  | User |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User logged in |
+|  Post condition  | User information shown |
+| Nominal Scenario | 3-1 |
+|     Variants     | None |
+|    Exceptions    | Scenario 3-2 |
+
+##### Scenario 3-1
+
+|  Scenario 3-1  | Retrieve current session details |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User logged in |
+| Post condition | User information shown |
+|     Step#      |                                Description                                 |
+|       1        | User: logged in |
+|       2        | System: Show username,name, surname, role of the logged in user |
+
+##### Scenario 3-2
+
+|  Scenario 3-2  | User not logged in |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User not logged in |
+| Post condition | Request not fulfilled |
+|     Step#      |                                Description                                 |
+|       1        | User Go to log in address |
+|       2        | System: Check that the user is already logged in |
+|       3        | System: User hasn't performed login yet. Show an error message |
+
+
+### Use case 4, Create Account
+
+| Actors Involved  | User |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | The user doesn't have an account |
+|  Post condition  | User has an account |
+| Nominal Scenario | 4-1 |
+|     Variants     | None |
+|    Exceptions    | Scenario 4-2 |
+
+##### Scenario 4-1
+
+|  Scenario 4-1  | Create Account |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | The user doesn't have an account |
+| Post condition | User has an account |
+|     Step#      |                                Description                                 |
+|       1        | User: Ask to create account |
+|       2        | System: Ask username, name, surname, password, role |
+|       3        | User: Provide username, name, surname, password, role |
+|       4        | System: Read username, name, surname, password,role |
+|       5        | System: Check that the provided username isn't associated with any account yet. The username hasn't been used yet |
+|       6        | System: Create a new user and store his information |
+
+##### Scenario 4-2
+
+|  Scenario 4-2  | The User already has an account |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | The user has an account |
+| Post condition | Registration failed |
+|     Step#      |                                Description                                 |
+|       1        | User: Ask to create account |
+|       2        | System: Ask username, name, surname, password,role |
+|       3        | User: Provide username, name, surname, password,role |
+|       4        | System: Read username, name, surname, password,role |
+|       5        | System: Check that the provided username isn't associated with any account yet. The username has been used already, sends error |
+
+
+### Use case 5, Query Accounts info
+
+| Actors Involved  | User |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User is logged in and has no information about something |
+|  Post condition  | User has information about something |
+| Nominal Scenario | 5-1 |
+|     Variants     | 5-2, 5-3 |
+|    Exceptions    | Scenario 5-4, 5-5|
+
+
+##### Scenario 5-1
+
+|  Scenario 5-1  | Get the list of all users |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has not the list of all users |
+| Post condition | List of all users is shown |
+|     Step#      |                                Description                                 |
+|       1        | User: Ask all users |
+|       2        | System: Return all the users, and show their information |
+
+##### Scenario 5-2
+
+|  Scenario 5-2  | Get the list of all users with a specific role |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User doesn’t have list of all users with a specific role |
+| Post condition | List of all users with a specific role is shown |
+|     Step#      |                                Description                                 |
+|       1        | User: Ask all users specifying the role |
+|       2        | System: Return all the users with a specific role, and show their information |
+
+##### Scenario 5-3
+
+|  Scenario 5-3  | Get User with a specific username |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User has no information |
+| Post condition | The specific user is shown |
+|     Step#      |                                Description                                 |
+|       1        | User: ask user info for a certain user. Provide username |
+|       2        | System: Check that the provided username exists in the database |
+|       3        | System: Retrieve the details about the user that's performing the request |
+|       4        | System: Check if the username provided matches with the user's one. They match |
+|       5        | System: Show user information |
+
+##### Scenario 5-4
+
+|  Scenario 5-4  | User with a specific username not found |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | None |
+| Post condition | The specified user not found |
+|     Step#      |                                Description                                 |
+|       1        | User: ask user info for a certain user. Provide username |
+|       2        | System: Check that the provided username exists in the database. They don't match |
+|       3        | System: sends error |
+##### Scenario 5-5
+
+|  Scenario 5-5  | User not logged in |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | None |
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  User makes the request|
+|       2        |  System detects user is not logged in|
+|       3        |  System sends error|
+
+
+### Use case 6, Delete Account
+
+| Actors Involved  |  User|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  User has an account|
+|  Post condition  |  The user doesn't have an account|
+| Nominal Scenario |  6-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 6-2|
+
+
+##### Scenario 6.1
+
+|  Scenario 6.1  |  Delete user|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  User has an account|
+| Post condition |  The user doesn't have an account|
+|     Step#      |                                Description                                 |
+|       1        |  User: Ask to delete account|
+|       2        |  System: Ask username|
+|       3        |  User: Provide username|
+|       4        |  System: Read username,Check if the provided username exists in the database.|
+|       5        |  System: find user, delete user account|
+
+##### Scenario 6.2
+
+|  Scenario 6.2  |  User doesn’t exist |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  The user doesn't have an account|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  User: Ask to delete account|
+|       2        | System: Ask username|
+|       3        |  User: Provide username|
+|       4        |  System: Read username,Check if the provided username exists in the database.|
+|       5        |  System: user does not exist in the database, Provide error message|
+
+
+
+### Use case 7, Retrieve products details
+
+| Actors Involved  |  User|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  User logged in|
+|  Post condition  |  Returns all products|
+| Nominal Scenario |  7-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 7-2|
+
+
+##### Scenario 7.1
+
+|  Scenario 7.1  |  Retrieve products details|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  User logged in|
+| Post condition |  Returns all products|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System verifies Customer authentication|
+|       3        |  System shows all products	|
+
+##### Scenario 7.2
+
+|  Scenario 7.2  |  User not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  User not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System detect customer is not logged in|
+|       3        |  System sends error|
+
+### Use case 8, Create product
+
+| Actors Involved  |  Manager|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, product doesn’t exist|
+|  Post condition  |  Product is created|
+| Nominal Scenario |  8-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 8-2, 8-3, 8-4|
+
+
+##### Scenario 8.1
+
+|  Scenario 8.1  |  Create product|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product doesn’t exist|
+| Post condition |  product is created|
+|     Step#      |                                Description                                 |
+|       1        |  Manager: Ask to create product|
+|       2        |  System: Ask code,selling price, model, category, details, arrival date|
+|       3        |  Manager: Provide code,selling price, model, category, details, arrival date|
+|       4        |  System: Read code,selling price, model, category, details, arrival date|
+|       5        |  System: Check that the provided code exists in the database. There is no match for code|
+|       6        |  System:Create a new product and store its information|
+
+##### Scenario 8.2
+
+|  Scenario 8.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager: Ask to create product|
+|       2        |  System: detects manager is not logged in|
+|       3        |  System: Provide error|
+
+##### Scenario 8.3
+
+|  Scenario 8.3  |  product already exists in the database|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product  exists|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager: Ask to create product|
+|       2        |  System: Ask code,selling price, model, category, details, arrival date|
+|       3        |  Manager: Provide code,selling price, model, category, details, arrival date|
+|       4        |  System: Read code,selling price, model, category, details, arrival date. |
+|       5        |  System: Check that the provided code exists in the database. There is a match for code.|
+|       6        |  System:Provide error message|
+
+##### Scenario 8.4
+
+|  Scenario 8.4  |  arrival date is after the current date|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager: Ask to create product|
+|       2        |  System: Ask code,selling price, model, category, details, arrival date|
+|       3        |  Manager: Provide code,selling price, model, category, details, arrival date|
+|       4        |  System: Read code,selling price, model, category, details, arrival date|
+|       5        |  System: check then the arrival date is before the current date|
+|       6        |  System: the arrival date is after the current date, provide error message|
+
+
+### Use case 9, Delete product
+
+| Actors Involved  |  Manager|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, product exists|
+|  Post condition  |  Product is deleted|
+| Nominal Scenario |  9-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 9-2, 9-3|
+
+
+##### Scenario 9.1
+
+|  Scenario 9.1  |  Delete product|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product exists|
+| Post condition |  Product is deleted|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the product|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System deletes product|
+
+##### Scenario 9.2
+
+|  Scenario 9.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the product|
+|       2        |  Precondition: Manager is not logged in|
+|       3        |  System detects manager is not logged in|
+|       4        |  System sends error|
+
+##### Scenario 9.3
+
+|  Scenario 9.3  |  The product doesn’t exist|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product doesn’t exist|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager make the request sending the id of the product|
+|       2        |  System verifies manager is logged in|
+|       3        |  System detects product doesn’t exist|
+|       4        |  System sends error|
+
+
+
+### Use case 10, Register arrival of products
+
+| Actors Involved  |  Manager|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, selling date is valid|
+|  Post condition  |  The arrival is registered|
+| Nominal Scenario |  10-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 10-2, 10-3|
+
+
+##### Scenario 10.1
+
+|  Scenario 10.1  |  Register arrival of products|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, arrival date is valid|
+| Post condition |  The arrival is registered|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the informations of the products and the arrival date|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies that the arrival date is prior or equal to the current day|
+|       4        |  System registers the arrival|
+
+##### Scenario 10.2
+
+|  Scenario 10.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the informations of the products and the arrival date|
+|       2        |  System detects manager is not logged in|
+|       3        |  System sends error|
+
+##### Scenario 10.3
+
+|  Scenario 10.3  |  Arrival date is not valid|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, arrival date is invalid|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the informations of the products and the arrival date|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System detects that the arrival date is after the current day |
+|       4        |  System sends error|
+
+
+
+### Use case 11, Mark product as sold
+
+| Actors Involved  |  Manager|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, product exists, product has not been sold, selling date is valid|
+|  Post condition  |  Product is sold|
+| Nominal Scenario |  11-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 11-2, 11-3, 11-4, 11-5|
+
+
+##### Scenario 11.1
+
+|  Scenario 11.1  |  Mark product as sold|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product exists, product has not been sold, selling date is valid|
+| Post condition |  Product is sold|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the product and the selling date|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System verifies product has not been sold|
+|       5        |  System verifies that the selling date is prior or equal to the current day and after or equal to the arrival date|
+|       6        |  System set product as sold|
+
+##### Scenario 11.2
+
+|  Scenario 11.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the product and the selling date|
+|       2        |  System detects manager is not logged in|
+|       3        |  System sends error|
+
+##### Scenario 11.3
+
+|  Scenario 11.3  |  The product doesn’t exist|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product doesn’t exist|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager make the request sending the id of the product and the selling date|
+|       2        |  System verifies manager is logged in|
+|       3        |  System detects product doesn’t exist|
+|       4        |  System sends error|
+
+##### Scenario 11.4
+
+|  Scenario 11.4  |  The product has been sold|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product exists, product has been sold|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the product and the selling date|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System detects that the product has been sold|
+|       5        |  System sends error|
+
+##### Scenario 11.5
+
+|  Scenario 11.5  |  Selling date is not valid|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product exists, product has not been sold, selling date is invalid|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the product and the selling date|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System verifies product has not been sold|
+|       5        |  System detects that the selling date is after the current day or is prior the arrival date|
+|       6        |  System sends error|
+
+
+### Use case 12, Get content of current cart
+
+| Actors Involved  |  Customer|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Customer is logged in|
+|  Post condition  |  Customer get the list of product contained in his current cart|
+| Nominal Scenario |  12-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 12-2|
+
+
+##### Scenario 12.1
+
+|  Scenario 12.1  |  Get content of current cart|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in|
+| Post condition |  Customer get the list of product contained in his current cart|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System verifies Customer authentication|
+|       3        |  System sends the list of product contained in his current cart|
+
+##### Scenario 12.2
+
+|  Scenario 12.2  |  Customer is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System detect customer is not logged in|
+|       3        |  System sends error|
+
+
+
+### Use case 13, Add product to current cart
+
+| Actors Involved  |  Customer|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Customer is logged in, the product exists, the product is not already contained in a cart, the product has not been sold yet|
+|  Post condition  |  Product added to current cart|
+| Nominal Scenario |  13-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 13-2, 13-3, 13-4, 13-5|
+
+
+##### Scenario 13.1
+
+|  Scenario 13.1  |  Add product to current cart|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, the product exists, the product is not already contained in a cart, the product has not been sold yet|
+| Post condition |  Product added to current cart|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request sending the id of the product|
+|       2        |  System verifies Customer is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System verifies product is not already contained in a cart|
+|       5        |  System verifies product has not been sold|
+|       6        |  System adds the product to the current cart|
+|       7        |  System sends success message|
+
+##### Scenario 13.2
+
+|  Scenario 13.2  |  Customer is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request sending the id of the product|
+|       2        |  System detect customer is not logged in|
+|       3        |  System sends error|
+
+##### Scenario 13.3
+
+|  Scenario 13.3  |  The product doesn’t exist|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, product doesn’t exist|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer make the request sending the id of the product|
+|       2        |  System verifies Customer logged in|
+|       3        |  System detects product doesn’t exist|
+|       4        |  System send error|
+
+##### Scenario 13.4
+
+|  Scenario 13.4  |  The product is already contained in a cart|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, product exists, product is already contained in a cart|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer make the request sending the id of the product|
+|       2        |  System verifies Customer logged in|
+|       3        |  System verifies product exists|
+|       4        |  System detects product in another cart|
+|       5        |  System sends error|
+
+##### Scenario 13.5
+
+|  Scenario 13.5  |  The product has been sold|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, product exists, product has been sold|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer make the request sending the id of the product|
+|       2        |  System verifies Customer is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System verifies product is not not already contained in a cart|
+|       5        |  System detect that product has been sold|
+|       6        |  System sends error|
+
+
+### Use case 14, Remove product from current cart
+
+| Actors Involved  |  Customer|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Customer is logged in, the product is contained in the current cart|
+|  Post condition  |  Product i removed from current cart|
+| Nominal Scenario |  14-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 14-2, 14-3|
+
+
+##### Scenario 14.1
+
+|  Scenario 14.1  |  Remove product from current cart|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, the product is contained in the current cart|
+| Post condition |  Product removed from current cart|
+|     Step#      |                                Description                                 |
+|       1        |  Customer make the request sending the id of the product|
+|       2        |  System verifies Customer is logged in|
+|       3        |  System verifies product is in the cart|
+|       4        |  Systems remove the product from the current cart|
+|       5        |  System send success message|
+
+##### Scenario 14.2
+
+|  Scenario 14.2  |  Customer is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer make the request|
+|       2        |  System detects Customer is not logged in|
+|       3        |  Systems send error|
+
+##### Scenario 14.3
+
+|  Scenario 14.3  |  The product is not contained in the current cart|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, product is not contained in the current cart|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer make the request|
+|       2        |  System verifies Customer is logged in|
+|       3        |  System detects cart is not empty|
+|       4        |  System sends error|
+
+
+### Use case 15, Set current cart as paid
+
+| Actors Involved  |  Customer|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Customer is logged in, current cart is not empty|
+|  Post condition  |  Customer’s current cart is paid|
+| Nominal Scenario |  15-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 15-2, 15-3|
+
+
+##### Scenario 15.1
+
+|  Scenario 15.1  |  Set current cart as paid|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, current cart is not empty|
+| Post condition |  Customer’s current cart is paid|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System verifies Customer is logged in|
+|       3        |  System verifies cart is empty|
+|       4        |  System sets customer’s current cart as paid|
+
+##### Scenario 15.2
+
+|  Scenario 15.2  |  Customer is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is not logged in|
+| Post condition |  Customer’s current cart is not paid|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System detects Customer is not logged in|
+|       3        |  System sends error|
+
+
+##### Scenario 15.3
+
+|  Scenario 15.3  |  Current cart is empty|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, current cart is empty|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System verifies Customer is logged in|
+|       3        |  System detects car as not empty|
+|       4        |  System sends error|
+
+
+
+### Use case 16, Get history of previously paid cart
+
+| Actors Involved  | Customer |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Customer is logged in|
+|  Post condition  |  Customer get the list of previously paid carts|
+| Nominal Scenario |  16-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 16-2|
+
+
+##### Scenario 16.1
+
+|  Scenario 16.1  | Get history of previously paid cart |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in|
+| Post condition | Customer get the list of previously paid carts |
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System verifies Customer logged in|
+|       3        |  System return previously paid carts content|
+
+##### Scenario 16.2
+
+|  Scenario 16.2  |  Customer is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        | Customer makes the request|
+|       2        | System detects customer is not logged in |
+|       3        | System sends error |
 
 # Glossary
 
