@@ -159,7 +159,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ![Use case diagram](./Images/UseCaseDiagramV2.png)
 
-### Use case 1, Login [//]: <> (DONE)
+### Use case 1, Login  <!--- DONE -->
 
 | Actors Involved  | User |
 | :--------------: | :------------------------------------------------------------------: |
@@ -206,7 +206,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       4        | System: Return an error message |
 
 
-### Use case 2, Logout [//]: <> (DONE)
+### Use case 2, Logout  <!--- DONE -->
 
 | Actors Involved  | User |
 | :--------------: | :------------------------------------------------------------------: |
@@ -240,7 +240,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        | System: User hasn't performed login yet. Show an error message |
 
 
-### Use case 3, Retrieve current session details [//]: <> (DONE)
+### Use case 3, Retrieve current session details  <!--- DONE -->
 
 | Actors Involved  | User |
 | :--------------: | :------------------------------------------------------------------: |
@@ -272,7 +272,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        | System: User hasn't performed login yet. Show an error message |
 
 
-### Use case 4, Create Account [//]: <> (DONE)
+### Use case 4, Create Account  <!--- DONE -->
 
 | Actors Involved  | User |
 | :--------------: | :------------------------------------------------------------------: |
@@ -310,7 +310,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       5        | System: Check that the provided username isn't associated with any account yet. The username has been used already, sends error |
 
 
-### Use case 5, Query Accounts info [//]: <> (DONE)
+### Use case 5, Query Accounts info  <!--- DONE -->
 
 | Actors Involved  | User |
 | :--------------: | :------------------------------------------------------------------: |
@@ -376,7 +376,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        |  System sends error|
 
 
-### Use case 6, Delete Account [//]: <> (DONE)
+### Use case 6, Delete Account  <!--- DONE -->
 
 | Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
@@ -426,7 +426,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       4        |  System: Read username,Check if the provided username exists in the database.|
 |       5        |  System: user doesn't have permission to delete account , Provide error message|
 
-### Use case 7, Retrieve products details [//]: <> (DONE)
+### Use case 7, Retrieve products details  <!--- DONE -->
 
 | Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
@@ -459,7 +459,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       2        |  System detect customer is not logged in|
 |       3        |  System sends error|
 
-### Use case 8, Create product [//]: <> (DONE)
+### Use case 8, Create product  <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -524,7 +524,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       6        |  System: the arrival date is after the current date, provide error message|
 
 
-### Use case 9, Delete product [//]: <> (DONE)
+### Use case 9, Delete product  <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -573,7 +573,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
-### Use case 10, Register arrival of products [//]: <> (DONE)
+### Use case 10, Register arrival of products  <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -621,7 +621,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
-### Use case 11, Mark product as sold [//]: <> (DONE)
+### Use case 11, Mark product as sold  <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -697,7 +697,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       6        |  System sends error|
 
 
-### Use case 12, Get content of current cart [//]: <> (DONE)
+### Use case 12, Get content of current cart  <!--- DONE -->
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
@@ -732,7 +732,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
-### Use case 13, Add product to current cart [//]: <> (DONE)
+### Use case 13, Add product to current cart  <!--- DONE -->
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
@@ -809,7 +809,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       6        |  System sends error|
 
 
-### Use case 14, Remove product from current cart [//]: <> (DONE)
+### Use case 14, Remove product from current cart  <!--- DONE -->
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
@@ -857,7 +857,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       4        |  System sends error|
 
 
-### Use case 15, Set current cart as paid [//]: <> (DONE)
+### Use case 15, Set current cart as paid  <!--- DONE -->
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
@@ -906,7 +906,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 
 
-### Use case 16, Get history of previously paid cart  [//]: <> (DONE)
+### Use case 16, Get history of previously paid cart   <!--- DONE -->
 
 | Actors Involved  | Customer |
 | :--------------: | :------------------------------------------------------------------: |
@@ -969,7 +969,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 20,Create Category [//]: <> (DONE)
+### Use case 20,Create Category <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1002,7 +1002,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       3        |  System sends error|
 
 
-### Use case 21,Delete Category [//]: <> (DONE)
+### Use case 21,Delete Category <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
