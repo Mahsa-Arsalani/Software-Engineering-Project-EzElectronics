@@ -41,10 +41,11 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Stakeholder name          | Description                                       |
 | :-----------------------: | :-----------------------------------------------: |
-| User                      | The customer                                      |
-| Manager                   | Who use the website                               |
+| User                      | A person who uses the website (even an unlogged one)                                     |
+|Customer| Who interacts with the system in order to purchase one or more products |
+| Manager                   | Who manages the product on the website                               |
 | Developer                 | Person who develops and maintains the application |
-| Google play + apple store | The service that permit to download the app       |
+
 
 # Context Diagram and interfaces
 
