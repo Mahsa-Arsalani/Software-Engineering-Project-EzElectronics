@@ -360,6 +360,54 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |       3        |  |
 |       4        |  |
 
+### Use case 14, Remove product from current cart
+
+| Actors Involved  |  Customer|
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Customer is logged in, the product is contained in the current cart|
+|  Post condition  |  Product i removed from current cart|
+| Nominal Scenario |  14-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 14-2, 14-3|
+
+
+##### Scenario 14.1
+
+|  Scenario 14.1  |  Remove product from current cart|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, the product is contained in the current cart|
+| Post condition |  Product removed from current cart|
+|     Step#      |                                Description                                 |
+|       1        |  Customer make the request sending the id of the product|
+|       2        |  System verifies Customer is logged in|
+|       3        |  System verifies product is in the cart|
+|       4        |  Systems remove the product from the current cart|
+|       5        |  System send success message|
+
+##### Scenario 14.2
+
+|  Scenario 14.2  |  Customer is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer make the request|
+|       2        |  System detects Customer is not logged in|
+|       3        |  Systems send error|
+
+##### Scenario 14.3
+
+|  Scenario 14.3  |  The product is not contained in the current cart|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, product is not contained in the current cart|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer make the request|
+|       2        |  System verifies Customer is logged in|
+|       3        |  System detects cart is not empty|
+|       4        |  System sends error|
+
+
 ### Use case 15, Set current cart as paid
 
 | Actors Involved  |  Customer|
@@ -394,17 +442,6 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |       2        |  System detects Customer is not logged in|
 |       3        |  System sends error|
 
-##### Scenario x.x
-
-|  Scenario x.x  |  |
-| :------------: | :------------------------------------------------------------------------: |
-|  Precondition  |  |
-| Post condition |  |
-|     Step#      |                                Description                                 |
-|       1        |  |
-|       2        |  |
-|       3        |  |
-|       4        |  |
 
 ##### Scenario 15.3
 
