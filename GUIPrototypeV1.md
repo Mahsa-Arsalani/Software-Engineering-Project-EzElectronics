@@ -68,5 +68,5 @@
 
 | Manager profile section |
 | :-------------: |
-| **Usecases**: Query accounts info|
+| **Usecases**: Query accounts info, Logout|
 | ![](./Images/GUI/V1/Manager_Profile_section.png) |
