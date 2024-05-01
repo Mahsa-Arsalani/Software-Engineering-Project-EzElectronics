@@ -52,6 +52,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |Defect|Description|
 | :--: | :--: |
 | getUsers(), getUsersByRole(), getUserByUsername()| Privacy defect, the functions return information of other users to unauthenticated users |
+| Cart creation| Ambiguity defect, It is not specified how the current cart is created|
 | | |
 
 # Stakeholders
