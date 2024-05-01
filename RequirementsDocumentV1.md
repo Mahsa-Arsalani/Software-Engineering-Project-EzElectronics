@@ -360,6 +360,41 @@ Persona 1 sold all products that were previously created by him. He deletes this
 |       3        |  |
 |       4        |  |
 
+### Use case 16, Get history of previously paid cart
+
+| Actors Involved  | Customer |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   |  Customer is logged in|
+|  Post condition  |  Customer get the list of previously paid carts|
+| Nominal Scenario |  16-1|
+|     Variants     |  None|
+|    Exceptions    |  Scenario 16-2|
+
+
+##### Scenario 16.1
+
+|  Scenario 16.1  | Get history of previously paid cart |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in|
+| Post condition | Customer get the list of previously paid carts |
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request|
+|       2        |  System verifies Customer logged in|
+|       3        |  System return previously paid carts content|
+
+##### Scenario 16.2
+
+|  Scenario 16.2  |  Customer is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        | Customer makes the request|
+|       2        | System detects customer is not logged in |
+|       3        | System sends error |
+
+
+
 # Glossary
 
 ![Glossary](./Images/GlossaryV1.jpg)
