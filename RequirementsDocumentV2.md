@@ -73,10 +73,6 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ## Functional Requirements
 
-\<In the form DO SOMETHING, or VERB NOUN, describe high level capabilities of the system>
-
-\<they match to high level use cases>
-
 |  ID   | Description |
 | :---: | :---------: |
 |  FR1  | Authorization and Authentication |
