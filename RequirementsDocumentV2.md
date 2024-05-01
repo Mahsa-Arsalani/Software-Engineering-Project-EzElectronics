@@ -51,7 +51,7 @@ Version: V1 - description of EZElectronics in FUTURE form (as proposed by the te
     - [Use case 26, Search models](#use-case-26search-models)
     - [Use case 27, Create discount](#use-case-27create-discount)
     - [Use case 28, Delete discount](#use-case-28delete-discount)
-    - [Use case 29, Query discount](#use-case-29query-discount)
+    - [Use case 29, Query discounts](#use-case-29query-discounts)
     - [Use case 30, Create review](#use-case-30create-review)
     - [Use case 31, Delete review](#use-case-31delete-review)
     - [Use case 32, Get reviews of a model](#use-case-32get-reviews-of-a-model)
@@ -555,9 +555,8 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Post condition |  Request not fulfilled|
 |     Step#      |                                Description                                 |
 |       1        |  Manager makes the request sending the id of the product|
-|       2        |  Precondition: Manager is not logged in|
-|       3        |  System detects manager is not logged in|
-|       4        |  System sends error|
+|       2        |  System detects manager is not logged in|
+|       3        |  System sends error|
 
 ##### Scenario 9.3
 
@@ -939,25 +938,80 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |       2        | System detects customer is not logged in |
 |       3        | System sends error |
 
-### Use case 17, Send email to change password 
+### Use case 17, Send email to change password <!--- DONE -->
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  Customer has an account and is not logged in|
-|  Post condition  |  Email is sent to customer|
+|   Precondition   |  Customer has an account|
+|  Post condition  |  Email is sent to customer'email-box|
 | Nominal Scenario |  17-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario|
+|    Exceptions    |  Scenario 17-2|
 
-### Use case 18,Change password 
+##### Scenario 17.1
+
+|  Scenario 17.1  | Send email to change password  |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Customer has an account|
+|  Post condition  |  Email is sent to customer|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request sendig his username|
+|       2        |  System verifies Customer's username exists|
+|       3        |  System send an email containing a pin to the Customer's email-box|
+
+##### Scenario 17.2
+
+|  Scenario 17.2  |  Customer doesn't exist|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer doesn't exist|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        | Customer makes the request sendig his username|
+|       2        | System detects Customer's username doesn't exist |
+|       3        | System sends error |
+
+### Use case 18,Change password <!--- DONE -->
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  Customer has valid pin os is logged in|
+|   Precondition   |  Customer has valid pin or is logged in|
 |  Post condition  |  Password is changed|
 | Nominal Scenario |  18-1|
-|     Variants     |  None|
-|    Exceptions    |  Scenario|
+|     Variants     |  18-3|
+|    Exceptions    |  Scenario 18-2|
+
+##### Scenario 18.1
+
+|  Scenario 18.1  | Change password |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Customer has valid pin|
+|  Post condition  |  Password is changed|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request sendig the pin and the new password|
+|       2        |  System verifies pin is valid|
+|       3        |  System change Customers's password|
+
+##### Scenario 18.2
+
+|  Scenario 18.2  |  pin not valid|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  pin not valid|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request sendig the pin and the new password|
+|       2        |  System detect pin is not valid|
+|       3        | System sends error |
+
+##### Scenario 18.3
+
+|  Scenario 18.3  | Change password (customer is logged in)  |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Customer is logged in|
+|  Post condition  |  Password is changed|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request sendig the new password|
+|       2        |  System change Customers's password|
+
 
 ### Use case 19,set product shipping status
 
@@ -1067,7 +1121,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  Post condition  |  User get all categories|
 |     Step#      |                                Description                                 |
 |       1        |  User makes the request|
-|       2        |  System shows all products	|
+|       2        |  System sends all products	|
 
 ### Use case 23,Create Model
 
@@ -1109,17 +1163,52 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 27,Create discount 
+### Use case 27,Create discount <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  Manager is logged in|
-|  Post condition  |  Discount is created, start date and end date are valid|
+|   Precondition   |  Manager is logged in, start date and end date are valid|
+|  Post condition  |  Discount is created|
 | Nominal Scenario |  27-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario|
+|    Exceptions    |  Scenario 27-2, 27-3|
 
-### Use case 28,Delete discount 
+##### Scenario 27.1
+
+|  Scenario 27.1  |  Create discount|
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, start date and end date are valid|
+|  Post condition  |  Discount is created|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the discount detail with start date and end date|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies start date and end date are >= current day and start date <= end date|
+|       4        |  System create discount|
+
+##### Scenario 27.2
+
+|  Scenario 27.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the discount detail with start date and end date|
+|       2        |  System detects manager is not logged in|
+|       3        |  System sends error|
+
+##### Scenario 27.3
+
+|  Scenario 27.3  |  dates are not valid|
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, start date and end date are not valid|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the discount detail with start date and end date|
+|       2        |  System verifies manager is logged in|
+|       3        |  System detect that start date or end date are < current day or start date > end date|
+|       4        |  System sends error|
+
+### Use case 28,Delete discount <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1127,17 +1216,62 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 |  Post condition  |  Discount is deleted|
 | Nominal Scenario |  28-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario|
+|    Exceptions    |  Scenario 28-2, 28-3|
 
-### Use case 29,Query discount 
+##### Scenario 28.1
+
+|  Scenario 28.1  |  Delete discount |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, discount exists|
+|  Post condition  |  Discount is deleted|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the discount id|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies discount exists|
+|       4        |  System create discount|
+
+##### Scenario 28.2
+
+|  Scenario 28.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the discount id|
+|       2        |  System detects manager is not logged in|
+|       3        |  System sends error|
+
+##### Scenario 28.3
+
+|  Scenario 28.3  |  Discount doesn't exist|
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, Discount doesn't exist|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the discount id|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System detect discount doesn't exist|
+|       4        |  System sends error|
+
+### Use case 29,Query discounts <!--- DONE -->
 
 | Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  User wants a list of discounts|
+|   Precondition   |  User wants a list of discounts |
 |  Post condition  |  User receive a list of discounts|
 | Nominal Scenario |  29-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario|
+|    Exceptions    |  None|
+
+##### Scenario 29.1
+
+|  Scenario 22.1  |  Query discount |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  User wants a list of discounts|
+|  Post condition  |  User receive a list of discounts|
+|     Step#      |                                Description                                 |
+|       1        |  User makes the request|
+|       2        |  System send all discounts	|
 
 ### Use case 30,Create Review 
 
