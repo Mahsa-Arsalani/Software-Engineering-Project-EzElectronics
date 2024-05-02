@@ -35,6 +35,11 @@
 | **Usecases**: Retrieve products details |
 | ![](./Images/GUI/V2/Home_Page.png) |
 
+| Customer Home page Discounts|
+| :-------------: |
+| **Usecases**: Retrieve products details |
+| ![](./Images/GUI/V2/Home_Page_discounts.png) |
+
 | Customer profile page |
 | :-------------: |
 | **Usecases**: Query account info, Get current cart, Get history of carts, Logout |
