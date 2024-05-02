@@ -65,6 +65,11 @@
 | **Usecases**: Get current cart, Pay current cart, Remove product from current cart |
 | ![](./Images/GUI/V2/Current_Cart_shipping.png) |
 
+| Customer current cart page Payment details|
+| :-------------: |
+| **Usecases**: Get current cart, Pay current cart, Remove product from current cart |
+| ![](./Images/GUI/V2/Current_Cart_payment.png) |
+
 | Customer carts history page |
 | :-------------: |
 | **Usecases**: Get history of carts|
