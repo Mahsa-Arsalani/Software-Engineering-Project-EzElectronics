@@ -47,8 +47,13 @@
 
 | Customer single product page |
 | :-------------: |
-| **Usecases**: Retrieve products details, add product to current cart |
+| **Usecases**: Retrieve products details, add product to current cart, Get reviews of a model |
 | ![](./Images/GUI/V2/Product_Page.png) |
+
+| Customer single product page (reviews) |
+| :-------------: |
+| **Usecases**: Retrieve products details, add product to current cart, Get reviews of a model, Create review, Delete review|
+| ![](./Images/GUI/V2/Product_Page_reviews.png) |
 
 | Customer current cart page |
 | :-------------: |
