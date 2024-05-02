@@ -10,11 +10,15 @@
 | **Usecases**: Get email to change password |
 | ![](./Images/GUI/V2/Send_email_change_password.png) |
 
-
 | User signup page |
 | :-------------: |
 | **Usecases**: Signup |
 | ![](./Images/GUI/V2/Create_Account.png) |
+
+| User signup page additional info |
+| :-------------: |
+| **Usecases**: Signup |
+| ![](./Images/GUI/V2/Create_Account_info.png) |
 
 | User signup done message |
 | :-------------: |
