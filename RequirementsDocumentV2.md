@@ -637,11 +637,11 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 
 
 
-### Use case 11, Mark product as sold<!--- DONE -->
+### Use case 11, Mark product as sold 
 
-| Actors Involved  |  Manager|
+| Actors Involved  |  System|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  Manager is logged in, product exists, product has not been sold, selling date is valid|
+|   Precondition   |  Payment done successfully, product exists, product has not been sold, selling date is valid|
 |  Post condition  |  Product is sold|
 | Nominal Scenario |  11-1|
 |     Variants     |  None|
@@ -652,15 +652,14 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 
 |  Scenario 11.1  |  Mark product as sold|
 | :------------: | :------------------------------------------------------------------------: |
-|  Precondition  |  Manager is logged in, product exists, product has not been sold, selling date is valid|
+|  Precondition  |  Payment done successfully, product exists, product has not been sold, selling date is valid|
 | Post condition |  Product is sold|
 |     Step#      |                                Description                                 |
-|       1        |  Manager makes the request sending the id of the product and the selling date|
-|       2        |  System verifies Manager is logged in|
-|       3        |  System verifies product exists|
-|       4        |  System verifies product has not been sold|
-|       5        |  System verifies that the selling date is prior or equal to the current day and after or equal to the arrival date|
-|       6        |  System set product as sold|
+|       1        |  System verifies payment was done|
+|       2        |  System verifies product exists|
+|       3        |  System verifies product has not been sold|
+|       4        |  System verifies that the selling date is prior or equal to the current day and after or equal to the arrival date|
+|       5        |  System set product as sold|
 
 ##### Scenario 11.2
 
