@@ -58,9 +58,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Stakeholder name          | Description                                       |
 | :-----------------------: | :-----------------------------------------------: |
-| User                      | A person who uses the website (even an unlogged one)                                     |
+| User                      | A person who uses the website (even an unlogged one) |
 |Customer| Who interacts with the system in order to purchase one or more products |
-| Manager                   | Who manages the product on the website                               |
+| Manager                   | Who manages the product on the website |
 | Developer                 | Person who develops and maintains the application |
 
 
@@ -74,9 +74,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   Actor   | Logical Interface           | Physical Interface |
 | :-------: | :-------------------------: | :----------------: |
-| User  | GUI Website | Smartphone / PC    |
-| Customer  | GUI Website | Smartphone / PC    |
-| Manager   | GUI Website | Smartphone / PC                 |
+| User  | GUI Website | Smartphone / PC |
+| Customer  | GUI Website | Smartphone / PC |
+| Manager   | GUI Website | Smartphone / PC |
 
 # Stories and personas
 
@@ -137,7 +137,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |  NFR2   | Usability | Manager should be able to use the website with training in less than 30 minutes | All FR |
 |  NFR3   | Efficiency | All functions on the website must be completed in <0.1 sec (excluding network latency) | All FR |
 |  NFR4   | Reliability | No more than three defect per year per user | All FR |
-|  NFR5   | Portability | Web app should be available on chrome from version… |  |
+|  NFR5   | Portability | Web app should be available on chrome version 108.0.5359 |  |
 |  NFR6   | Security | The website should work with password to prevent account theft | FR1.3 |
 
 
@@ -913,7 +913,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 
 |  Term  | Description |
 | :------------: | :------------------------------------------------------------------------: |
-|  User  | A person that interacts actively with the system. It can be a customer or a manager. In order to use the application every user should have an account |
+| User | A person that interacts actively with the system. It can be a customer or a manager. In order to use the application every user should have an account |
 | Customer | A user with the role of a customer that represents the equivalent, in relation to the system, of a physical customer. A Customer, therefore, interacts with the system in order to purchase one or more products |
 | Manager | A user with the role of a manager responsible for keeping the system updated by recording information related to the products for sale |
 | Session | Period of time during which an authenticated user interacts with the system |
