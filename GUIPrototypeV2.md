@@ -85,10 +85,30 @@
 | **Usecases**: Retrieve products details, Mark product as sold, Delete a product|
 | ![](./Images/GUI/V2/Manager_Search_Product.png) |
 
-| Manager interface, add product |
+| Manager interface, Create Category |
+| :-------------: |
+| **Usecases**: Create Category|
+| ![](./Images/GUI/V2/Manager_create_category.png) |
+
+| Manager interface, Delete category |
+| :-------------: |
+| **Usecases**: Delete category|
+| ![](./Images/GUI/V2/Manager_delete_category.png) |
+
+| Manager interface, Create Model |
+| :-------------: |
+| **Usecases**: Create Model|
+| ![](./Images/GUI/V2/Manager_create_model.png) |
+
+| Manager interface, Delete Model |
+| :-------------: |
+| **Usecases**: Delete Model|
+| ![](./Images/GUI/V2/Manager_delete_model.png) |
+
+| Manager interface, Add product |
 | :-------------: |
 | **Usecases**: Add product|
-| ![](./Images/GUI/V2/Manager_add_Product.png) |
+| ![](./Images/GUI/V2/Manager_add_product.png) |
 
 | Manager interface, register arrival |
 | :-------------: |
@@ -99,6 +119,11 @@
 | :-------------: |
 | **Usecases**: Query accounts info, Delete account|
 | ![](./Images/GUI/V2/Manager_Account_management.png) |
+
+| Manager interface, Register Discount |
+| :-------------: |
+| **Usecases**: Create Discount|
+| ![](./Images/GUI/V2/Manager_register_discount.png) |
 
 | Manager profile section |
 | :-------------: |
