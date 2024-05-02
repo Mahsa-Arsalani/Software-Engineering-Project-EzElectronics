@@ -12,7 +12,7 @@
 
 | User send Change password |
 | :-------------: |
-| **Usecases**: Get email to change password |
+| **Usecases**: Change password |
 | ![](./Images/GUI/V2/Change_password.png) |
 
 | User signup page |
