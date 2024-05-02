@@ -37,13 +37,13 @@
 
 | Customer Home page Discounts|
 | :-------------: |
-| **Usecases**: Retrieve products details |
+| **Usecases**: Retrieve products details, Query discounts |
 | ![](./Images/GUI/V2/Home_Page_discounts.png) |
 
 | Customer profile page |
 | :-------------: |
 | **Usecases**: Query account info, Get current cart, Get history of carts, Logout |
-| ![](./Images/GUI/V2/Customer_Profile_section.png) |
+| ![](./Images/GUI/V2/Profile_section.png) |
 
 | Customer single product page |
 | :-------------: |
