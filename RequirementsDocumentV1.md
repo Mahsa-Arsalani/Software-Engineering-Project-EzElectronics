@@ -6,7 +6,7 @@ Version: V1 - description of EZElectronics in CURRENT form (as received by teach
 
 | Version number | Change |
 | :------------: | :-----:|
-|       1.0      |        |
+| 1.0 |  |
 
 # Contents
 
@@ -913,7 +913,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 
 |  Term  | Description |
 | :------------: | :------------------------------------------------------------------------: |
-| User | A person that interacts actively with the system. It can be a customer or a manager. In order to use the application every user should have an account |
+| User | A person that interacts actively with the system. It can be a customer, a manager or a person without an account |
 | Customer | A user with the role of a customer that represents the equivalent, in relation to the system, of a physical customer. A Customer, therefore, interacts with the system in order to purchase one or more products |
 | Manager | A user with the role of a manager responsible for keeping the system updated by recording information related to the products for sale |
 | Session | Period of time during which an authenticated user interacts with the system |
@@ -926,7 +926,6 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 | Code | An attribute of the product that allows it to be uniquely identified |
 | Selling price | The amount of money needed to buy a certain product |
 | Cart | An abstract container that holds the products the customer wants to purchase or has purchased with a single payment |
-
 
 # Deployment Diagram
 

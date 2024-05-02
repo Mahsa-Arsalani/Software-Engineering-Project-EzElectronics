@@ -6,7 +6,7 @@ Version: V1 - description of EZElectronics in FUTURE form (as proposed by the te
 
 | Version number | Change |
 | :------------: | :----: |
-|                |        |
+| 2.0 |  |
 
 # Contents
 
@@ -163,13 +163,12 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 
 |   ID    | Type (efficiency, reliability, ..) | Description | Refers to |
 | :-----: | :--------------------------------: | :---------: | :-------: |
-|  NFR1   | Usability | User should be able to use mobile app with no training in less than 2 minutes (marketing reasons) | All FR |
+|  NFR1   | Usability | User should be able to use website with no training in less than 2 minutes (marketing reasons) | All FR |
 |  NFR2   | Usability | Manager should be able to use the website with training in less than 30 minutes | All FR |
-|  NFR3   | Efficiency | All functions on the mobile app must be completed in <0.1 sec (excluding network latency) | All FR |
-|  NFR4   | Efficiency | The app should require < 100Mb disk space for user | All FR |
-|  NFR5   | Reliability | No more than three defect per year per user | All FR |
-|  NFR6   | Portability | The app should be available IOS from release 15 and Android from release 9 |  |
-|  NFR7   | Security | The app and the website should work with password to prevent account theft | FR1.3 |
+|  NFR3   | Efficiency | All functions on the website must be completed in <0.1 sec (excluding network latency) | All FR |
+|  NFR4   | Reliability | No more than three defect per year per user | All FR |
+|  NFR5   | Portability | Web app should be available on chrome version 108.0.5359 |  |
+|  NFR6   | Security | The website should work with password to prevent account theft | FR1.3 |
 
 # Use case diagram and use cases
 
@@ -1322,11 +1321,27 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |    Exceptions    |  Scenario|
 
 # Glossary
+![Glossary](./Images/GlossaryV2.jpg)
 
-\<use UML class diagram to define important terms, or concepts in the domain of the application, and their relationships>
-
-\<concepts must be used consistently all over the document, ex in use cases, requirements etc>
+|  Term  | Description |
+| :------------: | :------------------------------------------------------------------------: |
+| User | A person that interacts actively with the system. It can be a customer, a manager or a person without an account |
+| Customer | A user with the role of a customer that represents the equivalent, in relation to the system, of a physical customer. A Customer, therefore, interacts with the system in order to purchase one or more products |
+| Manager | A user with the role of a manager responsible for keeping the system updated by recording information related to the products |
+| Session | Period of time during which an authenticated user interacts with the system |
+| Account | A set of information that identifies and describes a customer or a manager |
+| Product | A good that is put up for sale and can be purchased through the system |
+| Arrival date | An event that occurs when a series of products registered in the system arrive at a physical warehouse and are therefore ready for sale |
+| Selling date | The date a product was sold |
+| Category | Specifies the type of product. It can only be one of Smartphone, Laptop and Appliance |
+| Model | Subcategory of category |
+| Code | An attribute of the product that allows it to be uniquely identified |
+| Selling price | The amount of money needed to buy a certain product |
+| Cart | An abstract container that holds the products the customer wants to purchase or has purchased with a single payment |
+| Available | The product can be bought by a customer |
+| Delivering | The product is bought by a customer and it is in delivering. It cannot be bought by someone else at this point |
+| Delivered | The product is delivered at customer's home |
 
 # Deployment Diagram
 
-\<describe here deployment diagram >
+![DeploymentDiagram](./Images/DeploymentDiagramV2.png)
