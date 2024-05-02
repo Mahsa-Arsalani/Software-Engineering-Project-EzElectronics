@@ -5,6 +5,11 @@
 | **Usecases**: Login |
 | ![](./Images/GUI/V2/Login.png) |
 
+| User send email to change password |
+| :-------------: |
+| **Usecases**: Get email to change password |
+| ![](./Images/GUI/V2/Change_password.png) |
+
 
 | User signup page |
 | :-------------: |
