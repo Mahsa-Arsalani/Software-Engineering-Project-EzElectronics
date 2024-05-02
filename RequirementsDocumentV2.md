@@ -6,7 +6,7 @@ Version: V1 - description of EZElectronics in FUTURE form (as proposed by the te
 
 | Version number | Change |
 | :------------: | :----: |
-|     1           |        |
+|                |        |
 
 # Contents
 
@@ -23,38 +23,12 @@ Version: V1 - description of EZElectronics in FUTURE form (as proposed by the te
   - [Non Functional Requirements](#non-functional-requirements)
 - [Use case diagram and use cases](#use-case-diagram-and-use-cases)
   - [Use case diagram](#use-case-diagram)
-    - [Use case 1, login](#use-case-1-login)
-    - [Use case 2, logout](#use-case-2-logout)
-    - [Use case 3, Retrieve current session detail](#use-case-3-retrieve-current-session-details)
-    - [Use case 4, Create account](#use-case-4-create-account)
-    - [Use case 5, Query accounts info](#use-case-5-query-accounts-info)
-    - [Use case 6, Delete account](#use-case-6-delete-account)
-    - [Use case 7, Retrieve products details](#use-case-7-retrieve-products-details)
-    - [Use case 8, Create product](#use-case-8-create-product)
-    - [Use case 9, Delete Product](#use-case-9-delete-product)
-    - [Use case 10, Register arrival of products](#use-case-10-register-arrival-of-products)
-    - [Use case 11, Mark product as sold](#use-case-11-mark-product-as-sold)
-    - [Use case 12, Get content of current cart](#use-case-12-get-content-of-current-cart)
-    - [Use case 13, Add product to current cart](#use-case-13-add-product-to-current-cart)
-    - [Use case 14, Remove product from current cart](#use-case-14-remove-product-from-current-cart)
-    - [Use case 15, Set current cart as paid](#use-case-15-set-current-cart-as-paid)
-    - [Use case 16, Get history previosly paid carts](#use-case-16-get-history-of-previously-paid-cart)
-    - [Use case 17, Get email to change password](#use-case-17-send-email-to-change-password)
-    - [Use case 18, Change password](#use-case-18change-password)
-    - [Use case 19, Set product shipping status](#use-case-19set-product-shipping-status)
-    - [Use case 20, Create category](#use-case-20create-category)
-    - [Use case 21, Delete category](#use-case-21delete-category)
-    - [Use case 22, Get categories](#use-case-22get-categories)
-    - [Use case 23, Create model](#use-case-23create-model)
-    - [Use case 24, Delete model](#use-case-24delete-model)
-    - [Use case 25, Modify model](#use-case-25modify-model)
-    - [Use case 26, Search models](#use-case-26search-models)
-    - [Use case 27, Create discount](#use-case-27create-discount)
-    - [Use case 28, Delete discount](#use-case-28delete-discount)
-    - [Use case 29, Query discounts](#use-case-29query-discounts)
-    - [Use case 30, Create review](#use-case-30create-review)
-    - [Use case 31, Delete review](#use-case-31delete-review)
-    - [Use case 32, Get reviews of a model](#use-case-32get-reviews-of-a-model)
+    - [Use case 1, UC1](#use-case-1-uc1)
+      - [Scenario 1.1](#scenario-11)
+      - [Scenario 1.2](#scenario-12)
+      - [Scenario 1.x](#scenario-1x)
+    - [Use case 2, UC2](#use-case-2-uc2)
+    - [Use case x, UCx](#use-case-x-ucx)
 - [Glossary](#glossary)
 - [System Design](#system-design)
 - [Deployment Diagram](#deployment-diagram)
@@ -67,33 +41,50 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Stakeholder name | Description |
 | :--------------: | :---------: |
-| Stakeholder x..  |             |
+| User | A person who uses the website (even an unlogged one) |
+| Customer | The customer |
+| Manager | Who use the website |
+| Developer | Person who develops and maintains the application |
+| Payment service | The service that permits to pay for the products |
+| Delivering service | The service that manage the delivering of the products |
 
 # Context Diagram and interfaces
 
 ## Context Diagram
 
-\<Define here Context diagram using UML use case diagram>
-
-\<actors are a subset of stakeholders>
+![ContextDiagram](./Images/ContextDiagramV2.jpg)
 
 ## Interfaces
 
-\<describe here each interface in the context diagram>
-
-\<GUIs will be described graphically in a separate document>
-
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: |
-| Actor x.. |                   |                    |
+| User | GUI (Website) | Smartphone / PC |
+| Customer | GUI (Website) | Smartphone / PC |
+| Manager | GUI (Website) | Smartphone / PC |
+| Payment Service |  | Internet |
 
 # Stories and personas
 
-\<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
+## Person 1 
+Benedetto, male, 46 years old, Manager of one electronic store. He wants to sell the products to customers through a website and manage the sales of the products.
 
-\<Persona is-an-instance-of actor>
+## Person 2   
+ Federica, female, 27 years old, architect, Customer. She needs a new smartphone. Wants to see the information about the last smartphone that she bought from the website and according to that information she wants to see the available smartphones on the website and decide which one to cart.
 
-\<stories will be formalized later as scenarios in use cases>
+## Person 3 
+Stefano, male, 19 years old, engineering student, Customer. He needs a laptop to use in university. He wants to cart the most suitable laptop from the available laptops.
+
+## Story 1
+Persona 1 is the manager of “Techstore” electronic store. He wants to sell the products of the store on a website. He is a new user of the website and signed in the website as a manager. He posts the information about the products on the website and he can manage the sales from the website.
+
+## Story 2
+Persona 2 bought a smartphone from the website 3 years ago. Her smart phone is not working properly. She wants to buy a new one. However, she thinks that she needs a better smartphone which has a better camera for the photographs of the buildings she is designing and more storage for the project files and photographs of the buildings she is working on. She is an old customer of the website and after she entered her username and password, she got access to the available products.  She learns the details about her phone from the history of her purchases. She searches for the available smartphones on the website and carts the one which satisfies her needs from the available smartphones. She buys her current cart and pays it with her credit card. After purchasing she can see the delivery time of the products on the app.
+
+## Story 3
+Persona 3 is an electronics engineering student  in university. He needs to download such tools for his homeworks and projects. He needs a laptop convenient for him but he is a new customer and he doesn’t have an account.  He creates a new account as a customer with a username and password. He searches for laptops on the website. He compares the details about the laptops. He carts the one which is suitable for him. (update with ratings and reviews) 
+
+## Story 4
+Persona 1 sells one product and marks it as sold. After selling all products that were previously created by him, he deletes this product because there is no product left in stock.
 
 # Functional and non functional requirements
 
@@ -144,14 +135,15 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 ## Non Functional Requirements
 
-\<Describe constraints on functional requirements>
-
 |   ID    | Type (efficiency, reliability, ..) | Description | Refers to |
 | :-----: | :--------------------------------: | :---------: | :-------: |
-|  NFR1   |                                    |             |           |
-|  NFR2   |                                    |             |           |
-|  NFR3   |                                    |             |           |
-| NFRx .. |                                    |             |           |
+|  NFR1   | Usability | User should be able to use mobile app with no training in less than 2 minutes (marketing reasons) | All FR |
+|  NFR2   | Usability | Manager should be able to use the website with training in less than 30 minutes | All FR |
+|  NFR3   | Efficiency | All functions on the mobile app must be completed in <0.1 sec (excluding network latency) | All FR |
+|  NFR4   | Efficiency | The app should require < 100Mb disk space for user | All FR |
+|  NFR5   | Reliability | No more than three defect per year per user | All FR |
+|  NFR6   | Portability | The app should be available IOS from release 15 and Android from release 9 |  |
+|  NFR7   | Security | The app and the website should work with password to prevent account theft | FR1.3 |
 
 # Use case diagram and use cases
 
