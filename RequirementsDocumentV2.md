@@ -107,7 +107,7 @@ Persona 1 is the manager of “Techstore” electronic store. He wants to sell t
 Persona 2 bought a smartphone from the website 3 years ago. Her smart phone is not working properly. She wants to buy a new one. However, she thinks that she needs a better smartphone which has a better camera for the photographs of the buildings she is designing and more storage for the project files and photographs of the buildings she is working on. She is an old customer of the website and after she entered her username and password, she got access to the available products.  She learns the details about her phone from the history of her purchases. She searches for the available smartphones on the website and carts the one which satisfies her needs from the available smartphones. She buys her current cart and pays it with her credit card. After purchasing she can see the delivery time of the products on the app.
 
 ## Story 3
-Persona 3 is an electronics engineering student  in university. He needs to download such tools for his homeworks and projects. He needs a laptop convenient for him but he is a new customer and he doesn’t have an account.  He creates a new account as a customer with a username and password. He searches for laptops on the website. He compares the details about the laptops. He carts the one which is suitable for him. (update with ratings and reviews) 
+Persona 3 is an electronics engineering student  in university. He needs to download such tools for his homeworks and projects. He needs a laptop convenient for him but he is a new customer and he doesn’t have an account.  He creates a new account as a customer with a username and password. He searches for laptops on the website. He compares the details about the laptops. He carts the one which is suitable for him. He receives his laptop at the date shown in the website. After using the laptop for a while he thinks that the speed was sufficient. He  shares a review about it and rates the laptop. 
 
 ## Story 4
 Persona 1 sells one product and marks it as sold. After selling all products that were previously created by him, he deletes this product because there is no product left in stock.
@@ -307,7 +307,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 | Post condition | User has an account |
 |     Step#      |                                Description                                 |
 |       1        | User: Ask to create account |
-|       2        | System: Ask username, name, surname, password, role |
+|       2        | System: Ask username, name, surname, password, role|
 |       3        | User: Provide username, name, surname, password, role |
 |       4        | System: Read username, name, surname, password,role |
 |       5        | System: Check that the provided username isn't associated with any account yet. The username hasn't been used yet |
@@ -959,7 +959,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   |  Customer has an account|
-|  Post condition  |  Email is sent to customer'email-box|
+|  Post condition  |  Email is sent to customer's email-box|
 | Nominal Scenario |  17-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario 17-2|
@@ -971,7 +971,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |   Precondition   |  Customer has an account|
 |  Post condition  |  Email is sent to customer|
 |     Step#      |                                Description                                 |
-|       1        |  Customer makes the request sendig his username|
+|       1        |  Customer makes the request sending his username|
 |       2        |  System verifies Customer's username exists|
 |       3        |  System send an email containing a pin to the Customer's email-box|
 
@@ -982,7 +982,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |  Precondition  |  Customer doesn't exist|
 | Post condition |  Request not fulfilled|
 |     Step#      |                                Description                                 |
-|       1        | Customer makes the request sendig his username|
+|       1        | Customer makes the request sending his username|
 |       2        | System detects Customer's username doesn't exist |
 |       3        | System sends error |
 
@@ -1003,7 +1003,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |   Precondition   |  Customer has valid pin|
 |  Post condition  |  Password is changed|
 |     Step#      |                                Description                                 |
-|       1        |  Customer makes the request sendig the pin and the new password|
+|       1        |  Customer makes the request sending the pin and the new password|
 |       2        |  System verifies pin is valid|
 |       3        |  System change Customers's password|
 
@@ -1014,7 +1014,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |  Precondition  |  pin not valid|
 | Post condition |  Request not fulfilled|
 |     Step#      |                                Description                                 |
-|       1        |  Customer makes the request sendig the pin and the new password|
+|       1        |  Customer makes the request sending the pin and the new password|
 |       2        |  System detect pin is not valid|
 |       3        | System sends error |
 
@@ -1025,11 +1025,11 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |   Precondition   |  Customer is logged in|
 |  Post condition  |  Password is changed|
 |     Step#      |                                Description                                 |
-|       1        |  Customer makes the request sendig the new password|
+|       1        |  Customer makes the request sending the new password|
 |       2        |  System change Customers's password|
 
 
-### Use case 19, set product shipping status
+### Use case 19, Set product shipping status <!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1037,7 +1037,55 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |  Post condition  |  Status is changed|
 | Nominal Scenario |  19-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario|
+|    Exceptions    |  Scenario 19-2, 19-3, 19-4|
+##### Scenario 19.1
+
+|  Scenario 19.1  |  Set product shipping status|
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, product exists, status is valid|
+|  Post condition  |  Status is changed|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the product name and status|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies product exists|
+|       4        |  System verifies status is valid|
+|       4        |  System sets the product shipping status|
+
+##### Scenario 19.2
+
+|  Scenario 19.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the product name and status|
+|       2        |  System detects manager is not logged in|
+|       3        |  System sends error|
+
+##### Scenario 19.3
+
+|  Scenario 19.3  |  The product doesn’t exist|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product doesn’t exist|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the product name and status|
+|       2        |  System verifies manager is logged in|
+|       3        |  System detects the product doesn’t exist|
+|       4        |  System sends error|
+
+##### Scenario 19.4
+
+|  Scenario 19.4  |  The status is not valid|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, product exists, status is not valid|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the product name and status|
+|       2        |  System verifies manager is logged in|
+|       3        |  System detects the product exists|
+|       4        |  System detects status is not valid|
+|       5        |  System sends error|
 
 ### Use case 20, Create Category <!--- DONE -->
 
@@ -1058,7 +1106,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |     Step#      |                                Description                                 |
 |       1        |  Manager makes the request sending the informations of the category|
 |       2        |  System verifies Manager is logged in|
-|       3        |  System creates category the arrival|
+|       3        |  System creates category|
 
 ##### Scenario 20.2
 
@@ -1109,7 +1157,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 
 ##### Scenario 21.3
 
-|  Scenario 21.3  |  The product doesn’t exist|
+|  Scenario 21.3  |  The category doesn’t exist|
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  |  Manager is logged in, category doesn’t exist|
 | Post condition |  Request not fulfilled|
@@ -1139,7 +1187,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |       1        |  User makes the request|
 |       2        |  System sends all products	|
 
-### Use case 23, Create Model
+### Use case 23, Create Model<!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1147,9 +1195,30 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |  Post condition  |  Model is created|
 | Nominal Scenario |  23-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario|
+|    Exceptions    |  Scenario 23-2|
+##### Scenario 23.1
 
-### Use case 24, Delete Model
+|  Scenario 23.1  |  Create Model|
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in|
+|  Post condition  |  Model is created|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the informations of the model|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System creates model|
+
+##### Scenario 23.2
+
+|  Scenario 23.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the informations of the model|
+|       2        |  System detects manager is not logged in|
+|       3        |  System sends error|
+
+### Use case 24, Delete Model<!--- DONE -->
 
 | Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1157,19 +1226,85 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |  Post condition  |  Model is deleted|
 | Nominal Scenario |  24-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario|
+|    Exceptions    |  Scenario 24-2, 24-3|
 
-### Use case 25, Modify Model
+##### Scenario 24.1
 
-| Actors Involved  |  Menager|
+|  Scenario 24.1  |  Delete Model|
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  Manager is logged in, model exists|
+|  Post condition  |  Model is deleted|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the model|
+|       2        |  System verifies Manager is logged in|
+|       3        |  System verifies model exists|
+|       4        |  System deletes model|
+
+##### Scenario 24.2
+
+|  Scenario 24.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the model|
+|       2        |  System detects manager is not logged in|
+|       3        |  System sends error|
+
+##### Scenario 24.3
+
+|  Scenario 24.3  |  The model doesn’t exist|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, model doesn’t exist|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id of the model|
+|       2        |  System verifies manager is logged in|
+|       3        |  System detects model doesn’t exist|
+|       4        |  System sends error|
+### Use case 25, Modify Model<!--- DONE -->
+
+| Actors Involved  |  Manager|
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   |  Manager is logged in|
 |  Post condition  |  Model is modified|
 | Nominal Scenario |  25-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario|
+|    Exceptions    |  Scenario 25-2, 25-3|
+##### Scenario 25.1
 
-### Use case 26, Search Models
+|  Scenario 25.1  |  Modify Model|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, model exists|
+| Post condition |  Model is modified|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id and the informations of the model|
+|       2        |  System verifies manager is logged in|
+|       3        |  System detects model exist|
+|       4        |  System modifies the model|
+
+##### Scenario 25.2
+
+|  Scenario 25.2  |  Manager is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id and the informations of the model|
+|       2        |  System verifies manager is not logged in|
+|       3        |  System sends error|
+##### Scenario 25.3
+|  Scenario 25.3  |  The model doesn't exist |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Manager is logged in, model doesn't exist|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Manager makes the request sending the id and the informations of the model|
+|       2        |  System verifies manager is logged in|
+|       3        |  System detects model doesn't exist|
+|       4        |  System sends error|
+
+### Use case 26, Search Models <!--- DONE -->
 
 | Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
@@ -1177,8 +1312,15 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |  Post condition  |  User gets a list of models|
 | Nominal Scenario |  26-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario|
-
+|    Exceptions    |  None|
+##### Scenario 26.1
+|  Scenario 26.1  |  Retrieve models|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  The user want to retrieve a list of model|
+| Post condition |  User gets a list of models|
+|     Step#      |                                Description                                 |
+|       1        |  User makes the request|
+|       2        |  System sends the list of models|
 ### Use case 27, Create discount <!--- DONE -->
 
 | Actors Involved  |  Manager|
@@ -1281,7 +1423,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 
 ##### Scenario 29.1
 
-|  Scenario 22.1  |  Query discount |
+|  Scenario 29.1  |  Query discount |
 | :------------: | :------------------------------------------------------------------------: |
 |   Precondition   |  User wants a list of discounts|
 |  Post condition  |  User receive a list of discounts|
@@ -1289,35 +1431,102 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |       1        |  User makes the request|
 |       2        |  System send all discounts	|
 
-### Use case 30, Create Review 
+### Use case 30, Create Review<!--- DONE --> 
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  Custoemer is logged in|
+|   Precondition   |  Customer is logged in|
 |  Post condition  |  Review is created|
 | Nominal Scenario |  30-1|
 |     Variants     |  None|
-|    Exceptions    |  Scenario|
+|    Exceptions    |  Scenario 30-2|
 
-### Use case 31, Delete Review 
+##### Scenario 30.1
+
+|  Scenario 30.1  |  Create Review|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in|
+| Post condition |  Review is created|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request sending the id of the product and the review |
+|       2        |  System verifies customer is logged in|
+|       3        |  System  creates the review|
+
+##### Scenario 30.2
+
+|  Scenario 30.2  |  Customer is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request sending the id of the product and the review|
+|       2        |  System verifies customer is not logged in|
+|       3        |  System sends error|
+
+### Use case 31, Delete Review<!--- DONE --> 
 
 | Actors Involved  |  Customer|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  Customer is logged in, custumer own the review|
+|   Precondition   |  Customer is logged in, customer owns the review|
 |  Post condition  |  Review is deleted|
 | Nominal Scenario |  31-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
 
-### Use case 32, Get reviews of a model 
+##### Scenario 31.1
+
+|  Scenario 31.1  |  Delete Review|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, customer owns the review|
+| Post condition |  Review is deleted|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request sending the id of the product and the id of the review |
+|       2        |  System verifies customer is logged in|
+|       3        |  System verifies customer owns the review|
+|       4        |  System  deletes the review|
+
+##### Scenario 31.2
+
+|  Scenario 31.2  |  Customer is not logged in|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is not logged in|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  Customer makes the request sending the id of the product and the id of the review|
+|       2        |  System verifies customer is not logged in|
+|       3        |  System sends error|
+
+##### Scenario 31.3
+
+|  Scenario 31.3  |  Customer doesn't own the review|
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  |  Customer is logged in, customer doesn't own the review|
+| Post condition |  Request not fulfilled|
+|     Step#      |                                Description                                 |
+|       1        |  CCustomer makes the request sending the id of the product and the id of the review|
+|       2        |  System verifies customer is logged in|
+|       3        |  System verifies customer doesn't owns the review|
+|       4        |  System sends error|
+
+### Use case 32, Get reviews of a model <!--- DONE -->
 
 | Actors Involved  |  User|
 | :--------------: | :------------------------------------------------------------------: |
-|   Precondition   |  User wants a list of the reviws of a model|
+|   Precondition   |  User wants a list of the reviews of a model|
 |  Post condition  |  User gets a list of reviews|
 | Nominal Scenario |  32-1|
 |     Variants     |  None|
 |    Exceptions    |  Scenario|
+
+##### Scenario 32.1
+
+|  Scenario 32.1  |  Get reviews of a model |
+| :------------: | :------------------------------------------------------------------------: |
+|   Precondition   |  User wants a list of the reviews of a model|
+|  Post condition  |  User receive a list of reviews|
+|     Step#      |                                Description                                 |
+|       1        |  User makes the request sending the model id|
+|       2        |  System sends a list of the reviews of the model	|
 
 # Glossary
 ![Glossary](./Images/GlossaryV2.jpg)
