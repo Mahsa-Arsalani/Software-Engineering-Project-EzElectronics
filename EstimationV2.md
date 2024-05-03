@@ -35,9 +35,15 @@ Consider the EZElectronics  project in FUTURE version (as proposed by your team 
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| | |
+| Requirement document | 150 |
+| GUI prototype | 75 |
+| Design document | 70 |
+| Code | 750 |
+| Unit tests | 100 |
+| Api tests | 100 |
+| Management documents | 100 |
 ###
-Insert here Gantt chart with above activities
+![GaantChart](./Images/GaantChartV2.jpg)
 
 # Summary
 

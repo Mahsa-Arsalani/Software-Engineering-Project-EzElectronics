@@ -21,13 +21,13 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 ### 
 |         component name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| requirement document | 100 |
+| Requirement document | 100 |
 | GUI prototype | 30 |
-| design document | 40 |
-| code | 400 |
-| unit tests | 70 |
-| api tests | 75 |
-| management documents | 60 |
+| Design document | 40 |
+| Code | 400 |
+| Unit tests | 70 |
+| Api tests | 75 |
+| Management documents | 60 |
 
 
 
@@ -35,9 +35,15 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| | |
+| Requirement document | 100 |
+| GUI prototype | 30 |
+| Design document | 40 |
+| Code | 400 |
+| Unit tests | 70 |
+| Api tests | 75 |
+| Management documents | 60 |
 ###
-Insert here Gantt chart with above activities
+![GaantChart](./Images/GaantChartV1.jpg)
 
 # Summary
 
