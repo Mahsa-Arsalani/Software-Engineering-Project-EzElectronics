@@ -1,5 +1,5 @@
 # Project Estimation - CURRENT
-Date: 02/05/2024
+Date: 05/05/2024
 
 Version: 1.0
 
@@ -11,23 +11,23 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 |             | Estimate                        |             
 | ----------- | ------------------------------- |  
 | NC =  Estimated number of classes to be developed   | 21 |             
-|  A = Estimated average size per class, in LOC   | 400 | 
-| S = Estimated size of project, in LOC (= NC * A) | 8400 |
-| E = Estimated effort, in person hours (here use productivity 10 LOC per person hour)  | 840 |   
-| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) | 25200 | 
-| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) | 5 weeks and 2 days |               
+|  A = Estimated average size per class, in LOC   | 200 | 
+| S = Estimated size of project, in LOC (= NC * A) | 4200 |
+| E = Estimated effort, in person hours (here use productivity 10 LOC per person hour)  | 420 |   
+| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) | 12600 | 
+| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) | 2 weeks and 4 days |               
 
 # Estimate by product decomposition
 ### 
 |         component name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| Requirement document | 100 |
-| GUI prototype | 30 |
-| Design document | 40 |
-| Code | 400 |
-| Unit tests | 70 |
-| Api tests | 75 |
-| Management documents | 60 |
+| Requirement document | 60 |
+| GUI prototype | 25 |
+| Design document | 15 |
+| Code | 180 |
+| Unit tests | 35 |
+| Api tests | 35 |
+| Management documents | 15 |
 
 
 
@@ -35,28 +35,38 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| Requirement document | 104 |
+| Requirement document | 52 |
 |&emsp; Stories | 4 |
-|&emsp; Functional Requirements | 16 |
-|&emsp; Non Functional Requirements | 8 |
-|&emsp; Diagrams | 10 |
-|&emsp; Use Cases | 66 |
-| GUI prototype | 32 |
+|&emsp; Functional Requirements | 10 |
+|&emsp; Non Functional Requirements | 6 |
+|&emsp; Diagrams | 8 |
+|&emsp; Use Cases | 26 |
+| GUI prototype | 24 |
 |&emsp; Login| 2 |
-|&emsp; Sign up | 3 |
-|&emsp; Profile Page | 3 |
-|&emsp; Customer Home Page | 4 |
-|&emsp; Product Page | 3 |
+|&emsp; Sign up | 2 |
+|&emsp; Profile Page | 2 |
+|&emsp; Customer Home Page | 3 |
+|&emsp; Product Page | 2 |
 |&emsp; Current Cart | 2 |
-|&emsp; Cart History | 4 |
-|&emsp; Manager Home Page | 4 |
-|&emsp; Add Product | 4 |
-|&emsp; Accounts Management | 3 |
-| Design document | 40 |
-| Code | 400 |
-| Unit tests | 70 |
-| Api tests | 75 |
-| Management documents | 60 |
+|&emsp; Cart History | 3 |
+|&emsp; Manager Home Page | 3 |
+|&emsp; Add Product | 3 |
+|&emsp; Accounts Management | 2 |
+| Design document | 12 |
+| Code | 177 |
+|&emsp; Create Index Class| 8 |
+|&emsp; Create Utilities Class| 5 |
+|&emsp; Create Routers Class| 6 |
+|&emsp; Create Helper Class| 8 |
+|&emsp; Create DAO Classes| 4 |
+|&emsp; Create DB Class| 8 |
+|&emsp; Create Errors Class| 6 |
+|&emsp; Create Routers Class| 6 |
+|&emsp; Create Components' Classes| 34 |
+|&emsp; Create Methods for Components| 92 |
+| Unit tests | 35 |
+| Api tests | 35 |
+| Management documents | 15 |
 ###
 ![GaantChart](./Images/GaantChartV1.jpg)
 
@@ -66,9 +76,9 @@ Report here the results of the three estimation approaches. The  estimates may d
 
 |             | Estimated effort                        |   Estimated duration |          
 | ----------- | ------------------------------- | ---------------|
-| estimate by size | 840 | 5 weeks and 2 days |
-| estimate by product decomposition | 875 | 5 weeks and 3 days |
-| estimate by activity decomposition |  |
+| estimate by size | 420 | 2 weeks and 4 days |
+| estimate by product decomposition | 365 | 2 week and 2 days |
+| estimate by activity decomposition | 340 | 2 week and 1 days |
 
 
 
