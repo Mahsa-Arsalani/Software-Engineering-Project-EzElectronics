@@ -138,7 +138,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |  NFR3   | Efficiency | All functions on the website must be completed in <0.1 sec (excluding network latency) | All FR |
 |  NFR4   | Reliability | No more than three defect per year per user | All FR |
 |  NFR5   | Portability | Web app should be available on chrome version 108.0.5359 |  |
-|  NFR6   | Security | The website should work with password to prevent account theft | FR1.3 |
+|  NFR6   | Security | The website should work with password to prevent account theft | FR1.1 |
 
 
 # Use case diagram and use cases
