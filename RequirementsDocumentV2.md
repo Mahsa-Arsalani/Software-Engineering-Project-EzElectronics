@@ -1529,7 +1529,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 |       2        |  System sends a list of the reviews of the model	|
 
 # Glossary
-![Glossary](./Images/GlossaryV2.jpg)
+![Glossary](./Images/Glossary-V2.jpg)
 
 |  Term  | Description |
 | :------------: | :------------------------------------------------------------------------: |
