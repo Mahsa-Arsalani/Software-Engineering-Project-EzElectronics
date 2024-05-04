@@ -1533,22 +1533,24 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 
 |  Term  | Description |
 | :------------: | :------------------------------------------------------------------------: |
-| User | A person that interacts actively with the system. It can be a customer, a manager or a person without an account |
-| Customer | A user with the role of a customer that represents the equivalent, in relation to the system, of a physical customer. A Customer, therefore, interacts with the system in order to purchase one or more products |
-| Manager | A user with the role of a manager responsible for keeping the system updated by recording information related to the products |
-| Session | Period of time during which an authenticated user interacts with the system |
-| Account | A set of information that identifies and describes a customer or a manager |
+| User | A person that interacts actively with the system. It can be a customer, a manager or a person without an account. |
+| Customer | A user with the role of a customer that represents the equivalent, in relation to the system, of a physical customer. A Customer, therefore, interacts with the system in order to purchase one or more products. |
+| Manager | A user with the role of a manager responsible for keeping the system updated by recording information related to the products. |
 | Product | A good that is put up for sale and can be purchased through the system |
 | Arrival date | An event that occurs when a series of products registered in the system arrive at a physical warehouse and are therefore ready for sale |
 | Selling date | The date a product was sold |
 | Category | Specifies the type of product. It can only be one of Smartphone, Laptop and Appliance |
 | Model | Subcategory of category |
 | Code | An attribute of the product that allows it to be uniquely identified |
-| Selling price | The amount of money needed to buy a certain product |
+| Selling price | The amount of money needed to buy a certain model. |
 | Cart | An abstract container that holds the products the customer wants to purchase or has purchased with a single payment |
-| Available | The product can be bought by a customer |
-| Delivering | The product is bought by a customer and it is in delivering. It cannot be bought by someone else at this point |
-| Delivered | The product is delivered at customer's home |
+| Delivering | The product is bought by a customer and it is delivered. It can not be bought by someone else at this point. |
+| Delivered | The product is delivered at the customer's home. |
+| Review | Evaluation of a product, created by the consumer and containing the date of review and description of the product. |
+| Transaction | A report that specifies a payment was made. |
+| Payment Method | Options available for customers to make payments include credit card, debit card, PayPal. |
+| Payment date | The date the payment was made |
+| Discount | a price reduction for a product that update by the manager. |
 
 # Deployment Diagram
 
