@@ -909,7 +909,7 @@ Persona 1 sells one product and marks it as sold. After selling all products tha
 
 # Glossary
 
-![Glossary](./Images/GlossaryV1.jpg)
+![Glossary](./Images/Glossary-V1.jpg)
 
 |  Term  | Description |
 | :------------: | :------------------------------------------------------------------------: |
