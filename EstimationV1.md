@@ -35,8 +35,23 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| Requirement document | 100 |
-| GUI prototype | 30 |
+| Requirement document | 104 |
+|&emsp; Stories | 4 |
+|&emsp; Functional Requirements | 16 |
+|&emsp; Non Functional Requirements | 8 |
+|&emsp; Diagrams | 10 |
+|&emsp; Use Cases | 66 |
+| GUI prototype | 32 |
+|&emsp; Login| 2 |
+|&emsp; Sign up | 3 |
+|&emsp; Profile Page | 3 |
+|&emsp; Customer Home Page | 4 |
+|&emsp; Product Page | 3 |
+|&emsp; Current Cart | 2 |
+|&emsp; Cart History | 4 |
+|&emsp; Manager Home Page | 4 |
+|&emsp; Add Product | 4 |
+|&emsp; Accounts Management | 3 |
 | Design document | 40 |
 | Code | 400 |
 | Unit tests | 70 |
