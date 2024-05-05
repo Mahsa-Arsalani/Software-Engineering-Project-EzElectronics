@@ -75,7 +75,7 @@ Consider the EZElectronics  project in FUTURE version (as proposed by your team 
 | Api tests | 100 |
 | Management documents | 30 |
 ###
-![GaantChart](./Images/GaantChartV2.jpg)
+![GaantChart](./Images/Gantt_Chart_Graph_V2.png)
 
 # Summary
 

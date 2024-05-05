@@ -68,7 +68,7 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 | Api tests | 35 |
 | Management documents | 15 |
 ###
-![GaantChart](./Images/GaantChartV1.jpg)
+![GaantChart](./Images/Gantt_Chart_Graph_V1.png)
 
 # Summary
 
