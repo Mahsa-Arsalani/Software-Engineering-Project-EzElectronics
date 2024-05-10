@@ -1,7 +1,7 @@
 # Project Estimation - FUTURE
-Date:
+Date: 05/05/2024
 
-Version:
+Version: 2.0
 
 
 # Estimation approach
@@ -10,24 +10,24 @@ Consider the EZElectronics  project in FUTURE version (as proposed by your team 
 ### 
 |             | Estimate                        |             
 | ----------- | ------------------------------- |  
-| NC =  Estimated number of classes to be developed   |                             |             
-|  A = Estimated average size per class, in LOC       |                            | 
-| S = Estimated size of project, in LOC (= NC * A) | |
-| E = Estimated effort, in person hours (here use productivity 10 LOC per person hour)  |                                      |   
-| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) | | 
-| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) |                    |               
+| NC =  Estimated number of classes to be developed   | 31 |             
+|  A = Estimated average size per class, in LOC   | 400 | 
+| S = Estimated size of project, in LOC (= NC * A) | 12400 |
+| E = Estimated effort, in person hours (here use productivity 10 LOC per person hour)  | 1240 |   
+| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) | 37200 | 
+| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) | 7 weeks and 4 days |               
 
 # Estimate by product decomposition
 ### 
 |         component name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-|requirement document    | |
-| GUI prototype ||
-|design document ||
-|code ||
-| unit tests ||
-| api tests ||
-| management documents  ||
+| Requirement document | 120 |
+| GUI prototype | 60 |
+| design document | 30 |
+| code | 780 |
+| unit tests | 100 |
+| api tests | 100 |
+| management documents | 30 |
 
 
 
@@ -35,9 +35,47 @@ Consider the EZElectronics  project in FUTURE version (as proposed by your team 
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| | |
+| Requirement document | 122 |
+|&emsp; Stories | 4 |
+|&emsp; Functional Requirements | 20 |
+|&emsp; Non Functional Requirements | 8 |
+|&emsp; Diagrams | 20 |
+|&emsp; Use Cases | 70 |
+| GUI prototype | 65 |
+|&emsp; Login| 2 |
+|&emsp; Sign up | 4 |
+|&emsp; Change Password | 5 |
+|&emsp; Profile Page | 3 |
+|&emsp; Customer Home Page | 4 |
+|&emsp; Discount Page | 6 |
+|&emsp; Product Page | 3 |
+|&emsp; Review Page | 4 |
+|&emsp; Current Cart | 2 |
+|&emsp; Cart History | 4 |
+|&emsp; Shipping Page | 5 |
+|&emsp; Payment Page | 4 |
+|&emsp; Manager Home Page | 4 |
+|&emsp; Add Product | 4 |
+|&emsp; Add Model | 5 |
+|&emsp; Add Category | 5 |
+|&emsp; Accounts Management | 3 |
+| Design document | 30 |
+| Code | 794 |
+|&emsp; Create Index Class| 15 |
+|&emsp; Create Utilities Class| 12 |
+|&emsp; Create Routers Class| 14 |
+|&emsp; Create Helper Class| 20 |
+|&emsp; Create DAO Classes| 10 |
+|&emsp; Create DB Class| 17 |
+|&emsp; Create Errors Class| 14 |
+|&emsp; Create Routers Class| 12 |
+|&emsp; Create Components' Classes| 190 |
+|&emsp; Create Methods for Components| 490 |
+| Unit tests | 100 |
+| Api tests | 100 |
+| Management documents | 30 |
 ###
-Insert here Gantt chart with above activities
+![GaantChart](./Images/Gantt_Chart_Graph_V2.png)
 
 # Summary
 
@@ -45,9 +83,9 @@ Report here the results of the three estimation approaches. The  estimates may d
 
 |             | Estimated effort                        |   Estimated duration |          
 | ----------- | ------------------------------- | ---------------|
-| estimate by size ||
-| estimate by product decomposition ||
-| estimate by activity decomposition ||
+| estimate by size | 1240 | 7 weeks and 4 days |
+| estimate by product decomposition | 1220 | 7 weeks and 3 days |
+| estimate by activity decomposition | 1231 |7 weeks and 4 days |
 
 
 
