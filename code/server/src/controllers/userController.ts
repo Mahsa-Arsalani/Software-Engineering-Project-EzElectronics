@@ -1,5 +1,6 @@
-import { User } from "../components/user"
+import { Role, User } from "../components/user"
 import UserDAO from "../dao/userDAO"
+import { UserNotAdminError, UnauthorizedUserError } from "../errors/userError";
 
 /**
  * Represents a controller for managing users.
@@ -29,14 +30,18 @@ class UserController {
      * Returns all users.
      * @returns A Promise that resolves to an array of users.
      */
-    async getUsers() /**:Promise<User[]> */ { }
+    async getUsers() :Promise<User[]> { 
+        return this.dao.getUsers()
+    }
 
     /**
      * Returns all users with a specific role.
      * @param role - The role of the users to retrieve. It can only be one of the three allowed types ("Manager", "Customer", "Admin")
      * @returns A Promise that resolves to an array of users with the specified role.
      */
-    async getUsersByRole(role: string) /**:Promise<User[]> */ { }
+    async getUsersByRole(role: string):Promise<User[]> {
+        return this.dao.getUsersByRole(role)
+    }
 
     /**
      * Returns a specific user.
@@ -46,7 +51,12 @@ class UserController {
      * @param username - The username of the user to retrieve. The user must exist.
      * @returns A Promise that resolves to the user with the specified username.
      */
-    async getUserByUsername(user: User, username: string) /**:Promise<User> */ { }
+    async getUserByUsername(user: User, username: string):Promise<User> {
+        if(user.username === username || user.role === Role.ADMIN){
+            return this.dao.getUserByUsername(username)
+        }
+        return new Promise<User>((resolve, reject) => { reject(new UnauthorizedUserError) })
+    }
 
     /**
      * Deletes a specific user
@@ -56,13 +66,40 @@ class UserController {
      * @param username - The username of the user to delete. The user must exist.
      * @returns A Promise that resolves to true if the user has been deleted.
      */
-    async deleteUser(user: User, username: string) /**:Promise<Boolean> */ { }
+    async deleteUser(user: User, username: string):Promise<Boolean>{
+        if(user.username !== username){
+            if(user.role === Role.ADMIN){
+                return new Promise<Boolean>((resolve, reject) => {
+                    this.dao.getUserByUsername(username)
+                    .then((user) => {
+                        if(user.role !== Role.ADMIN){
+                            this.dao.deleteUserByUsername(username)
+                            .then(val => resolve(val))
+                            .catch(err => reject(err))
+                        }
+                        else{
+                            reject(new UnauthorizedUserError)
+                        }
+                    })
+                    .catch((err)=>reject(err))
+                })
+            }
+            else{
+                return new Promise<Boolean>((resolve, reject) => { reject(new UserNotAdminError) })
+            }
+        }
+        else{
+            return this.dao.deleteUserByUsername(user.username)
+        }
+    }
 
     /**
      * Deletes all non-Admin users
      * @returns A Promise that resolves to true if all non-Admin users have been deleted.
      */
-    async deleteAll() { }
+    async deleteAll(): Promise<Boolean>{
+        return this.dao.deleteAllNonAdmin()
+    }
 
     /**
      * Updates the personal information of one user. The user can only update their own information.
@@ -74,7 +111,47 @@ class UserController {
      * @param username The username of the user to update. It must be equal to the username of the user parameter.
      * @returns A Promise that resolves to the updated user
      */
-    async updateUserInfo(user: User, name: string, surname: string, address: string, birthdate: string, username: string) /**:Promise<User> */ { }
+    async updateUserInfo(user: User, name: string, surname: string, address: string, birthdate: string, username: string) :Promise<User> {
+        if(user.username !== username){
+            if(user.role === Role.ADMIN){
+                return new Promise<User>((resolve, reject) => {
+                    this.dao.getUserByUsername(username)
+                    .then((user) => {
+                        if(user.role !== Role.ADMIN){
+                            this.dao.updateUserByUsername(name, surname, address, birthdate, username)
+                            .then(() => {
+                                user.name = name
+                                user.surname = surname
+                                user.address = address
+                                user.birthdate = birthdate
+                                resolve(user)
+                            })
+                            .catch(err => reject(err))
+
+                        }
+                        else{
+                            reject(new UnauthorizedUserError)
+                        }
+                    })
+                    .catch((err)=>reject(err))
+                })
+            }
+            else{
+                return new Promise<User>((resolve, reject) => { reject(new UserNotAdminError) })
+            }
+        }
+        else{
+            return new Promise<User>((resolve, reject)=>{
+                this.dao.updateUserByUsername(name, surname, address, birthdate, user.username)
+                .then(() => {
+                    this.dao.getUserByUsername(user.username)
+                    .then(user => resolve(user))
+                    .catch(err => reject(err))
+                })
+                .catch(err => reject(err))
+            })
+        }
+    }
 }
 
 export default UserController

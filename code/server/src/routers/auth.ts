@@ -5,6 +5,7 @@ import { Utility } from "../utilities"
 const session = require('express-session')
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+import { UnauthorizedUserError } from "../errors/userError";
 
 /**
  * Represents a class that defines the routes for handling authentication.
@@ -168,6 +169,18 @@ class Authenticator {
         if (req.isAuthenticated() && (Utility.isAdmin(req.user) || Utility.isManager(req.user))) return next()
         return res.status(401).json({ error: "User is not an admin or manager", status: 401 })
     }
+
+    /*
+    isRequestingOwnData(req: any, res: any, next: any){
+        if(req.isAuthenticated() && req.user.username.equal(req.params.username)) return next()
+        return next(new UnauthorizedUserError)
+    }
+
+    isAdminOrRequestingOwnData(req: any, res: any, next: any){
+        if(req.isAuthenticated() && (Utility.isAdmin(req.user) || req.user.username.equal(req.params.username)) ) return next()
+            return next(new UnauthorizedUserError)
+    }
+    */
 
 }
 
