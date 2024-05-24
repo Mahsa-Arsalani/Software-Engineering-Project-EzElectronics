@@ -52,11 +52,10 @@ class UserController {
      * @returns A Promise that resolves to the user with the specified username.
      */
     async getUserByUsername(user: User, username: string):Promise<User> {
-        if(user.username === username || user.role === Role.ADMIN){
-            return this.dao.getUserByUsername(username)
-        }
+        if(user.username !== username && user.role !== Role.ADMIN)
+            throw new UnauthorizedUserError
 
-        throw new UnauthorizedUserError
+        return this.dao.getUserByUsername(username)
     }
 
     /**
@@ -69,16 +68,15 @@ class UserController {
      */
     async deleteUser(user: User, username: string):Promise<Boolean>{
         if(user.username !== username){
-            if(user.role === Role.ADMIN){
-                const user: User = await this.dao.getUserByUsername(username)
-                
-                if(user.role !== Role.ADMIN)
-                    return this.dao.deleteUserByUsername(username)
-                else
-                    throw new UnauthorizedUserError
+            if(user.role !== Role.ADMIN){
+                throw new UserNotAdminError
             }
             else{
-                throw new UserNotAdminError
+                const user: User = await this.dao.getUserByUsername(username)
+                if(user.role === Role.ADMIN)
+                    throw new UnauthorizedUserError
+                else
+                    return this.dao.deleteUserByUsername(username)
             }
         }
         else{
@@ -106,43 +104,27 @@ class UserController {
      */
     async updateUserInfo(user: User, name: string, surname: string, address: string, birthdate: string, username: string) :Promise<User> {
         if(user.username !== username){
-            if(user.role === Role.ADMIN){
-                return new Promise<User>((resolve, reject) => {
-                    this.dao.getUserByUsername(username)
-                    .then((user) => {
-                        if(user.role !== Role.ADMIN){
-                            this.dao.updateUserByUsername(name, surname, address, birthdate, username)
-                            .then(() => {
-                                user.name = name
-                                user.surname = surname
-                                user.address = address
-                                user.birthdate = birthdate
-                                resolve(user)
-                            })
-                            .catch(err => reject(err))
-
-                        }
-                        else{
-                            reject(new UnauthorizedUserError)
-                        }
-                    })
-                    .catch((err)=>reject(err))
-                })
+            if(user.role !== Role.ADMIN){
+                throw new UserNotAdminError
             }
             else{
-                return new Promise<User>((resolve, reject) => { reject(new UserNotAdminError) })
+                const user: User = await this.dao.getUserByUsername(username)
+                if(user.role === Role.ADMIN){
+                    throw new UnauthorizedUserError
+                }
+                else{
+                    await this.dao.updateUserByUsername(name, surname, address, birthdate, username)
+                    user.name = name
+                    user.surname = surname
+                    user.address = address
+                    user.birthdate = birthdate
+                    return user
+                }
             }
         }
         else{
-            return new Promise<User>((resolve, reject)=>{
-                this.dao.updateUserByUsername(name, surname, address, birthdate, user.username)
-                .then(() => {
-                    this.dao.getUserByUsername(user.username)
-                    .then(user => resolve(user))
-                    .catch(err => reject(err))
-                })
-                .catch(err => reject(err))
-            })
+            await this.dao.updateUserByUsername(name, surname, address, birthdate, user.username)
+            return await this.dao.getUserByUsername(user.username)
         }
     }
 }
