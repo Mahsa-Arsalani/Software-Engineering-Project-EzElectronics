@@ -55,7 +55,8 @@ class UserController {
         if(user.username === username || user.role === Role.ADMIN){
             return this.dao.getUserByUsername(username)
         }
-        return new Promise<User>((resolve, reject) => { reject(new UnauthorizedUserError) })
+
+        throw new UnauthorizedUserError
     }
 
     /**
@@ -69,23 +70,15 @@ class UserController {
     async deleteUser(user: User, username: string):Promise<Boolean>{
         if(user.username !== username){
             if(user.role === Role.ADMIN){
-                return new Promise<Boolean>((resolve, reject) => {
-                    this.dao.getUserByUsername(username)
-                    .then((user) => {
-                        if(user.role !== Role.ADMIN){
-                            this.dao.deleteUserByUsername(username)
-                            .then(val => resolve(val))
-                            .catch(err => reject(err))
-                        }
-                        else{
-                            reject(new UnauthorizedUserError)
-                        }
-                    })
-                    .catch((err)=>reject(err))
-                })
+                const user: User = await this.dao.getUserByUsername(username)
+                
+                if(user.role !== Role.ADMIN)
+                    return this.dao.deleteUserByUsername(username)
+                else
+                    throw new UnauthorizedUserError
             }
             else{
-                return new Promise<Boolean>((resolve, reject) => { reject(new UserNotAdminError) })
+                throw new UserNotAdminError
             }
         }
         else{
