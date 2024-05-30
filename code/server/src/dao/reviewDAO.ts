@@ -1,3 +1,4 @@
+import db from "../db/db"
 
 /**
  * A class that implements the interaction with the database for all review-related operations.
