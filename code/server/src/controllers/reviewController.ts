@@ -17,14 +17,14 @@ class ReviewController {
      * @returns A Promise that resolves to nothing
      */
     async addReview(model: string, user: User, score: number, comment: string) /**:Promise<void> */ { }
-
+        this.dao.addReview(model,user,score,comment)
     /**
      * Returns all reviews for a product
      * @param model The model of the product to get reviews from
      * @returns A Promise that resolves to an array of ProductReview objects
      */
     async getProductReviews(model: string) /**:Promise<ProductReview[]> */ { }
-
+        return this.dao.getProductReviews(model)
     /**
      * Deletes the review made by a user for a product
      * @param model The model of the product to delete the review from
@@ -32,6 +32,7 @@ class ReviewController {
      * @returns A Promise that resolves to nothing
      */
     async deleteReview(model: string, user: User) /**:Promise<void> */ { }
+        this.dao.deleteReview(model,user)
 
     /**
      * Deletes all reviews for a product
@@ -39,12 +40,13 @@ class ReviewController {
      * @returns A Promise that resolves to nothing
      */
     async deleteReviewsOfProduct(model: string) /**:Promise<void> */ { }
-
+        this.dao.deleteReviewOfProduct(model)
     /**
      * Deletes all reviews of all products
      * @returns A Promise that resolves to nothing
      */
     async deleteAllReviews() /**:Promise<void> */ { }
+        this.dao.deleteAllReviews()
 }
 
 export default ReviewController;
