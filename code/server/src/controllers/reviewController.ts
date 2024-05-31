@@ -42,7 +42,7 @@ class ReviewController {
      * @returns A Promise that resolves to nothing
      */
     async deleteReviewsOfProduct(model: string) /**:Promise<void> */ { 
-        return this.dao.deleteReviewOfProduct(model)
+        return this.dao.deleteReviewsOfProduct(model)
     }
     /**
      * Deletes all reviews of all products
