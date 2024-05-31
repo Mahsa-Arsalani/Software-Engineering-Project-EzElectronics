@@ -1,5 +1,6 @@
 import db from "../db/db"
-import { User, Review} from "../components/user"
+import { User} from "../components/user"
+import { ProductReview} from "../components/review"
 import { ExistingReviewError, NoReviewProductError} from "../errors/reviewError";
 /**
  * A class that implements the interaction with the database for all review-related operations.
@@ -26,8 +27,8 @@ addReview(model:string,user:User,score:number,comment:string):Promise<void>{
                     reject(new ExistingReviewError());
                 }
                 const date = new Date().toISOString().split('T')[0];
-                const insertsql="INSERT INTO reviews(user,model,score,date, comment) VALUES (?,?,?,?,?)";
-            db.run(insertsql, [user,model,score,date,comment], (err: Error | null) => {
+                const insertsql="INSERT INTO reviews(model,user,score,date, comment) VALUES (?,?,?,?,?)";
+            db.run(insertsql, [model,user,score,date,comment], (err: Error | null) => {
                 if (err) {
                     reject(err);
                 }
@@ -45,28 +46,85 @@ addReview(model:string,user:User,score:number,comment:string):Promise<void>{
      * @returns A Promise that resolves to an array of ProductReview objects
      */
  getProductReviews(model: string):Promise<ProductReview[]>{ 
-    return new Promise<ProductReview>((resolve,reject)=>{
+    return new Promise<ProductReview[]>((resolve,reject)=>{
         try{
-            const sql="SELECT * FROM reviews WHERE model = ?"
-            db.get(sql,[model], (err:Error | null,row: any)=> {
+            const sql="SELECT * FROM reviews WHERE model = ?";
+            db.all(sql,[model], (err:Error | null,row: any)=> {
                 if (err) {
-                    reject(err)
+                    reject(err);
                     return
                 }
                 if(!row){
-                    reject(new NoReviewProductError())
+                    reject(new NoReviewProductError());
                     return
                 }
-                const reviews: Review[] = rows.map((row:any) =>new Review(row.score, row.date, row.comment))
-                resolve(reviews)
+                const reviews: ProductReview[] = rows.map((row:any) =>new ProductReview(row.model, row.user, row.score, row.date, row.comment));
+                resolve(reviews);
             })
         } catch (error){
-            reject(error)
+            reject(error);
         }
     })
  }
- 
-
+ /**
+     * Deletes the review made by a user for a product
+     * @param model The model of the product to delete the review from
+     * @param user The user who made the review to delete
+     * @returns A Promise that resolves to nothing
+     */
+ deleteReview(model: string, user: User) :Promise<void>{
+    return new Promise<void>((resolve,reject)=>{
+        try{
+            const sql = "DELETE FROM reviews WHERE model= ? AND user= ?";
+            db.run(sql,[model,user],(err:Error | null) =>{
+                if(err) {
+                    reject(err);
+                }
+                resolve();
+            })
+        } catch(error){
+            reject(error);
+        }
+    })
+}
+ /**
+     * Deletes all reviews for a product
+     * @param model The model of the product to delete the reviews from
+     * @returns A Promise that resolves to nothing
+     */
+ deleteReviewsOfProduct(model: string) :Promise<void> {
+    return new Promise<void>((resolve,reject)=>{
+        try{
+            const sql = "DELETE FROM reviews WHERE model= ?";
+            db.run(sql,[model],(err:Error | null) =>{
+                if(err) {
+                    reject(err);
+                }
+                resolve();
+            })
+        } catch(error){
+            reject(error);
+        }
+    })
+}
+/**
+* Deletes all reviews of all products
+* @returns A Promise that resolves to nothing
+*/
+deleteAllReviews() :Promise<void> {
+    return new Promise<void>((resolve,reject)=>{
+        try{
+            const sql = "DELETE FROM reviews";
+            db.run(sql,(err:Error | null) =>{
+                if(err) {
+                    reject(err);
+                }
+                resolve();
+            })
+        } catch(error){
+            reject(error);
+        }
+    })
 }
 
 
