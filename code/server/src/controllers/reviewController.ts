@@ -1,5 +1,7 @@
-import { User } from "../components/user";
+import { User, Role } from "../components/user";
 import ReviewDAO from "../dao/reviewDAO";
+import {UnauthorizedUserError} from "../errors/userError";
+import ProductDAO from "../dao/productDAO";
 
 class ReviewController {
     private dao: ReviewDAO
@@ -17,14 +19,17 @@ class ReviewController {
      * @returns A Promise that resolves to nothing
      */
     async addReview(model: string, user: User, score: number, comment: string) /**:Promise<void> */ { 
-        return this.dao.addReview(model,user,score,comment)
+        if(user.role !== Role.CUSTOMER)
+            throw new UnauthorizedUserError
+        if(ProductDAO.getAllProducts(null, null, model))
+            return this.dao.addReview(model,user,score,comment)
     }    
     /**
      * Returns all reviews for a product
      * @param model The model of the product to get reviews from
      * @returns A Promise that resolves to an array of ProductReview objects
      */
-    async getProductReviews(model: string) :Promise<ProductReview[]> { 
+    async getProductReviews(model: string)  /** :Promise<ProductReview[]>*/ { 
         return this.dao.getProductReviews(model)
     }
     /**
@@ -34,6 +39,8 @@ class ReviewController {
      * @returns A Promise that resolves to nothing
      */
     async deleteReview(model: string, user: User) /**:Promise<void> */ { 
+        if(user.role !== Role.CUSTOMER)
+            throw new UnauthorizedUserError
         return this.dao.deleteReview(model,user)
     }
     /**

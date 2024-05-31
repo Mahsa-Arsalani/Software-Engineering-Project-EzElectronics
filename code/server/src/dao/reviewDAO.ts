@@ -21,7 +21,7 @@ addReview(model:string,user:User,score:number,comment:string):Promise<void>{
             const checkSql = "SELECT COUNT(*) AS count FROM reviews WHERE user = ? AND model = ?";
             db.get(checkSql, [user, model], (err: Error | null, row: any) => {
                 if (err) {
-                    reject(err);
+                    reject();
                 }
                 if (row.count > 0) {
                     reject(new ExistingReviewError());
@@ -49,12 +49,12 @@ addReview(model:string,user:User,score:number,comment:string):Promise<void>{
     return new Promise<ProductReview[]>((resolve,reject)=>{
         try{
             const sql="SELECT * FROM reviews WHERE model = ?";
-            db.all(sql,[model], (err:Error | null,row: any)=> {
+            db.all(sql,[model], (err:Error | null,rows: any)=> {
                 if (err) {
                     reject(err);
                     return
                 }
-                if(!row){
+                if(!rows){
                     reject(new NoReviewProductError());
                     return
                 }
@@ -75,17 +75,26 @@ addReview(model:string,user:User,score:number,comment:string):Promise<void>{
  deleteReview(model: string, user: User) :Promise<void>{
     return new Promise<void>((resolve,reject)=>{
         try{
+            const checkSql = "SELECT COUNT(*) AS count FROM reviews WHERE user = ? AND model = ?";
+            db.get(checkSql, [user, model], (err: Error | null, row: any) => {
+                if (err) {
+                    reject(err);
+                }
+                if (row.count < 1) {
+                    reject(new NoReviewProductError());
+                }
             const sql = "DELETE FROM reviews WHERE model= ? AND user= ?";
             db.run(sql,[model,user],(err:Error | null) =>{
                 if(err) {
                     reject(err);
                 }
                 resolve();
-            })
-        } catch(error){
-            reject(error);
-        }
-    })
+            });
+        });    
+    } catch(error){
+        reject(error);
+    }
+});
 }
  /**
      * Deletes all reviews for a product
