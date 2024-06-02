@@ -5,9 +5,11 @@ import ProductDAO from "../dao/productDAO";
 
 class ReviewController {
     private dao: ReviewDAO
+    private ProductDAO: ProductDAO
 
     constructor() {
         this.dao = new ReviewDAO
+        this.ProductDAO = new ProductDAO
     }
 
     /**
@@ -21,7 +23,8 @@ class ReviewController {
     async addReview(model: string, user: User, score: number, comment: string) /**:Promise<void> */ { 
         if(user.role !== Role.CUSTOMER)
             throw new UnauthorizedUserError
-        if(ProductDAO.getAllProducts(null, null, model))
+
+        if(this.ProductDAO.getAllProducts(null, null, model))
             return this.dao.addReview(model,user,score,comment)
     }    
     /**

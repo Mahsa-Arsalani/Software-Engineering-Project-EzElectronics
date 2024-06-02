@@ -135,6 +135,7 @@ deleteAllReviews() :Promise<void> {
         }
     })
 }
+}
 
 
 export default ReviewDAO;
