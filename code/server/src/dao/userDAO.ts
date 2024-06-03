@@ -169,7 +169,6 @@ class UserDAO {
             } catch (error) {
                 reject(error)
             }
-
         })
     }
 

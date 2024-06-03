@@ -105,12 +105,12 @@ class UserController {
     async updateUserInfo(user: User, name: string, surname: string, address: string, birthdate: string, username: string) :Promise<User> {
         if(user.username !== username){
             if(user.role !== Role.ADMIN){
-                throw new UserNotAdminError
+                throw new UserNotAdminError()
             }
             else{
                 const user: User = await this.dao.getUserByUsername(username)
                 if(user.role === Role.ADMIN){
-                    throw new UnauthorizedUserError
+                    throw new UnauthorizedUserError()
                 }
                 else{
                     await this.dao.updateUserByUsername(name, surname, address, birthdate, username)
