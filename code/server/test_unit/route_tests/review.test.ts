@@ -19,61 +19,38 @@ afterEach(()=>{
 
 describe("Review Routes unit test", ()=>{
 
-    const testCustomer = {
-        username: "testCustomerUsername",
-        name: "testCustomerName",
-        surname: "testCustomerSurname",
-        password: "testCustomerPassword",
-        role: Role.CUSTOMER,
-        address: "testCustomerAddress",
-        birthdate: "testCustomerBirthdate"
+    const testReview1 = {
+        model: "Alexa",
+        user: "testuser1",
+        date: "2024/06/04",
+        score: 2,
+        comment: "testcomment1"
     }
 
-    const testAdmin = {
-        username: "testAdminUsername",
-        name: "testAdminName",
-        surname: "testAdminSurname",
-        password: "testAdminPassword",
-        role: Role.ADMIN,
-        address: "testAdminAddress",
-        birthdate: "testAdminBirthdate"
-    }
+    describe("POST /reviews/:model",()=>{
 
-    describe("POST /review",()=>{
-
-        const testUser = { //Define a test user object sent to the route
-            username: "test",
-            name: "test",
-            surname: "test",
-            password: "test",
-            role: "Customer"
+        const testReview2 = { //Define a test review object sent to the route
+            model: "Alexa",
+            user: "testuser2",
+            date: "2024/06/04",
+            score: 3,
+            comment: "testcomment2"
         }
 
-        //Example of a unit test for the POST ezelectronics/review route
+        //Example of a unit test for the POST ezelectronics/reviews/:model route
         //The test checks if the route returns a 200 success code
         //The test also expects the createUser method of the controller to be called once with the correct parameters
         test("It should return a 200 success code", async () => {
-            jest.spyOn(ReviewController.prototype, "addReview").mockResolvedValueOnce(true) //Mock the addReview method of the controller
-            const response = await request(app).post(baseURL + "/review").send(testUser) //Send a POST request to the route
+            jest.spyOn(ReviewController.prototype, "addReview").mockResolvedValueOnce() //Mock the addReview method of the controller
+            const response = await request(app).post(baseURL + "/review").send(testReview2) //Send a POST request to the route
             expect(response.status).toBe(200) //Check if the response status is 200
-            expect(UserController.prototype.createUser).toHaveBeenCalledTimes(1) //Check if the createUser method has been called once
-            //Check if the createUser method has been called with the correct parameters
-            expect(UserController.prototype.createUser).toHaveBeenCalledWith(testUser.username,
-                testUser.name,
-                testUser.surname,
-                testUser.password,
-                testUser.role)
-        })
-
-        test("it should return 503 error code", async ()=>{
-
-            jest.spyOn(UserController.prototype, "createUser").mockRejectedValue("error") //Mock the createUser method of the controller
-            const response = await request(app).post(baseURL + "/users").send(testUser) //Send a POST request to the route
-            expect(response.status).toBe(503) //Check if the response status is 200
-            expect(UserController.prototype.createUser).toHaveBeenCalledTimes(1)
-
-        })
-
-    })
+            expect(ReviewController.prototype.addReview).toHaveBeenCalledTimes(1) //Check if the addReview method has been called once
+            //Check if the addReview method has been called with the correct parameters
+            expect(ReviewController.prototype.addReview).toHaveBeenCalledWith(testReview2.model,
+                testReview2.user,
+                testReview2.score,
+                testReview2.comment)
+        })
+    })
 
 })
