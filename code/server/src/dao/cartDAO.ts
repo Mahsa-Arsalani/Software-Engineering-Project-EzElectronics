@@ -237,7 +237,7 @@ removeProductFromCart(user: User, product: string):Promise<Boolean> {
                     }
                     if(item.model == product && item.quantity <= 1){
                                  // delete the product 
-                                const newProducts = array.filter((item:any)=>{item !== product });
+                                const newProducts = array.filter((item:any)=>{item !== item.model });
                                 const updateCart =  "UPDATE cart SET products = ? WHERE cartID = ?"
                                 db.run(updateCart, [JSON.stringify(newProducts), row.cartID], (err: Error | null) => {
                                     if(err)
@@ -272,13 +272,13 @@ clearCart(user: User):Promise<Boolean> {
         try{
             const username = user.username;
             const sql = "UPDATE cart SET products = ? WHERE customer = ? paid = 0";
-            db.run(sql, [[], username], (err:Error | null,rows: any) => {
+            db.run(sql, [[], username], (err:Error | null) => {
                 if (err) {
                     reject(err)
                 } else {
                     resolve(true)
                 }
-            })
+            }) 
             
         } catch(error) {
             reject(error)
@@ -299,7 +299,7 @@ deleteAllCarts():Promise<Boolean> {
     return new Promise<Boolean>((resolve, reject)=>{
         try{
             const sql = "DELETE FROM cart";
-            db.run(sql, (err:Error | null,rows: any) => {
+            db.run(sql, (err:Error | null) => {
                 if(err) {
                     reject(err);
                 }
