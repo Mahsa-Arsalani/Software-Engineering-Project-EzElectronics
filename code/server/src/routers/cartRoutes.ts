@@ -3,7 +3,6 @@ import ErrorHandler from "../helper"
 import { body, param } from "express-validator"
 import CartController from "../controllers/cartController"
 import Authenticator from "./auth"
-import { Cart } from "../components/cart"
 
 /**
  * Represents a class that defines the routes for handling carts.
@@ -119,6 +118,7 @@ class CartRoutes {
          */
         this.router.delete(
             "/products/:model",
+            param("model").isString().isLength({min:1}),
             this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             (req: any, res: any, next: any) => this.controller.removeProductFromCart(req.user, req.params.model)
