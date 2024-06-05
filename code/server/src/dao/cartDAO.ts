@@ -1,8 +1,8 @@
 import db from "../db/db"
-import {Cart, ProductInCart} from "../components/cart";
-import {User, Role} from "../components/user";
-import {CartNotFoundError} from "../errors/cartError";
-import {UserNotCustomerError} from "../errors/userError";
+import {Cart} from "../components/cart";
+import {User} from "../components/user";
+import {CartNotFoundError, EmptyCartError} from "../errors/cartError";
+
 /**
  * A class that implements the interaction with the database for all cart-related operations.
  * You are free to implement any method you need here, as long as the requirements are satisfied.
@@ -20,10 +20,7 @@ class CartDAO {
 addToCart(user : User, product : string):Promise<Boolean>{
     return new Promise<Boolean>((resolve, reject)=>{
         const username = user.username;
-        console.log(username);
-        
-        const unPaidSql = "SELECT * FROM cart WHERE customer = ? AND paid = 0 "
-
+        const unPaidSql = "SELECT * FROM cart WHERE customer = ? AND paid = 0"
         db.get(unPaidSql, [username], (err: Error | null, row: any) => {
             if(row){
                   const array = JSON.parse(row.products);
@@ -34,16 +31,16 @@ addToCart(user : User, product : string):Promise<Boolean>{
                         const newProducts = array.map((item2:any)=>{
                             if(product == item2.model){
                                 return {"model": item2.model,
-                                    "quantity": item2.quantity + 1 ,
-                                    "category": item2.category,
-                                    "price": item2.price}
+                                        "quantity": item2.quantity + 1 ,
+                                        "category": item2.category,
+                                        "price": item2.price}
                             }else{
                                 return item2
                             }
                         })
                         
                         const increaseSql = "UPDATE cart SET products = ? WHERE cartID = ?"
-                        db.run(increaseSql, [JSON.stringify(newProducts), row.cartID], (err: Error | null, row: any) => {
+                        db.run(increaseSql, [JSON.stringify(newProducts), row.cartID], (err: Error | null) => {
                             if(err)
                                 reject(err)
                             else resolve(true)
@@ -52,20 +49,20 @@ addToCart(user : User, product : string):Promise<Boolean>{
                     }
                     else{
                         const array = JSON.parse(row.products);
-                        const finedProduct = "SELECT * FROM products WHERE model = ?"
-                        db.get(finedProduct,[product],(err: Error | null, row2: any) =>{
+                        const findProduct = "SELECT * FROM products WHERE model = ?"
+                        db.get(findProduct,[product],(err: Error | null, row2: any) =>{
                             if (err){
                                 reject(err)
                             }else{
                                 array.push({
                                     "model": product,
+                                    "quantity": 1,
                                     "category": row2.category,
-                                    "price": row2.sellingPrice,
-                                    "quantity": 1
+                                    "price": row2.sellingPrice   
                                 })
                                     
                                 const addProductSql =  "UPDATE cart SET products = ? WHERE cartID = ?"
-                                db.run(addProductSql, [JSON.stringify(array), row.cartID], (err: Error | null, row: any) => {
+                                db.run(addProductSql, [JSON.stringify(array), row.cartID], (err: Error | null) => {
                                     if(err)
                                         reject(err)
                                     else resolve(true)
@@ -76,22 +73,21 @@ addToCart(user : User, product : string):Promise<Boolean>{
                     }
                 })
             }
-            else{
-                
-                
+
+            // Create new cart with product
+            else{   
                 const array:any =[]
-                const finedProduct = "SELECT * FROM products WHERE model = ?"
-                db.get(finedProduct,[product],(err: Error | null, row2: any) =>{
+                const findProduct = "SELECT * FROM products WHERE model = ?"
+                db.get(findProduct,[product],(err: Error | null, row2: any) =>{
                     if (err){
                         reject(err)
-                    }else{
+                    }else{ 
                         array.push({
                             "model": product,
+                            "quantity": 1,
                             "category": row2.category,
-                            "price": row2.sellingPrice,
-                            "quantity": 1
-                        })
-                            
+                            "price": row2.sellingPrice
+                        })     
                         const createCartSql = "INSERT INTO cart(customer, paid, paymentDate, total, products) VALUES(?,0,NULL,NULL,?)"
                         db.run(createCartSql,[username, JSON.stringify(array)],(err: Error | null, row: any) => {
                             if(err)
@@ -100,9 +96,7 @@ addToCart(user : User, product : string):Promise<Boolean>{
                         })
                     }
                         
-                })
-                // Create new cart with product
-                
+                })                
             }
         })
        
@@ -123,14 +117,11 @@ getCart(user: User) : Promise<Cart> {
             const username = user.username;
             const sql = "SELECT * FROM cart WHERE customer = ? AND paid = 0"
             db.get(sql, [username], (err: Error | null, row: any) => {
-                if (err) 
-                    reject(err)
-                if (!row) {
-                    reject(new CartNotFoundError);
-                } else {
-                    const cart: Cart = new Cart(row.customer, row.paid, row.paymentDate, row.total, row.products);
-                    resolve(cart)
+                if (err){
+                    reject(err);   
                 }
+                const cart: Cart = new Cart(row.customer, row.paid, row.paymentDate, row.total, row.products);
+                resolve(cart)              
             })
         } catch (error) {
             reject(error);
@@ -144,12 +135,26 @@ getCart(user: User) : Promise<Cart> {
  * Checks out the user's cart. We assume that payment is always successful, there is no need to implement anything related to payment.
  * @param user - The user whose cart should be checked out.
  * @returns A Promise that resolves to `true` if the cart was successfully checked out.
- * ******* It fails if the cart is empty, there is no current cart in the database, or at least one of the products in the cart is not available in the required quantity.
  */
 checkoutCart(user: User):Promise<Boolean>{
     return new Promise<Boolean>((resolve, reject)=>{
         try{
-           
+            const username = user.username;
+            const sql = "SELECT * FROM cart WHERE customer = ? AND paid = 0";
+            db.get(sql, [username], (err:Error | null, row: any) =>{
+            
+                    if(row.products){
+                        const sql = "UPDATE cart SET paid = 1 WHERE cartID = ?"
+                        db.run(sql, [row.cartID], (err:Error | null, row: any) => {
+                            if(err)
+                                reject(err)
+                            else resolve(true)
+                    })
+                    }if(!row.products){
+                        reject (new EmptyCartError)
+                    }    
+            })  
+              
         } catch(error) {
             reject(error)
         }
@@ -164,7 +169,6 @@ checkoutCart(user: User):Promise<Boolean>{
  * @param user - The customer for whom to retrieve the carts.
  * @returns A Promise that resolves to an array of carts belonging to the customer.
  * Only the carts that have been checked out should be returned, the current cart should not be included in the result.
- * (only carts that have been paid for are returned - the current cart is not included in the list).
  */
 async getCustomerCarts(user: User):Promise<Cart[]> {
     return new Promise<Cart[]>((resolve, reject)=>{
@@ -198,17 +202,64 @@ async getCustomerCarts(user: User):Promise<Cart[]> {
  * @param product The model of the product to remove.
  * @returns A Promise that resolves to `true` if the product was successfully removed.
  */
+
+// It requires the model of the product to remove. the product must exist in the current cart
 removeProductFromCart(user: User, product: string):Promise<Boolean> {
     return new Promise<Boolean>((resolve, reject)=>{
-        try{
-            // same as add to cart
-            
-        } catch(error) {
-            reject(error)
-        }
-    })
 
+        const username = user.username;
+        const currentCartSql = "SELECT * FROM cart WHERE customer = ? AND paid = 0"
+        db.get(currentCartSql, [username], (err: Error | null, row: any) => {
+            if(row){
+
+                const array = JSON.parse(row.products);
+                array.map((item:any) =>{
+                    if(item.model == product && item.quantity >= 2){
+                        
+                            const newProducts = array.map((item2:any)=>{
+                                // decrease queantity by 1
+                                if(product == item2.model){
+                                    return {"model": item2.model,
+                                            "quantity": item2.quantity - 1 ,
+                                            "category": item2.category,
+                                            "price": item2.price}
+                                }
+                                else{
+                                    return item2
+                                }
+                            })
+                            const updateCart = "UPDATE cart SET products = ? WHERE cartID = ?"
+                            db.run(updateCart, [JSON.stringify(newProducts), row.cartID], (err: Error | null) => {
+                            if(err)
+                                reject(err)
+                            else resolve(true)
+                        } )
+                    }
+                    if(item.model == product && item.quantity <= 1){
+                                 // delete the product 
+                                const newProducts = array.filter((item:any)=>{item !== product });
+                                const updateCart =  "UPDATE cart SET products = ? WHERE cartID = ?"
+                                db.run(updateCart, [JSON.stringify(newProducts), row.cartID], (err: Error | null) => {
+                                    if(err)
+                                        reject(err)
+                                    else resolve(true)
+                                })
+                            }
+                                
+                    })
+                }
+               
+
+            else{
+                reject(new CartNotFoundError)
+            }
+        })
+            
+            
+    })
 }
+
+
 
 
 /**
@@ -219,8 +270,9 @@ removeProductFromCart(user: User, product: string):Promise<Boolean> {
 clearCart(user: User):Promise<Boolean> { 
     return new Promise<Boolean>((resolve, reject)=>{
         try{
-            const sql = "UPDATE cart SET products = ? WHERE paid = 0"
-            db.run(sql, [], (err:Error | null,rows: any) => {
+            const username = user.username;
+            const sql = "UPDATE cart SET products = ? WHERE customer = ? paid = 0";
+            db.run(sql, [[], username], (err:Error | null,rows: any) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -244,7 +296,7 @@ clearCart(user: User):Promise<Boolean> {
  * @returns A Promise that resolves to `true` if all carts were successfully deleted.
  */
 deleteAllCarts():Promise<Boolean> { 
-    return new Promise((resolve, reject)=>{
+    return new Promise<Boolean>((resolve, reject)=>{
         try{
             const sql = "DELETE FROM cart";
             db.run(sql, (err:Error | null,rows: any) => {
