@@ -33,6 +33,8 @@ class CartController {
      * @returns A Promise that resolves to the user's cart or an empty one if there is no current cart.
      */
     async getCart(user: User)/*: Cart*/ { 
+        if(user.role !== Role.CUSTOMER)
+            throw new UserNotCustomerError
         return this.dao.getCart(user)
     }
 
@@ -41,7 +43,9 @@ class CartController {
      * @param user - The user whose cart should be checked out.
      * @returns A Promise that resolves to `true` if the cart was successfully checked out.
      */
-    async checkoutCart(user: User) /**Promise<Boolean> */ { 
+    async checkoutCart(user: User) /**Promise<Boolean> */ {
+        if(user.role !== Role.CUSTOMER)
+            throw new UserNotCustomerError 
         return this.dao.checkoutCart(user)
     }
 
@@ -52,6 +56,8 @@ class CartController {
      * Only the carts that have been checked out should be returned, the current cart should not be included in the result.
      */
     async getCustomerCarts(user: User) /**Promise<Cart[]> */ { 
+        if(user.role !== Role.CUSTOMER)
+            throw new UserNotCustomerError
         return this.dao.getCustomerCarts(user)
     } 
 
@@ -62,6 +68,8 @@ class CartController {
      * @returns A Promise that resolves to `true` if the product was successfully removed.
      */
     async removeProductFromCart(user: User, product: string) /**Promise<Boolean> */ {
+        if(user.role !== Role.CUSTOMER)
+            throw new UserNotCustomerError
         return this.dao.removeProductFromCart(user, product)
      }
 
@@ -72,6 +80,8 @@ class CartController {
      * @returns A Promise that resolves to `true` if the cart was successfully cleared.
      */
     async clearCart(user: User)/*:Promise<Boolean> */ { 
+        if(user.role !== Role.CUSTOMER)
+            throw new UserNotCustomerError
         return this.dao.clearCart(user)
     }
 
