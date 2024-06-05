@@ -120,7 +120,7 @@ getCart(user: User) : Promise<Cart> {
                 if (err){
                     reject(err);   
                 }
-                const cart: Cart = new Cart(row.customer, row.paid, row.paymentDate, row.total, row.products);
+                const cart: Cart = new Cart(row.customer, row.paid, row.paymentDate, row.total,JSON.parse(row.products));
                 resolve(cart)              
             })
         } catch (error) {
