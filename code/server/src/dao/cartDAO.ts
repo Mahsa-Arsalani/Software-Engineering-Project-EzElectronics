@@ -29,6 +29,7 @@ addToCart(user : User, product : Product):Promise<Boolean>{
                 const idx = products.findIndex((item: any) => item.model === product.model)
                 if(idx >= 0){
                     products[idx].quantity += 1
+                    products[idx].price = product.sellingPrice
                 }else{
                     products.push({
                         "model": product.model,
@@ -38,8 +39,11 @@ addToCart(user : User, product : Product):Promise<Boolean>{
                     })
                 }
 
-                const increaseSql = "UPDATE cart SET products = ? WHERE cartID = ?"
-                db.run(increaseSql, [JSON.stringify(products), row.cartID], (err: Error | null) => {
+                let total = 0
+                products.forEach((item: any) => {total += item.price * item.quantity});
+
+                const increaseSql = "UPDATE cart SET products = ?, total = ? WHERE cartID = ?"
+                db.run(increaseSql, [JSON.stringify(products), total , row.cartID], (err: Error | null) => {
                     if(err)
                         reject(err)
                     else resolve(true)
