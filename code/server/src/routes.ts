@@ -3,7 +3,7 @@ import ErrorHandler from "./helper"
 import Authenticator from "./routers/auth"
 import { UserRoutes, AuthRoutes } from "./routers/userRoutes"
 import ProductRoutes from "./routers/productRoutes"
-//import CartRoutes from "./routers/cartRoutes" //comment untill it's done
+import CartRoutes from "./routers/cartRoutes"
 import ReviewRoutes from "./routers/reviewRoutes"
 
 const morgan = require("morgan")
@@ -33,7 +33,7 @@ function initRoutes(app: express.Application) {
     const userRoutes = new UserRoutes(authenticator)
     const authRoutes = new AuthRoutes(authenticator)
     const productRoutes = new ProductRoutes(authenticator)
-    //const cartRoutes = new CartRoutes(authenticator) //comment untill it's done
+    const cartRoutes = new CartRoutes(authenticator)
     const reviewRoutes = new ReviewRoutes(authenticator)
 
     /**
@@ -42,7 +42,7 @@ function initRoutes(app: express.Application) {
     app.use(`${prefix}/users`, userRoutes.getRouter())
     app.use(`${prefix}/sessions`, authRoutes.getRouter())
     app.use(`${prefix}/products`, productRoutes.getRouter())
-    //app.use(`${prefix}/carts`, cartRoutes.getRouter()) //comment untill it's done
+    app.use(`${prefix}/carts`, cartRoutes.getRouter())
     app.use(`${prefix}/reviews`, reviewRoutes.getRouter())
 
     ErrorHandler.registerErrorHandler(app)
