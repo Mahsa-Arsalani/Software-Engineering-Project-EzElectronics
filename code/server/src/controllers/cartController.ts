@@ -1,15 +1,20 @@
 import {User, Role} from "../components/user";
 import CartDAO from "../dao/cartDAO";
+import ProductDAO from "../dao/productDAO";
+import { Product } from "../components/product";
 import {UserNotCustomerError} from "../errors/userError";
+import {EmptyProductStockError} from "../errors/productError"
 /**
  * Represents a controller for managing shopping carts.
  * All methods of this class must interact with the corresponding DAO class to retrieve or store data.
  */
 class CartController {
     private dao: CartDAO
+    private productDao: ProductDAO
 
     constructor() {
         this.dao = new CartDAO
+        this.productDao = new ProductDAO
     }
 
     /**
@@ -20,10 +25,13 @@ class CartController {
      * @param productId - The model of the product to add.
      * @returns A Promise that resolves to `true` if the product was successfully added.
      */
-    async addToCart(user: User, product: string)/*: Promise<Boolean>*/ { 
-        if(user.role !== Role.CUSTOMER)
-            throw new UserNotCustomerError
-        return this.dao.addToCart(user, product)
+    async addToCart(user: User, model: string)/*: Promise<Boolean>*/ { 
+        //if(user.role !== Role.CUSTOMER)
+        //    throw new UserNotCustomerError
+        const p: Product = await this.productDao.getProductByModel(model)
+        if(p.quantity < 1)
+            throw new EmptyProductStockError()
+        return this.dao.addToCart(user, p)
     }
 
 

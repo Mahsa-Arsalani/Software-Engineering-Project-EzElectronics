@@ -2,6 +2,7 @@ import db from "../db/db"
 import {Cart} from "../components/cart";
 import {User} from "../components/user";
 import {CartNotFoundError, EmptyCartError} from "../errors/cartError";
+import { Product } from "../components/product";
 
 /**
  * A class that implements the interaction with the database for all cart-related operations.
@@ -17,15 +18,34 @@ class CartDAO {
  * @param productId - The model of the product to add.
  * @returns A Promise that resolves to `true` if the product was successfully added.
  */
-addToCart(user : User, product : string):Promise<Boolean>{
+addToCart(user : User, product : Product):Promise<Boolean>{
     return new Promise<Boolean>((resolve, reject)=>{
         const username = user.username;
         const unPaidSql = "SELECT * FROM cart WHERE customer = ? AND paid = 0"
         db.get(unPaidSql, [username], (err: Error | null, row: any) => {
             if(row){
-                  const array = JSON.parse(row.products);
+                const products = JSON.parse(row.products);
+
+                const idx = products.findIndex((item: any) => item.model === product.model)
+                if(idx >= 0){
+                    products[idx].quantity += 1
+                }else{
+                    products.push({
+                        "model": product.model,
+                        "quantity": 1,
+                        "category": product.category,
+                        "price": product.sellingPrice  
+                    })
+                }
+
+                const increaseSql = "UPDATE cart SET products = ? WHERE cartID = ?"
+                db.run(increaseSql, [JSON.stringify(products), row.cartID], (err: Error | null) => {
+                    if(err)
+                        reject(err)
+                    else resolve(true)
+                })
                 
-                array.map((item:any) =>{
+                /*array.map((item:any) =>{
                     if(item.model == product){
                         // increase queantity by 1
                         const newProducts = array.map((item2:any)=>{
@@ -71,11 +91,25 @@ addToCart(user : User, product : string):Promise<Boolean>{
                                 
                         })
                     }
-                })
+                })*/
             }
 
             // Create new cart with product
             else{   
+                const products = [{
+                    "model": product.model,
+                    "quantity": 1,
+                    "category": product.category,
+                    "price": product.sellingPrice
+                }]
+
+                const createCartSql = "INSERT INTO cart(customer, paid, paymentDate, total, products) VALUES(?,0,NULL,NULL,?)"
+                db.run(createCartSql,[username, JSON.stringify(products)],(err: Error | null, row: any) => {
+                    if(err) reject(err)
+                    else resolve(true)
+                })
+
+                /*
                 const array:any =[]
                 const findProduct = "SELECT * FROM products WHERE model = ?"
                 db.get(findProduct,[product],(err: Error | null, row2: any) =>{
@@ -96,7 +130,8 @@ addToCart(user : User, product : string):Promise<Boolean>{
                         })
                     }
                         
-                })                
+                })  
+                */              
             }
         })
        

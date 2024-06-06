@@ -70,7 +70,7 @@ class CartRoutes {
         this.router.post(
             "/",
             body("model").isString().isLength({min:1}),
-            this.authenticator.isLoggedIn,
+            //add validator check
             this.authenticator.isCustomer,
             (req: any, res: any, next: any) => this.controller.addToCart(req.user, req.body.model)
                 .then(() => res.status(200).end())

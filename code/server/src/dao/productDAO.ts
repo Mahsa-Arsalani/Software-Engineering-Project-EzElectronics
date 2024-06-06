@@ -182,6 +182,29 @@ class ProductDAO {
         });
     }
 
+    getProductByModel(model: string): Promise<Product>{
+        return new Promise<Product>((resolve, reject) => {
+            try {
+                const sql = "SELECT * FROM products WHERE model = ?"
+                db.get(sql, [model], (err: Error | null, row: any) => {
+                    if (err) {
+                        reject(err)
+                        return
+                    }
+                    if (!row) {
+                        reject(new ProductNotFoundError())
+                        return
+                    }
+                    const user: Product = new Product(row.sellingPrice, row.model, row.category, row.arrivalDate, row.details, row.quantity)
+                    resolve(user)
+                })
+            } catch (error) {
+                reject(error)
+            }
+
+        })
+    }
+
     // It runs an SQL query that doesn't return anything (like insert, update, delete).
     private runSql(sql: string, params?: any[]): Promise<void> {
         return new Promise((resolve, reject) => {
