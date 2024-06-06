@@ -70,7 +70,7 @@ class CartRoutes {
         this.router.post(
             "/",
             body("model").isString().isLength({min:1}),
-            //add validator check
+            this.errorHandler.validateRequest,
             this.authenticator.isCustomer,
             (req: any, res: any, next: any) => this.controller.addToCart(req.user, req.body.model)
                 .then(() => res.status(200).end())
@@ -87,7 +87,7 @@ class CartRoutes {
          */
         this.router.patch(
             "/",
-            this.authenticator.isLoggedIn,
+            //this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             (req: any, res: any, next: any) => this.controller.checkoutCart(req.user)
                 .then(() => res.status(200).end())
@@ -103,7 +103,7 @@ class CartRoutes {
          */
         this.router.get(
             "/history",
-            this.authenticator.isLoggedIn,
+            //this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             (req: any, res: any, next: any) => this.controller.getCustomerCarts(req.user)
                 .then((carts: any /**Cart[] */) => res.status(200).json(carts))
@@ -119,7 +119,8 @@ class CartRoutes {
         this.router.delete(
             "/products/:model",
             param("model").isString().isLength({min:1}),
-            this.authenticator.isLoggedIn,
+            this.errorHandler.validateRequest,
+            //this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             (req: any, res: any, next: any) => this.controller.removeProductFromCart(req.user, req.params.model)
                 .then(() => res.status(200).end())

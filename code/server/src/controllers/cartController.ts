@@ -75,9 +75,10 @@ class CartController {
      * @param product The model of the product to remove.
      * @returns A Promise that resolves to `true` if the product was successfully removed.
      */
-    async removeProductFromCart(user: User, product: string) /**Promise<Boolean> */ {
-        if(user.role !== Role.CUSTOMER)
-            throw new UserNotCustomerError
+    async removeProductFromCart(user: User, model: string) /**Promise<Boolean> */ {
+        //if(user.role !== Role.CUSTOMER)
+            //throw new UserNotCustomerError
+        const product = await this.productDao.getProductByModel(model)
         return this.dao.removeProductFromCart(user, product)
      }
 

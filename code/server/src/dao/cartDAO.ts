@@ -1,7 +1,7 @@
 import db from "../db/db"
 import {Cart} from "../components/cart";
 import {User} from "../components/user";
-import {CartNotFoundError, EmptyCartError} from "../errors/cartError";
+import {CartNotFoundError, EmptyCartError, ProductNotInCartError} from "../errors/cartError";
 import { Product } from "../components/product";
 
 /**
@@ -249,14 +249,35 @@ async getCustomerCarts(user: User):Promise<Cart[]> {
  */
 
 // It requires the model of the product to remove. the product must exist in the current cart
-removeProductFromCart(user: User, product: string):Promise<Boolean> {
+removeProductFromCart(user: User, product: Product):Promise<Boolean> {
     return new Promise<Boolean>((resolve, reject)=>{
 
         const username = user.username;
         const currentCartSql = "SELECT * FROM cart WHERE customer = ? AND paid = 0"
         db.get(currentCartSql, [username], (err: Error | null, row: any) => {
             if(row){
+                const products = JSON.parse(row.products);
 
+                const idx = products.findIndex((item: any) => item.model === product.model)
+                if(idx >= 0){
+                    if(products[idx].quantity > 1){
+                        products[idx].quantity -= 1
+                    }
+                    else{
+                        products.splice(idx,1)
+                    }
+                }
+                else{
+                    reject(new ProductNotInCartError())
+                }
+
+                const updateCart = "UPDATE cart SET products = ? WHERE cartID = ?"
+                db.run(updateCart, [JSON.stringify(products), row.cartID], (err: Error | null) => {
+                    if(err)
+                        reject(err)
+                    else resolve(true)
+                })
+                /*
                 const array = JSON.parse(row.products);
                 array.map((item:any) =>{
                     if(item.model == product && item.quantity >= 2){
@@ -291,7 +312,7 @@ removeProductFromCart(user: User, product: string):Promise<Boolean> {
                                 })
                             }
                                 
-                    })
+                    })*/
                 }
                
 
