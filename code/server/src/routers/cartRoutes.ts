@@ -3,6 +3,7 @@ import ErrorHandler from "../helper"
 import { body, param } from "express-validator"
 import CartController from "../controllers/cartController"
 import Authenticator from "./auth"
+import { Cart } from "../components/cart"
 
 /**
  * Represents a class that defines the routes for handling carts.
@@ -92,6 +93,7 @@ class CartRoutes {
             (req: any, res: any, next: any) => this.controller.checkoutCart(req.user)
                 .then(() => res.status(200).end())
                 .catch((err) => {
+                    console.log(err)
                     next(err)
                 })
         )
@@ -106,7 +108,7 @@ class CartRoutes {
             //this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             (req: any, res: any, next: any) => this.controller.getCustomerCarts(req.user)
-                .then((carts: any /**Cart[] */) => res.status(200).json(carts))
+                .then((carts: Cart[]) => res.status(200).json(carts))
                 .catch((err) => next(err))
         )
 

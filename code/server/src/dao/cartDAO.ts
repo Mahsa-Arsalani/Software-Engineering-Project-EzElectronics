@@ -3,6 +3,8 @@ import {Cart} from "../components/cart";
 import {User} from "../components/user";
 import {CartNotFoundError, EmptyCartError, ProductNotInCartError} from "../errors/cartError";
 import { Product } from "../components/product";
+import { ProductInCart } from "../components/cart";
+import dayjs from 'dayjs';
 
 /**
  * A class that implements the interaction with the database for all cart-related operations.
@@ -107,8 +109,8 @@ addToCart(user : User, product : Product):Promise<Boolean>{
                     "price": product.sellingPrice
                 }]
 
-                const createCartSql = "INSERT INTO cart(customer, paid, paymentDate, total, products) VALUES(?,0,NULL,NULL,?)"
-                db.run(createCartSql,[username, JSON.stringify(products)],(err: Error | null, row: any) => {
+                const createCartSql = "INSERT INTO cart(customer, paid, paymentDate, total, products) VALUES(?,0,NULL,?,?)"
+                db.run(createCartSql,[username, product.sellingPrice, JSON.stringify(products)],(err: Error | null, row: any) => {
                     if(err) reject(err)
                     else resolve(true)
                 })
@@ -161,10 +163,11 @@ getCart(user: User) : Promise<Cart> {
                 }
 
                 if(row){
-                    const cart: Cart = new Cart(row.customer, row.paid, row.paymentDate, row.total,JSON.parse(row.products));
+                    const cart: Cart = new Cart(row.customer, row.paid, row.paymentDate, row.total, JSON.parse(row.products));
                     resolve(cart)
                 }else{
                     const cart: Cart = new Cart(username, false, null, 0, []);
+                    cart.setExist(false)
                     resolve(cart)
                 }       
             })
@@ -184,21 +187,21 @@ getCart(user: User) : Promise<Cart> {
 checkoutCart(user: User):Promise<Boolean>{
     return new Promise<Boolean>((resolve, reject)=>{
         try{
-            const username = user.username;
-            const sql = "SELECT * FROM cart WHERE customer = ? AND paid = 0";
-            db.get(sql, [username], (err:Error | null, row: any) =>{
+            //Moved this logic in the controller
+            //const username = user.username;
+            //const sql = "SELECT * FROM cart WHERE customer = ? AND paid = 0";
+            //db.get(sql, [username], (err:Error | null, row: any) =>{
             
-                    if(row.products){
-                        const sql = "UPDATE cart SET paid = 1 WHERE cartID = ?"
-                        db.run(sql, [row.cartID], (err:Error | null, row: any) => {
-                            if(err)
-                                reject(err)
-                            else resolve(true)
-                    })
-                    }if(!row.products){
-                        reject (new EmptyCartError)
-                    }    
-            })  
+                    //if(row.products){
+            const sql = "UPDATE cart SET paymentDate = ?, paid = 1 WHERE customer = ? AND paid = 0"
+            db.run(sql, [dayjs().format("YYYY-MM-DD"), user.username], (err:Error | null, row: any) => {
+                if(err) reject(err)
+                else resolve(true)
+            })
+                    //}if(!row.products){
+                    //    reject (new EmptyCartError)
+                    //}    
+            //})  
               
         } catch(error) {
             reject(error)
@@ -215,7 +218,7 @@ checkoutCart(user: User):Promise<Boolean>{
  * @returns A Promise that resolves to an array of carts belonging to the customer.
  * Only the carts that have been checked out should be returned, the current cart should not be included in the result.
  */
-async getCustomerCarts(user: User):Promise<Cart[]> {
+getCustomerCarts(user: User):Promise<Cart[]> {
     return new Promise<Cart[]>((resolve, reject)=>{
         try{
             const username = user.username;
@@ -239,7 +242,20 @@ async getCustomerCarts(user: User):Promise<Cart[]> {
 } 
 
 
-
+updateCurrentCart(user: User, cart: Cart): Promise<Boolean>{
+    return new Promise<Boolean>((resolve, reject)=>{
+        try{
+            const updateCart = "UPDATE cart SET paymentDate = ?, total = ?, products = ? WHERE customer = ? AND paid = 0"
+            db.run(updateCart, [cart.paymentDate, cart.total, JSON.stringify(cart.products), user.username], (err: Error | null) => {
+                if(err) reject(err)
+                else resolve(true)
+            })
+        }
+        catch(err){
+            reject(err)
+        }
+    })
+}
 
 /**
  * Removes one product unit from the current cart. In case there is more than one unit in the cart, only one should be removed.
@@ -256,12 +272,14 @@ removeProductFromCart(user: User, product: Product):Promise<Boolean> {
         const currentCartSql = "SELECT * FROM cart WHERE customer = ? AND paid = 0"
         db.get(currentCartSql, [username], (err: Error | null, row: any) => {
             if(row){
-                const products = JSON.parse(row.products);
+                const products: ProductInCart[] = JSON.parse(row.products);
 
                 const idx = products.findIndex((item: any) => item.model === product.model)
                 if(idx >= 0){
-                    if(products[idx].quantity > 1){
-                        products[idx].quantity -= 1
+                    const product = products[idx]
+                    if(product.quantity > 1){
+                        product.quantity -= 1
+                        //update total
                     }
                     else{
                         products.splice(idx,1)

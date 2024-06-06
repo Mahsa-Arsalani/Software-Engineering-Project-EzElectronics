@@ -2,8 +2,10 @@ import {User, Role} from "../components/user";
 import CartDAO from "../dao/cartDAO";
 import ProductDAO from "../dao/productDAO";
 import { Product } from "../components/product";
+import { Cart } from "../components/cart";
 import {UserNotCustomerError} from "../errors/userError";
-import {EmptyProductStockError} from "../errors/productError"
+import {EmptyProductStockError, LowProductStockError} from "../errors/productError"
+import { CartNotFoundError, EmptyCartError} from "../errors/cartError";
 /**
  * Represents a controller for managing shopping carts.
  * All methods of this class must interact with the corresponding DAO class to retrieve or store data.
@@ -51,9 +53,46 @@ class CartController {
      * @param user - The user whose cart should be checked out.
      * @returns A Promise that resolves to `true` if the cart was successfully checked out.
      */
-    async checkoutCart(user: User) /**Promise<Boolean> */ {
-        if(user.role !== Role.CUSTOMER)
-            throw new UserNotCustomerError 
+    async checkoutCart(user: User): Promise<Boolean> {
+        //if(user.role !== Role.CUSTOMER)
+            //throw new UserNotCustomerError
+        const currentCart: Cart = await this.dao.getCart(user)
+        const products = currentCart.products
+        
+        if(!currentCart.exist()){
+            throw new CartNotFoundError()
+        }
+
+        if(products.length === 0){
+            throw new EmptyCartError()
+        }
+
+        let empty = false
+        let low = false
+        for(const cartItem of products){
+            const product = await this.productDao.getProductByModel(cartItem.model)
+            if(product.quantity > 0){
+                if(cartItem.quantity > product.quantity){
+                    low = true
+                    break
+                }
+            }else{
+                empty = true
+                break
+            }
+        }
+
+        if(empty){
+            throw new EmptyProductStockError()
+        }
+
+        if(low){
+            throw new LowProductStockError()
+        }
+
+        for(const cartItem of products){
+            await this.productDao.sellModel(cartItem.model, cartItem.quantity, null)
+        }
         return this.dao.checkoutCart(user)
     }
 
