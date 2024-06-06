@@ -302,6 +302,49 @@ removeProductFromCart(user: User, product: string):Promise<Boolean> {
             
             
     })
+
+        /*return new Promise<Boolean>((resolve, reject) => {
+            const username = user.username;
+            const currentCartSql = "SELECT * FROM cart WHERE customer = ? AND paid = 0";
+        
+            db.get(currentCartSql, [username], (err: Error | null, row: any) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+        
+                if (row) {
+                    let productsArray = JSON.parse(row.products);
+                    let productFound = false;
+        
+                    productsArray = productsArray.map((item: any) => {
+                        if (item.model === product) {
+                            item.quantity -= 1;
+                            productFound = true;
+                        }
+                        return item;
+                    }).filter((item: any) => item.quantity > 0);
+        
+                    if (productFound) {
+                        const updateCartSql = "UPDATE cart SET products = ? WHERE cartID = ?";
+                        db.run(updateCartSql, [JSON.stringify(productsArray), row.cartID], (err: Error | null) => {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(true);
+                            }
+                        });
+                    } else {
+                        // Product was not found, no update needed
+                        resolve(false); 
+                    }
+                } else {
+                    // No cart found for the user
+                    resolve(false);
+                }
+            });
+        });*/
+        
 }
 
 
