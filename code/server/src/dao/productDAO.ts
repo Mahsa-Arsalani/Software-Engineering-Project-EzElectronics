@@ -47,9 +47,9 @@ class ProductDAO {
     /** 
      * It updates a model's quantity and/or arrival date.
      * The number to use as quantity is not the new quantity but the increment to add to the old one.
-     * It doesn't return anything
+     * It return the new quantity available
      */
-    updateModel(model: string, quantity: number, arrivalDate: string | null): Promise<void> {
+    updateModel(model: string, quantity: number, arrivalDate: string | null): Promise<number> {
         return new Promise((resolve, reject) => {
 
             // Checks the date
@@ -66,12 +66,15 @@ class ProductDAO {
                     const updateSql = "UPDATE products SET quantity = quantity + ?, arrivalDate = ? WHERE model = ?";
                     return this.runSql(updateSql, [quantity, arrivalDate, model]);
                 })
-                .then(resolve)
-                .catch(err => {
+                .then(() =>{
+                    const sqlnewquantity = "SELECT quantity FROM products WHERE model = ?";
+                    const newquantity = this.getSql(sqlnewquantity, [model])
+                resolve(newquantity)})
+               .catch(err => {
                     reject(err);
                 });
-        });
-    }
+            });
+        }
 
     /** 
      * It allows selling products. Model is the name of the model sold, quantity is the number of products sold, selling date is

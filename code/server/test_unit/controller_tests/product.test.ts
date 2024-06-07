@@ -66,7 +66,20 @@ describe("ProductController unit testing", ()=>{
                 testSmartphone.arrivalDate);
             expect(response).toBe(undefined); //Check if the response is undefined
         });
-    })
+    });
 
-    
+    describe("changeProductQuantity test cases", ()=>{
+        test("It should return 55", async() => {
+            jest.spyOn(ProductDAO.prototype, "updateModel").mockResolvedValueOnce(55);
+            const controller = new ProductController(); //Create a new instance of the controller
+            //Call the registerProducts method of the controller with the test user object
+            const response = await controller.changeProductQuantity(testSmartphone.model, 5, null);
+        
+            //Check if the newModel method of the DAO has been called once with the correct parameters
+            expect(ProductDAO.prototype.updateModel).toHaveBeenCalledTimes(1);
+            expect(ProductDAO.prototype.updateModel).toHaveBeenCalledWith(
+                testSmartphone.model, 5, null);
+            expect(response).toBe(55); //Check if the response is the quantity + 5
+        });
+    });
 });
