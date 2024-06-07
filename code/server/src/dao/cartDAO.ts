@@ -5,6 +5,7 @@ import {CartNotFoundError, EmptyCartError, ProductNotInCartError} from "../error
 import { Product } from "../components/product";
 import { ProductInCart } from "../components/cart";
 import dayjs from 'dayjs';
+import { stringify } from "querystring";
 
 /**
  * A class that implements the interaction with the database for all cart-related operations.
@@ -373,8 +374,8 @@ clearCart(user: User):Promise<Boolean> {
     return new Promise<Boolean>((resolve, reject)=>{
         try{
             const username = user.username;
-            const sql = "UPDATE cart SET products = ? WHERE customer = ? paid = 0";
-            db.run(sql, [[], username], (err:Error | null) => {
+            const sql = "UPDATE cart SET products = ? WHERE customer = ? AND paid = 0";
+            db.run(sql, [JSON.stringify([]), username], (err:Error | null) => {
                 if (err) {
                     reject(err)
                 } else {
