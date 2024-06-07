@@ -75,17 +75,17 @@ test("It should return a 200 success code", async () => {
     expect(response.body).toEqual([testreview1]);
     expect(ReviewController.prototype.getProductReviews).toHaveBeenCalledTimes(1);
 });
-test("It should return a 404 status code", async () => {
-    jest.spyOn(ReviewController.prototype, "getProductReviews").mockRejectedValue(new NoReviewProductError());
+test("It should return a 401 status code", async () => {
+    jest.spyOn(ReviewController.prototype, "getProductReviews").mockRejectedValue(new UnauthorizedUserError());
     const response = await request(app).get('${baseURL}/reviews/iPhone13');
-    expect(response.status).toBe(404);
-    expect(response.body.error).toEqual("You have not reviewed this product");
+    expect(response.status).toBe(401);
+    expect(response.body.error).toEqual("Unauthenticated user");
     expect(ReviewController.prototype.getProductReviews).toHaveBeenCalledTimes(1);
 });
 //Example of a unit test for the  DELETE ezelectronics/reviews/:model route
 test("It should return a 200 success code", async () => {
     jest.spyOn(Authenticator.prototype,"isCustomer").mockImplementation((req,res,next)=>next());
-    jest.spyOn(ReviewController.prototype, "deleteReview").mockResolvedValue(true);
+    jest.spyOn(ReviewController.prototype, "deleteReview").mockResolvedValue();
     const response = await request(app).delete('${baseURL}/reviews/iPhone13');
     expect(response.status).toBe(200);
     expect(Authenticator.prototype.isCustomer).toHaveBeenCalledTimes(1);
@@ -98,7 +98,7 @@ test("It should return a 404 status code", async () => {
     expect(response.status).toBe(404);
     expect(response.body.error).toEqual("Product not found");
     expect(Authenticator.prototype.isCustomer).toHaveBeenCalledTimes(1);
-    expect(ReviewController.prototype.getProductReviews).toHaveBeenCalledTimes(1);
+    expect(ReviewController.prototype.deleteReview).toHaveBeenCalledTimes(1);
 });
 test("It should return a 404 status code", async () => {
     jest.spyOn(Authenticator.prototype,"isCustomer").mockImplementation((req,res,next)=>next());
@@ -107,23 +107,41 @@ test("It should return a 404 status code", async () => {
     expect(response.status).toBe(404);
     expect(response.body.error).toEqual("You have not reviewed this product");
     expect(Authenticator.prototype.isCustomer).toHaveBeenCalledTimes(1);
-    expect(ReviewController.prototype.getProductReviews).toHaveBeenCalledTimes(1);
-});
-//Example of a unit test for the  DELETE ezelectronics/reviews/:model route
-test("It should return a 200 success code", async () => {
-    jest.spyOn(Authenticator.prototype,"isCustomer").mockImplementation((req,res,next)=>next());
-    jest.spyOn(ReviewController.prototype, "deleteReview").mockResolvedValue(true);
-    const response = await request(app).delete('${baseURL}/reviews/iPhone13');
-    expect(response.status).toBe(200);
-    expect(Authenticator.prototype.isCustomer).toHaveBeenCalledTimes(1);
     expect(ReviewController.prototype.deleteReview).toHaveBeenCalledTimes(1);
+});
+//Example of a unit test for the  DELETE ezelectronics/reviews/:model/all route
+test("It should return a 200 success code", async () => {
+    jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
+    jest.spyOn(ReviewController.prototype, "deleteReviewsOfProduct").mockResolvedValue();
+    const response = await request(app).delete('${baseURL}/reviews/iPhone13/all');
+    expect(response.status).toBe(200);
+    expect(Authenticator.prototype.isAdminOrManager).toHaveBeenCalledTimes(1);
+    expect(ReviewController.prototype.deleteReviewsOfProduct).toHaveBeenCalledTimes(1);
 });
 test("It should return a 404 status code", async () => {
     jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
-    jest.spyOn(ReviewController.prototype, "deleteReview").mockRejectedValue(new ProductNotFoundError());
-    const response = await request(app).delete('${baseURL}/reviews/notexisting');
+    jest.spyOn(ReviewController.prototype, "deleteReviewsOfProduct").mockRejectedValue(new ProductNotFoundError());
+    const response = await request(app).delete('${baseURL}/reviews/notexisting/all');
     expect(response.status).toBe(404);
     expect(response.body.error).toEqual("Product not found");
-    expect(Authenticator.prototype.isCustomer).toHaveBeenCalledTimes(1);
-    expect(ReviewController.prototype.getProductReviews).toHaveBeenCalledTimes(1);
+    expect(Authenticator.prototype.isAdminOrManager).toHaveBeenCalledTimes(1);
+    expect(ReviewController.prototype.deleteReviewsOfProduct).toHaveBeenCalledTimes(1);
+});
+//Example of a unit test for the  DELETE ezelectronics/reviews route
+test("It should return a 200 success code", async () => {
+    jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
+    jest.spyOn(ReviewController.prototype, "deleteAllReviews").mockResolvedValue();
+    const response = await request(app).delete('${baseURL}/reviews');
+    expect(response.status).toBe(200);
+    expect(Authenticator.prototype.isAdminOrManager).toHaveBeenCalledTimes(1);
+    expect(ReviewController.prototype.deleteAllReviews).toHaveBeenCalledTimes(1);
+});
+test("It should return a 401 status code", async () => {
+    jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
+    jest.spyOn(ReviewController.prototype, "deleteAllReviews").mockRejectedValue(new UnauthorizedUserError());
+    const response = await request(app).delete('${baseURL}/reviews');
+    expect(response.status).toBe(401);
+    expect(response.body.error).toEqual("User is not an admin or manager");
+    expect(Authenticator.prototype.isAdminOrManager).toHaveBeenCalledTimes(1);
+    expect(ReviewController.prototype.deleteAllReviews).toHaveBeenCalledTimes(1);
 });
