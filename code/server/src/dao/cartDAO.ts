@@ -20,38 +20,18 @@ class CartDAO {
  * @param productId - The model of the product to add.
  * @returns A Promise that resolves to `true` if the product was successfully added.
  */
+/*
+//Moved this login in the contrtoller
+
 addToCart(user : User, product : Product):Promise<Boolean>{
     return new Promise<Boolean>((resolve, reject)=>{
         const username = user.username;
         const unPaidSql = "SELECT * FROM cart WHERE customer = ? AND paid = 0"
         db.get(unPaidSql, [username], (err: Error | null, row: any) => {
             if(row){
-                const products = JSON.parse(row.products);
+                const array = JSON.parse(row.products);
 
-                const idx = products.findIndex((item: any) => item.model === product.model)
-                if(idx >= 0){
-                    products[idx].quantity += 1
-                    products[idx].price = product.sellingPrice
-                }else{
-                    products.push({
-                        "model": product.model,
-                        "quantity": 1,
-                        "category": product.category,
-                        "price": product.sellingPrice  
-                    })
-                }
-
-                let total = 0
-                products.forEach((item: any) => {total += item.price * item.quantity});
-
-                const increaseSql = "UPDATE cart SET products = ?, total = ? WHERE cartID = ?"
-                db.run(increaseSql, [JSON.stringify(products), total , row.cartID], (err: Error | null) => {
-                    if(err)
-                        reject(err)
-                    else resolve(true)
-                })
-                
-                /*array.map((item:any) =>{
+                array.map((item:any) =>{
                     if(item.model == product){
                         // increase queantity by 1
                         const newProducts = array.map((item2:any)=>{
@@ -97,7 +77,7 @@ addToCart(user : User, product : Product):Promise<Boolean>{
                                 
                         })
                     }
-                })*/
+                })
             }
 
             // Create new cart with product
@@ -137,7 +117,7 @@ addToCart(user : User, product : Product):Promise<Boolean>{
                     }
                         
                 })  
-                */              
+                            
             }
         })
        
@@ -145,7 +125,7 @@ addToCart(user : User, product : Product):Promise<Boolean>{
     })
 }
 
-
+*/
 
 /**
  * Retrieves the current cart for a specific user.
@@ -257,6 +237,21 @@ updateCurrentCart(user: User, cart: Cart): Promise<Boolean>{
     })
 }
 
+createCurrentCart(user: User, cart: Cart): Promise<Boolean>{
+    return new Promise<Boolean>((resolve, reject)=>{
+        try{
+            const createCartSql = "INSERT INTO cart(customer, paid, paymentDate, total, products) VALUES(?,0,NULL,?,?)"
+                db.run(createCartSql,[user.username, cart.total, JSON.stringify(cart.products)],(err: Error | null, row: any) => {
+                    if(err) reject(err)
+                    else resolve(true)
+                })
+        }
+        catch(err){
+            reject(err)
+        }
+    })
+}
+
 /**
  * Removes one product unit from the current cart. In case there is more than one unit in the cart, only one should be removed.
  * @param user The user who owns the cart.
@@ -265,6 +260,10 @@ updateCurrentCart(user: User, cart: Cart): Promise<Boolean>{
  */
 
 // It requires the model of the product to remove. the product must exist in the current cart
+/*
+
+//Moved this logic in the controller
+
 removeProductFromCart(user: User, product: Product):Promise<Boolean> {
     return new Promise<Boolean>((resolve, reject)=>{
 
@@ -272,30 +271,6 @@ removeProductFromCart(user: User, product: Product):Promise<Boolean> {
         const currentCartSql = "SELECT * FROM cart WHERE customer = ? AND paid = 0"
         db.get(currentCartSql, [username], (err: Error | null, row: any) => {
             if(row){
-                const products: ProductInCart[] = JSON.parse(row.products);
-
-                const idx = products.findIndex((item: any) => item.model === product.model)
-                if(idx >= 0){
-                    const product = products[idx]
-                    if(product.quantity > 1){
-                        product.quantity -= 1
-                        //update total
-                    }
-                    else{
-                        products.splice(idx,1)
-                    }
-                }
-                else{
-                    reject(new ProductNotInCartError())
-                }
-
-                const updateCart = "UPDATE cart SET products = ? WHERE cartID = ?"
-                db.run(updateCart, [JSON.stringify(products), row.cartID], (err: Error | null) => {
-                    if(err)
-                        reject(err)
-                    else resolve(true)
-                })
-                /*
                 const array = JSON.parse(row.products);
                 array.map((item:any) =>{
                     if(item.model == product && item.quantity >= 2){
@@ -330,7 +305,7 @@ removeProductFromCart(user: User, product: Product):Promise<Boolean> {
                                 })
                             }
                                 
-                    })*/
+                    })
                 }
                
 
@@ -340,7 +315,7 @@ removeProductFromCart(user: User, product: Product):Promise<Boolean> {
         })
             
             
-    })
+    })*/
 
         /*return new Promise<Boolean>((resolve, reject) => {
             const username = user.username;
@@ -382,9 +357,9 @@ removeProductFromCart(user: User, product: Product):Promise<Boolean> {
                     resolve(false);
                 }
             });
-        });*/
+        });
         
-}
+}*/
 
 
 

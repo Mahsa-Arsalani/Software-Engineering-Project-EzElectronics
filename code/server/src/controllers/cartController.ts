@@ -2,10 +2,10 @@ import {User, Role} from "../components/user";
 import CartDAO from "../dao/cartDAO";
 import ProductDAO from "../dao/productDAO";
 import { Product } from "../components/product";
-import { Cart } from "../components/cart";
+import { Cart, ProductInCart} from "../components/cart";
 import {UserNotCustomerError} from "../errors/userError";
 import {EmptyProductStockError, LowProductStockError} from "../errors/productError"
-import { CartNotFoundError, EmptyCartError} from "../errors/cartError";
+import { CartNotFoundError, EmptyCartError, ProductNotInCartError} from "../errors/cartError";
 /**
  * Represents a controller for managing shopping carts.
  * All methods of this class must interact with the corresponding DAO class to retrieve or store data.
@@ -27,13 +27,36 @@ class CartController {
      * @param productId - The model of the product to add.
      * @returns A Promise that resolves to `true` if the product was successfully added.
      */
-    async addToCart(user: User, model: string)/*: Promise<Boolean>*/ { 
+    async addToCart(user: User, model: string): Promise<Boolean> { 
         //if(user.role !== Role.CUSTOMER)
         //    throw new UserNotCustomerError
-        const p: Product = await this.productDao.getProductByModel(model)
-        if(p.quantity < 1)
+
+        const newProduct: Product = await this.productDao.getProductByModel(model)
+        if(newProduct.quantity < 1)
             throw new EmptyProductStockError()
-        return this.dao.addToCart(user, p)
+
+        const currentCart: Cart = await this.dao.getCart(user)
+        const products: ProductInCart[] = currentCart.products 
+        
+        const idx = products.findIndex((item: ProductInCart) => item.model === model)
+        if(idx >= 0){
+            const product = products[idx]
+            product.quantity += 1
+            product.price = newProduct.sellingPrice
+            product.category = newProduct.category
+        }else{
+            products.push(new ProductInCart(model, 1, newProduct.category, newProduct.sellingPrice))
+        }
+
+        currentCart.total = 0
+        products.forEach((item: ProductInCart) => {currentCart.total += item.price * item.quantity});
+
+
+        if(currentCart.exist()){
+            return this.dao.updateCurrentCart(user, currentCart)
+        }else{
+            return this.dao.createCurrentCart(user, currentCart)
+        }
     }
 
 
@@ -42,9 +65,9 @@ class CartController {
      * @param user - The user for whom to retrieve the cart.
      * @returns A Promise that resolves to the user's cart or an empty one if there is no current cart.
      */
-    async getCart(user: User)/*: Cart*/ { 
-        if(user.role !== Role.CUSTOMER)
-            throw new UserNotCustomerError
+    async getCart(user: User): Promise<Cart> { 
+        //if(user.role !== Role.CUSTOMER)
+        //    throw new UserNotCustomerError
         return this.dao.getCart(user)
     }
 
@@ -67,27 +90,15 @@ class CartController {
             throw new EmptyCartError()
         }
 
-        let empty = false
-        let low = false
         for(const cartItem of products){
             const product = await this.productDao.getProductByModel(cartItem.model)
             if(product.quantity > 0){
                 if(cartItem.quantity > product.quantity){
-                    low = true
-                    break
+                    throw new LowProductStockError()
                 }
             }else{
-                empty = true
-                break
+                throw new EmptyProductStockError()
             }
-        }
-
-        if(empty){
-            throw new EmptyProductStockError()
-        }
-
-        if(low){
-            throw new LowProductStockError()
         }
 
         for(const cartItem of products){
@@ -102,9 +113,9 @@ class CartController {
      * @returns A Promise that resolves to an array of carts belonging to the customer.
      * Only the carts that have been checked out should be returned, the current cart should not be included in the result.
      */
-    async getCustomerCarts(user: User) /**Promise<Cart[]> */ { 
-        if(user.role !== Role.CUSTOMER)
-            throw new UserNotCustomerError
+    async getCustomerCarts(user: User): Promise<Cart[]> { 
+        //if(user.role !== Role.CUSTOMER)
+        //    throw new UserNotCustomerError
         return this.dao.getCustomerCarts(user)
     } 
 
@@ -117,8 +128,30 @@ class CartController {
     async removeProductFromCart(user: User, model: string) /**Promise<Boolean> */ {
         //if(user.role !== Role.CUSTOMER)
             //throw new UserNotCustomerError
-        const product = await this.productDao.getProductByModel(model)
-        return this.dao.removeProductFromCart(user, product)
+        const oldProduct = await this.productDao.getProductByModel(model)
+        
+        const currentCart: Cart = await this.dao.getCart(user)
+        const products: ProductInCart[] = currentCart.products 
+
+        if(!currentCart.exist())
+            throw new CartNotFoundError()
+        
+        const idx = products.findIndex((item: ProductInCart) => item.model === model)
+        if(idx >= 0){
+            const product = products[idx]
+            if(product.quantity > 1){
+                product.quantity -= 1 
+            }
+            else{
+                products.splice(idx,1)
+            }
+
+            currentCart.total -= product.price
+        }else{
+            throw new ProductNotInCartError()
+        }
+        
+        return this.dao.updateCurrentCart(user, currentCart)
      }
 
 
