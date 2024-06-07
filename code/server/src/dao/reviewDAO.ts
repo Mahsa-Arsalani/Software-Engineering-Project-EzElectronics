@@ -18,6 +18,17 @@ class ReviewDAO {
 addReview(model:string,user:User,score:number,comment:string):Promise<void>{
     return new Promise<void>((resolve,reject)=>{
         try{
+            /*const createTableSql = 
+                `CREATE TABLE IF NOT EXISTS reviews (
+                model TEXT PRIMARY KEY,
+                user TEXT,
+                score INTEGER,
+                date TEXT
+                comment TEXT)`;
+
+            // Runs the query
+            db.run(createTableSql, [], (err: Error | null) => { });*/
+
             const checkSql = "SELECT COUNT(*) AS count FROM reviews WHERE user = ? AND model = ?";
             db.get(checkSql, [user, model], (err: Error | null, row: any) => {
                 if (err) {
