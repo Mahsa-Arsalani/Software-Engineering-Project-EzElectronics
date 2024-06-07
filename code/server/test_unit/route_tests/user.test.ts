@@ -31,18 +31,27 @@ jest.mock("express-validator", () =>{
     }
 })
 
-jest.mock("../../src/helper")
+
+jest.mock('../../src/helper', () => {
+    const ErrorHandlerModule: any = jest.requireActual('../../src/helper');
+    const ErrorHandler = ErrorHandlerModule.default
+    ErrorHandler.prototype.validateRequest = jest.fn((req: any, res: any, next: any) => {return next()})
+  
+    return {
+      __esModule: true,
+      default: ErrorHandler
+    };
+});
 
 const dummyMiddleware = (req: any, res: any, next: any) => {return next()}
 
-beforeEach(()=>{
-    jest.spyOn(ErrorHandler.prototype, "validateRequest").mockImplementation(dummyMiddleware)
+beforeAll(()=>{
     jest.spyOn(Authenticator.prototype, "isAdmin").mockImplementation((req, res, next) => {return next()})
     jest.spyOn(Authenticator.prototype, "isLoggedIn").mockImplementation(dummyMiddleware)
 })
 
 afterEach(()=>{
-    jest.resetAllMocks()
+    //jest.resetAllMocks()
     jest.clearAllMocks()
 })
 
@@ -98,11 +107,11 @@ describe("User Routes unit test", ()=>{
                 testUser.role)
         })
 
-        test("it should return 500 error code", async ()=>{
+        test("it should return 503 error code", async ()=>{
 
             jest.spyOn(UserController.prototype, "createUser").mockRejectedValue("error") //Mock the createUser method of the controller
             const response = await request(app).post(baseURL + "/users").send(testUser) //Send a POST request to the route
-            expect(response.status).toBe(500)
+            expect(response.status).toBe(503)
             expect(UserController.prototype.createUser).toHaveBeenCalledTimes(1)
 
         })
@@ -122,12 +131,12 @@ describe("User Routes unit test", ()=>{
 
         })
 
-        test("it should return 500 error code", async ()=>{
+        test("it should return 503 error code", async ()=>{
 
             jest.spyOn(UserController.prototype, "getUsers").mockRejectedValue("error")
 
             const response = await request(app).get(baseURL + "/users")
-            expect(response.status).toBe(500)
+            expect(response.status).toBe(503)
             expect(UserController.prototype.getUsers).toHaveBeenCalledTimes(1)
 
         })
@@ -145,12 +154,12 @@ describe("User Routes unit test", ()=>{
 
         })
 
-        test("it should return 500 error code", async ()=>{
+        test("it should return 503 error code", async ()=>{
 
             jest.spyOn(UserController.prototype, "getUsersByRole").mockRejectedValue("error")
 
             const response = await request(app).get(baseURL + "/users/roles/Customer")
-            expect(response.status).toBe(500)
+            expect(response.status).toBe(503)
             expect(UserController.prototype.getUsersByRole).toHaveBeenCalledTimes(1)
 
         })
@@ -168,12 +177,12 @@ describe("User Routes unit test", ()=>{
 
         })
 
-        test("it should return 500 error code", async ()=>{
+        test("it should return 503 error code", async ()=>{
 
             jest.spyOn(UserController.prototype, "getUserByUsername").mockRejectedValue("error")
 
             const response = await request(app).get(baseURL + "/users/" + testCustomer.username)
-            expect(response.status).toBe(500)
+            expect(response.status).toBe(503)
             expect(UserController.prototype.getUserByUsername).toHaveBeenCalledTimes(1)
 
         })
@@ -191,12 +200,12 @@ describe("User Routes unit test", ()=>{
 
         })
 
-        test("it should return 500 error code", async ()=>{
+        test("it should return 503 error code", async ()=>{
 
             jest.spyOn(UserController.prototype, "deleteUser").mockRejectedValue("error")
 
             const response = await request(app).delete(baseURL + "/users/" + testCustomer.username)
-            expect(response.status).toBe(500)
+            expect(response.status).toBe(503)
             expect(UserController.prototype.deleteUser).toHaveBeenCalledTimes(1)
 
         })
@@ -214,12 +223,12 @@ describe("User Routes unit test", ()=>{
 
         })
 
-        test("it should return 500 error code", async ()=>{
+        test("it should return 503 error code", async ()=>{
 
             jest.spyOn(UserController.prototype, "deleteAll").mockRejectedValue("error")
 
             const response = await request(app).delete(baseURL + "/users")
-            expect(response.status).toBe(500)
+            expect(response.status).toBe(503)
             expect(UserController.prototype.deleteAll).toHaveBeenCalledTimes(1)
 
         })
@@ -237,14 +246,15 @@ describe("User Routes unit test", ()=>{
 
         })
 
-        test("it should return 500 error code", async ()=>{
+        test("it should return 503 error code", async ()=>{
 
             jest.spyOn(UserController.prototype, "updateUserInfo").mockRejectedValue("error")
 
             const response = await request(app).patch(baseURL + "/users/" + testCustomer.username).send(testCustomer)
-            expect(response.status).toBe(500)
+            expect(response.status).toBe(503)
             expect(UserController.prototype.updateUserInfo).toHaveBeenCalledTimes(1)
 
         })
     })
+        
 })

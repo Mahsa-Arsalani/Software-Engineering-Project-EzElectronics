@@ -21,7 +21,7 @@ class CartDAO {
  * @returns A Promise that resolves to `true` if the product was successfully added.
  */
 /*
-//Moved this login in the contrtoller
+//Moved this logic in the contrtoller
 
 addToCart(user : User, product : Product):Promise<Boolean>{
     return new Promise<Boolean>((resolve, reject)=>{

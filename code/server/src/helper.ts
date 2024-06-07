@@ -14,6 +14,7 @@ class ErrorHandler {
      * @returns Returns the next function if there are no errors or a response with a status code of 422 if there are errors.
      */
     validateRequest(req: any, res: any, next: any) {
+        console.log("original")
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
             let error = "The parameters are not formatted properly\n\n"
