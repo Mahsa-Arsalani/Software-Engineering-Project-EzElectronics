@@ -212,7 +212,7 @@ getCustomerCarts(user: User):Promise<Cart[]> {
                 if (!rows) {
                     reject(new CartNotFoundError());
                 }
-                const carts: Cart[] = rows.map((row:any) => new Cart(row.customer, row.paid, row.paymentDate, row.total, row.products));
+                const carts: Cart[] = rows.map((row:any) => new Cart(row.customer, row.paid, row.paymentDate, row.total, JSON.parse(row.products)));
                 resolve(carts);
             })
             
