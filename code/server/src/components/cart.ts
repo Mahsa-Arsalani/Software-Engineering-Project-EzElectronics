@@ -10,7 +10,7 @@ class Cart {
     total: number
     products: ProductInCart[]
 
-    private existVal: Boolean
+    //private existVal: Boolean
 
     /**
      * Creates a new instance of the Cart class.
@@ -27,15 +27,18 @@ class Cart {
         this.total = total
         this.products = products
 
-        this.existVal = true
+        //this.existVal = true
+        let existVal: Boolean = true
+        this.setExist = (state:Boolean)=>{existVal = state}
+        this.exist = (): Boolean=>{return existVal}
     }
 
     setExist(state: Boolean){
-        this.existVal = state
+        //this.existVal = state
     }
 
     exist(): Boolean{
-        return this.existVal
+        return true//return this.existVal
     }
 
 
