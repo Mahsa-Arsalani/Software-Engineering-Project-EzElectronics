@@ -1,5 +1,4 @@
 import { test, expect, jest } from "@jest/globals"
-import ProductController from "../../src/controllers/productController"
 import ProductDAO from "../../src/dao/productDAO"
 import db from "../../src/db/db"
 import { Product, Category } from "../../src/components/product"
@@ -26,8 +25,8 @@ describe("ProductDAO unit testing", ()=>{
         arrivalDate: ""
     }
 
-describe("createUser test cases",()=>{
-    test("It should resolve true", async () => {
+describe("createProduct test cases",()=>{
+    test("It should resolve with undefined", async () => {
         const productDAO = new ProductDAO();
         const mockDBRun = jest.spyOn(db, "run").mockImplementation((sql, params, callback) => {
             callback(null);
@@ -37,6 +36,49 @@ describe("createUser test cases",()=>{
             testProduct.details, testProduct.sellingPrice, testProduct.arrivalDate);
         expect(result).toBe(undefined);
         });
-    });
+
+    test("It should throw an exception for non valid parameter - model", async () => {
+        const productDAO = new ProductDAO();
     
+        await expect(productDAO.newModel("", testProduct.category, testProduct.quantity, 
+            testProduct.details, testProduct.sellingPrice, testProduct.arrivalDate)).rejects.toThrow(Error);
+    
+        const query = "SELECT COUNT(*) AS count FROM products";
+        const result = await db.get(query);
+        expect(result).toEqual({});
+    });
+
+    test("It should throw an exception for non valid parameter - category", async () => {
+        const productDAO = new ProductDAO();
+    
+        await expect(productDAO.newModel(testProduct.model, "category", testProduct.quantity, 
+            testProduct.details, testProduct.sellingPrice, testProduct.arrivalDate)).rejects.toThrow(Error);
+    
+        const query = "SELECT COUNT(*) AS count FROM products";
+        const result = await db.get(query);
+        expect(result).toEqual({});
+    });
+
+    test("It should throw an exception for non valid parameter - sellingPrice", async () => {
+        const productDAO = new ProductDAO();
+    
+        await expect(productDAO.newModel(testProduct.model, testProduct.category, testProduct.quantity, 
+            testProduct.details, -5, testProduct.arrivalDate)).rejects.toThrow(Error);
+    
+        const query = "SELECT COUNT(*) AS count FROM products";
+        const result = await db.get(query);
+        expect(result).toEqual({});
+    });
+
+    test("It should throw an exception for non valid parameter - date", async () => {
+        const productDAO = new ProductDAO();
+    
+        await expect(productDAO.newModel(testProduct.model, testProduct.category, testProduct.quantity, 
+            testProduct.details, testProduct.sellingPrice, "2050-01-01")).rejects.toThrow(DateError);
+    
+        const query = "SELECT COUNT(*) AS count FROM products";
+        const result = await db.get(query);
+        expect(result).toEqual({});
+    });
+});
 });

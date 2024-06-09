@@ -1,5 +1,5 @@
 import db from "../db/db";
-import { Product } from "../components/product";
+import { Category, Product } from "../components/product";
 import dayjs from 'dayjs';
 import { ProductAlreadyExistsError, ProductNotFoundError, LowProductStockError, EmptyProductStockError } from "../errors/productError";
 import { DateError } from "../utilities";
@@ -32,6 +32,10 @@ class ProductDAO {
                 arrivalDate TEXT)`;
 
             // Runs the query
+            if (model.length == 0 || 
+                !(category === Category.APPLIANCE || category === Category.LAPTOP || category === Category.SMARTPHONE) ||
+            sellingPrice <= 0)
+                reject(new Error());
             this.runSql(createTableSql)
                 .then(() => {
                     const insertSql = "INSERT INTO products (model, category, quantity, details, sellingPrice, arrivalDate) VALUES (?, ?, ?, ?, ?, ?)";
