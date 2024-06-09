@@ -21,8 +21,8 @@ describe("ProductController unit testing", ()=>{
         sellingPrice: 50.00,
         model: "Samsung GalaxyA54",
         category: Category.SMARTPHONE,
-        arrivalDate: null,
-        details: null,
+        arrivalDate: "",
+        details: "",
         quantity: 50
     }
 
@@ -30,8 +30,8 @@ describe("ProductController unit testing", ()=>{
         sellingPrice: 10.00,
         model: "Alexa",
         category: Category.APPLIANCE,
-        arrivalDate: null,
-        details: null,
+        arrivalDate: "2050-01-01",
+        details: "",
         quantity: 20
     }
 
@@ -39,8 +39,8 @@ describe("ProductController unit testing", ()=>{
         sellingPrice: 200.00,
         model: "Hp PC",
         category: Category.LAPTOP,
-        arrivalDate: null,
-        details: null,
+        arrivalDate: "",
+        details: "",
         quantity: 0
     }
 
@@ -51,7 +51,7 @@ describe("ProductController unit testing", ()=>{
         test("It should return undefined", async () => {
             jest.spyOn(ProductDAO.prototype, "newModel").mockResolvedValueOnce(undefined); //Mock the newModel method of the DAO
             const controller = new ProductController(); //Create a new instance of the controller
-            //Call the registerProducts method of the controller with the test user object
+            //Call the registerProducts method of the controller with the test object
             const response = await controller.registerProducts(testSmartphone.model, testSmartphone.category, testSmartphone.quantity, 
                 testSmartphone.details, testSmartphone.sellingPrice, testSmartphone.arrivalDate);
         
@@ -66,13 +66,47 @@ describe("ProductController unit testing", ()=>{
                 testSmartphone.arrivalDate);
             expect(response).toBe(undefined); //Check if the response is undefined
         });
+
+        it('Should throws DateError', async () => {
+
+        // Configure mock to reject the Promise
+        const error = new DateError();
+        const controller = new ProductController(); //Create a new instance of the controller
+
+        // Configura il mock per rifiutare la Promise
+        jest.spyOn(ProductDAO.prototype, "newModel").mockRejectedValueOnce(error);
+
+        await expect(controller.registerProducts(testAppliance.model, 
+            testAppliance.category, 
+            testAppliance.quantity, 
+            testAppliance.details, 
+            testAppliance.sellingPrice, 
+            testAppliance.arrivalDate)).rejects.toThrow(error);
+        });
+
+        it('Should throws ProductAlreadyExistsError', async () => {
+
+            // Configure mock to reject the Promise
+            const error = new ProductAlreadyExistsError();
+            const controller = new ProductController(); //Create a new instance of the controller
+    
+            // Configura il mock per rifiutare la Promise
+            jest.spyOn(ProductDAO.prototype, "newModel").mockRejectedValueOnce(error);
+    
+            await expect(controller.registerProducts(testSmartphone.model, 
+                testSmartphone.category, 
+                testSmartphone.quantity, 
+                testSmartphone.details, 
+                testSmartphone.sellingPrice, 
+                testSmartphone.arrivalDate)).rejects.toThrow(error);
+            });
     });
 
     describe("changeProductQuantity test cases", ()=>{
         test("It should return 55", async() => {
             jest.spyOn(ProductDAO.prototype, "updateModel").mockResolvedValueOnce(55);
             const controller = new ProductController(); //Create a new instance of the controller
-            //Call the changeProductQuantity method of the controller with the test user object
+            //Call the changeProductQuantity method of the controller with the test object
             const response = await controller.changeProductQuantity(testSmartphone.model, 5, null);
         
             //Check if the newModel method of the DAO has been called once with the correct parameters
@@ -81,13 +115,46 @@ describe("ProductController unit testing", ()=>{
                 testSmartphone.model, 5, null);
             expect(response).toBe(55); //Check if the response is the quantity, so 50, + 5
         });
+
+        it('Should reject DateError 1', async () => {
+
+            // Configure mock to reject the Promise
+            const controller = new ProductController(); //Create a new instance of the controller
+    
+            // Configura il mock per rifiutare la Promise
+            jest.spyOn(ProductDAO.prototype, "updateModel").mockRejectedValueOnce(new DateError());
+    
+            await expect(controller.changeProductQuantity(testAppliance.model, 5, testAppliance.arrivalDate)).rejects.toEqual(new DateError());
+        });
+
+        it('Should reject DateError 2', async () => {
+
+            // Configure mock to reject the Promise
+            const controller = new ProductController(); //Create a new instance of the controller
+    
+            // Configura il mock per rifiutare la Promise
+            jest.spyOn(ProductDAO.prototype, "updateModel").mockRejectedValueOnce(new DateError());
+    
+            await expect(controller.changeProductQuantity(testAppliance.model, 5, "1900/01/01")).rejects.toEqual(new DateError());
+        });
+
+        it('Should reject ProductNotFoundError', async () => {
+
+            // Configure mock to reject the Promise
+            const controller = new ProductController(); //Create a new instance of the controller
+    
+            // Configura il mock per rifiutare la Promise
+            jest.spyOn(ProductDAO.prototype, "updateModel").mockRejectedValueOnce(new ProductNotFoundError());
+    
+            await expect(controller.changeProductQuantity("ababababa", 5, "")).rejects.toEqual(new ProductNotFoundError());
+        });
     });
 
     describe("sellProduct test cases", ()=>{
         test("It should return 45", async() => {
             jest.spyOn(ProductDAO.prototype, "sellModel").mockResolvedValueOnce(45);
             const controller = new ProductController(); //Create a new instance of the controller
-            //Call the sellProduct method of the controller with the test user object
+            //Call the sellProduct method of the controller with the test object
             const response = await controller.sellProduct(testSmartphone.model, 5, null);
         
             //Check if the newModel method of the DAO has been called once with the correct parameters
@@ -96,20 +163,38 @@ describe("ProductController unit testing", ()=>{
                 testSmartphone.model, 5, null);
             expect(response).toBe(45); //Check if the response is the quantity, so 50, - 5
         });
-    });
 
-    describe("sellProduct test cases", ()=>{
-        test("It should return 45", async() => {
-            jest.spyOn(ProductDAO.prototype, "sellModel").mockResolvedValueOnce(45);
+        it('Should reject DateError', async () => {
+
+            // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
-            //Call the sellProduct method of the controller with the test user object
-            const response = await controller.sellProduct(testSmartphone.model, 5, null);
-        
-            //Check if the newModel method of the DAO has been called once with the correct parameters
-            expect(ProductDAO.prototype.sellModel).toHaveBeenCalledTimes(1);
-            expect(ProductDAO.prototype.sellModel).toHaveBeenCalledWith(
-                testSmartphone.model, 5, null);
-            expect(response).toBe(45); //Check if the response is the quantity, so 50, - 5
+    
+            // Configura il mock per rifiutare la Promise
+            jest.spyOn(ProductDAO.prototype, "sellModel").mockRejectedValueOnce(new DateError());
+            // ArrivalDate used as sellingDate only because it is 2050/01/01 and it works
+            await expect(controller.sellProduct(testAppliance.model, 5, testAppliance.arrivalDate)).rejects.toEqual(new DateError());
+        });
+
+        it('Should reject LowProductStockError', async () => {
+
+            // Configure mock to reject the Promise
+            const controller = new ProductController(); //Create a new instance of the controller
+    
+            // Configura il mock per rifiutare la Promise
+            jest.spyOn(ProductDAO.prototype, "sellModel").mockRejectedValueOnce(new LowProductStockError());
+            // ArrivalDate used as sellingDate only because it is 2050/01/01 and it works
+            await expect(controller.sellProduct(testSmartphone.model, 500, testSmartphone.arrivalDate)).rejects.toEqual(new LowProductStockError());
+        });
+
+        it('Should reject EmptyProductStockError', async () => {
+
+            // Configure mock to reject the Promise
+            const controller = new ProductController(); //Create a new instance of the controller
+    
+            // Configura il mock per rifiutare la Promise
+            jest.spyOn(ProductDAO.prototype, "sellModel").mockRejectedValueOnce(new EmptyProductStockError());
+            // ArrivalDate used as sellingDate only because it is 2050/01/01 and it works
+            await expect(controller.sellProduct(testLaptop.model, 500, testLaptop.arrivalDate)).rejects.toEqual(new EmptyProductStockError());
         });
     });
 
@@ -190,6 +275,6 @@ describe("ProductController unit testing", ()=>{
             expect(ProductDAO.prototype.deleteOneProduct).toHaveBeenCalledTimes(1);
             expect(ProductDAO.prototype.deleteOneProduct).toHaveBeenCalledWith(testAppliance.model);
             expect(response).toBe(true); //Check if the response is true
-        });
+        }); 
     });
 });
