@@ -199,7 +199,7 @@ describe("ProductController unit testing", ()=>{
     });
 
     describe("getProducts test cases", ()=>{
-        test("it should resolve to a product list", async ()=>{
+        test("it should resolve to a list of three products", async ()=>{
             const requested = [new Product( testSmartphone.sellingPrice, 
                 testSmartphone.model, 
                 testSmartphone.category, 
@@ -212,7 +212,8 @@ describe("ProductController unit testing", ()=>{
                 testAppliance.category, 
                 testAppliance.arrivalDate, 
                 testAppliance.details, 
-                testAppliance.quantity),
+                testAppliance.quantity
+                ),
                 new Product(testLaptop.sellingPrice, 
                 testLaptop.model, 
                 testLaptop.category, 
@@ -224,6 +225,60 @@ describe("ProductController unit testing", ()=>{
             const response = await controller.getProducts(null, null, null);
             expect(ProductDAO.prototype.getAllProducts).toHaveBeenCalledTimes(1);
             expect(response).toEqual(requested)
+        });
+
+        test("it should resolve to a list of one product - grouped by model", async ()=>{
+            const requested = [new Product( testSmartphone.sellingPrice, 
+                testSmartphone.model, 
+                testSmartphone.category, 
+                testSmartphone.arrivalDate, 
+                testSmartphone.details, 
+                testSmartphone.quantity
+                )];
+            jest.spyOn(ProductDAO.prototype, "getAllProducts").mockResolvedValueOnce(requested);
+            const controller = new ProductController();
+            const response = await controller.getProducts("model", testSmartphone.model, null);
+            expect(ProductDAO.prototype.getAllProducts).toHaveBeenCalledTimes(1);
+            expect(response).toEqual(requested)
+        });
+
+        test("it should resolve to a list of one product - grouped by category", async ()=>{
+            const requested = [new Product( testSmartphone.sellingPrice, 
+                testSmartphone.model, 
+                testSmartphone.category, 
+                testSmartphone.arrivalDate, 
+                testSmartphone.details, 
+                testSmartphone.quantity
+                )];
+            jest.spyOn(ProductDAO.prototype, "getAllProducts").mockResolvedValueOnce(requested);
+            const controller = new ProductController();
+            const response = await controller.getProducts("category", null, testSmartphone.category);
+            expect(ProductDAO.prototype.getAllProducts).toHaveBeenCalledTimes(1);
+            expect(response).toEqual(requested)
+        });
+
+        it('group = model but model is null -> Error', async () => {
+            const controller = new ProductController();
+            jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
+            await expect(controller.getProducts("model", null, null)).rejects.toEqual(new Error());
+        });
+
+        it('group = category but category is null -> Error', async () => {
+            const controller = new ProductController();
+            jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
+            await expect(controller.getProducts("category", null, null)).rejects.toEqual(new Error());
+        });
+
+        it('group = model but category is not null -> Error', async () => {
+            const controller = new ProductController();
+            jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
+            await expect(controller.getProducts("model", testSmartphone.model, "bla")).rejects.toEqual(new Error());
+        });
+
+        it('group = category but model is not null -> Error', async () => {
+            const controller = new ProductController();
+            jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
+            await expect(controller.getProducts("category", "bla", testSmartphone.category)).rejects.toEqual(new Error());
         });
     });
 
@@ -244,13 +299,67 @@ describe("ProductController unit testing", ()=>{
                 testAppliance.quantity)];
             jest.spyOn(ProductDAO.prototype, "getAllProducts").mockResolvedValueOnce(requested);
             const controller = new ProductController();
-            const response = await controller.getProducts(null, null, null);
+            const response = await controller.getAvailableProducts(null, null, null);
             expect(ProductDAO.prototype.getAllProducts).toHaveBeenCalledTimes(1);
             expect(response).toEqual(requested)
         });
+
+        test("it should resolve to a list of one product - grouped by model", async ()=>{
+            const requested = [new Product( testSmartphone.sellingPrice, 
+                testSmartphone.model, 
+                testSmartphone.category, 
+                testSmartphone.arrivalDate, 
+                testSmartphone.details, 
+                testSmartphone.quantity
+                )];
+            jest.spyOn(ProductDAO.prototype, "getAllProducts").mockResolvedValueOnce(requested);
+            const controller = new ProductController();
+            const response = await controller.getAvailableProducts("model", testSmartphone.model, null);
+            expect(ProductDAO.prototype.getAllProducts).toHaveBeenCalledTimes(1);
+            expect(response).toEqual(requested)
+        });
+
+        test("it should resolve to a list of one product - grouped by categpry", async ()=>{
+            const requested = [new Product( testSmartphone.sellingPrice, 
+                testSmartphone.model, 
+                testSmartphone.category, 
+                testSmartphone.arrivalDate, 
+                testSmartphone.details, 
+                testSmartphone.quantity
+                )];
+            jest.spyOn(ProductDAO.prototype, "getAllProducts").mockResolvedValueOnce(requested);
+            const controller = new ProductController();
+            const response = await controller.getAvailableProducts("category", null, testSmartphone.category);
+            expect(ProductDAO.prototype.getAllProducts).toHaveBeenCalledTimes(1);
+            expect(response).toEqual(requested)
+        });
+
+        it('group = model but category is not null -> Error', async () => {
+            const controller = new ProductController();
+            jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
+            await expect(controller.getAvailableProducts("model", testSmartphone.model, "bla")).rejects.toEqual(new Error());
+        });
+
+        it('group = category but model is not null -> Error', async () => {
+            const controller = new ProductController();
+            jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
+            await expect(controller.getAvailableProducts("category", "bla", testSmartphone.category)).rejects.toEqual(new Error());
+        });
+
+        it('group = model but category is not null -> Error', async () => {
+            const controller = new ProductController();
+            jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
+            await expect(controller.getAvailableProducts("model", testSmartphone.model, testSmartphone.category)).rejects.toEqual(new Error());
+        });
+
+        it('group = category but model is not null -> Error', async () => {
+            const controller = new ProductController();
+            jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
+            await expect(controller.getAvailableProducts("category", "bla", testSmartphone.category)).rejects.toEqual(new Error());
+        });
     });
 
-    describe("deleteAllProdycts test cases", ()=>{
+    describe("deleteAllProducts test cases", ()=>{
         test("It should return true", async () => {
             jest.spyOn(ProductDAO.prototype, "deleteAllProducts").mockResolvedValueOnce(true); //Mock the deleteAllProducts method of the DAO
             const controller = new ProductController(); //Create a new instance of the controller
