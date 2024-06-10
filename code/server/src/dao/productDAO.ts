@@ -120,18 +120,18 @@ class ProductDAO {
                 let params: any[] = [];
 
                 // Checks errors and sets query parameters
-                if (grouping) {
-                    if (grouping === "category" && category && !model) {
+                if (grouping !== null) {
+                    if (grouping === "category" && category === null && model !== null) {
                         sql += " WHERE category = ?";
                         params = [category];
-                    } else if (grouping === "model" && model && !category) {
+                    } else if (grouping === "model" && model === null && category !== null) {
                         sql += " WHERE model = ?";
                         params = [model];
                     } else {
                         return reject(new Error("Invalid parameters"));
                     }
                 } else {
-                    if (model || category) {
+                    if (model !== null || category !== null) {
                         return reject(new Error("Invalid parameters"));
                     }
                 }
@@ -139,8 +139,8 @@ class ProductDAO {
                 // Runs the query
                 this.allSql(sql, params)
                     .then((rows) => {
-                        if (rows.length === 0 && model) return reject(new ProductNotFoundError());
-                        resolve(rows);
+                        if (rows.length === 0) return reject(new ProductNotFoundError());
+                        else resolve(rows);
                     })
                     .catch(err => {
                         reject(err);
