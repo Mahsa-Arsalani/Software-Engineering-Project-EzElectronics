@@ -26,7 +26,7 @@ class ReviewController {
             throw new UnauthorizedUserError()
             
         try {
-            const productExists = await this.ProductDAO.getAllProducts("model", null, model);
+            const productExists = await this.ProductDAO.getAllProducts(null,null,model);
             if (productExists) {
                 await this.dao.addReview(model, user, score, comment);
             } else {
