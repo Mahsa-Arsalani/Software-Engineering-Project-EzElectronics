@@ -13,7 +13,7 @@ afterEach(() => {
 
 const testUser = new User("testcust", "testname", "testsurname", Role.CUSTOMER, "testaddress", "testbirthdate")
 const testReview = {
-    model: "Samsung Galaxy A54",
+    model: "Alexa",
     user: testUser,
     date: "testdate",
     score: 3,
