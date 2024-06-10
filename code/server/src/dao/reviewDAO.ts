@@ -30,7 +30,7 @@ addReview(model:string,user:User,score:number,comment:string):Promise<void>{
             db.run(createTableSql, [], (err: Error | null) => { });*/
 
             const checkSql = "SELECT COUNT(*) AS count FROM reviews WHERE user = ? AND model = ?";
-            db.get(checkSql, [user, model], (err: Error | null, row: any) => {
+            db.get(checkSql, [user.username, model], (err: Error | null, row: any) => {
                 if (err) {
                     reject();
                 }
@@ -39,7 +39,7 @@ addReview(model:string,user:User,score:number,comment:string):Promise<void>{
                 }
                 const date = new Date().toISOString().split('T')[0];
                 const insertsql="INSERT INTO reviews(model,user,score,date, comment) VALUES (?,?,?,?,?)";
-            db.run(insertsql, [model,user,score,date,comment], (err: Error | null) => {
+            db.run(insertsql, [model,user.username,score,date,comment], (err: Error | null) => {
                 if (err) {
                     reject(err);
                 }
@@ -87,7 +87,7 @@ addReview(model:string,user:User,score:number,comment:string):Promise<void>{
     return new Promise<void>((resolve,reject)=>{
         try{
             const checkSql = "SELECT COUNT(*) AS count FROM reviews WHERE user = ? AND model = ?";
-            db.get(checkSql, [user, model], (err: Error | null, row: any) => {
+            db.get(checkSql, [user.username, model], (err: Error | null, row: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -95,7 +95,7 @@ addReview(model:string,user:User,score:number,comment:string):Promise<void>{
                     reject(new NoReviewProductError());
                 }
             const sql = "DELETE FROM reviews WHERE model= ? AND user= ?";
-            db.run(sql,[model,user],(err:Error | null) =>{
+            db.run(sql,[model,user.username],(err:Error | null) =>{
                 if(err) {
                     reject(err);
                 }
