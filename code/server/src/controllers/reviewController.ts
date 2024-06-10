@@ -24,7 +24,7 @@ class ReviewController {
         if(user.role !== Role.CUSTOMER)
             throw new UnauthorizedUserError
 
-        if(await this.ProductDAO.getAllProducts(null, null, model))
+        if(await this.ProductDAO.getAllProducts("model",null,model))
             return this.dao.addReview(model,user,score,comment)
     }    
     /**
