@@ -21,29 +21,70 @@ describe("CartController unit testing", () => {
   const testUser = new User("tusername","tname","tsurname", Role.CUSTOMER , "taddress", "10-10-1999");
   const testProduct = new Product(50.0, "Samsung GalaxyA54", Category.SMARTPHONE, "", "", 50);
   const testCart = new Cart("tcustomer", true, "11-06-2024", 10, [{model:"Samsung GalaxyA54", quantity: 10, category: Category.SMARTPHONE, price: 50.00 }]);
-  const updatedCart = new Cart("tcustomer", true, "11-06-2024", 450, [{ model: "Samsung GalaxyA54", quantity: 9, category: Category.SMARTPHONE, price: 50.00 }]);
+  const updatedCart = new Cart("ucustomer", true, "12-06-2024", 450, [{ model: "Samsung GalaxyA54", quantity: 5, category: Category.SMARTPHONE, price: 30.00 }]);
   const emptyCart = new Cart("tcustomer", true, "11-06-2024", 0, []);
 
 
 
 
 
-  describe("getCart test cases", () => {
-    test("It should return the cart for the logged in user", async () => {
-      jest.spyOn(CartDAO.prototype, "getCart").mockResolvedValueOnce(testCart);
-      const controller = new CartController();
-      const response = await controller.getCart(testUser);
+    
 
-      expect(CartDAO.prototype.getCart).toHaveBeenCalledTimes(1);
-      expect(CartDAO.prototype.getCart).toHaveBeenCalledWith(testUser);
-      expect(response).toEqual(testCart);
-    });
+    describe("addtoCart test" , () => {
+        test("It should successfully remove a product from the cart", async () => {
+          jest.spyOn(ProductDAO.prototype, "getProductByModel").mockResolvedValueOnce(testProduct);
+          jest.spyOn(CartDAO.prototype, "getCart").mockResolvedValueOnce(testCart);
+          jest.spyOn(CartDAO.prototype, "updateCurrentCart").mockResolvedValueOnce(true);
+  
+          const controller = new CartController();
+          const response = await controller.removeProductFromCart(testUser, "Samsung GalaxyA54");
+  
+          expect(ProductDAO.prototype.getProductByModel).toHaveBeenCalledTimes(1);
+          expect(ProductDAO.prototype.getProductByModel).toHaveBeenCalledWith("Samsung GalaxyA54");
+          expect(CartDAO.prototype.getCart).toHaveBeenCalledTimes(1);
+          expect(CartDAO.prototype.getCart).toHaveBeenCalledWith(testUser);
+          expect(CartDAO.prototype.updateCurrentCart).toHaveBeenCalledTimes(1);
+          // expect(CartDAO.prototype.updateCurrentCart).toHaveBeenCalledWith(testUser, updatedCart);
+          expect(response).toEqual(true);
+      });
+  
+      test("It should remove the product completely if the quantity is 1", async () => {
+          const cartWithOneProduct = new Cart("tcustomer", true, "11-06-2024", 50, [{ model: "Samsung GalaxyA54", quantity: 1, category: Category.SMARTPHONE, price: 50.00 }]);
+  
+          jest.spyOn(ProductDAO.prototype, "getProductByModel").mockResolvedValueOnce(testProduct);
+          jest.spyOn(CartDAO.prototype, "getCart").mockResolvedValueOnce(cartWithOneProduct);
+          jest.spyOn(CartDAO.prototype, "updateCurrentCart").mockResolvedValueOnce(true);
+  
+          const controller = new CartController();
+          const response = await controller.removeProductFromCart(testUser, "Samsung GalaxyA54");
+  
+          expect(ProductDAO.prototype.getProductByModel).toHaveBeenCalledTimes(1);
+          expect(ProductDAO.prototype.getProductByModel).toHaveBeenCalledWith("Samsung GalaxyA54");
+          expect(CartDAO.prototype.getCart).toHaveBeenCalledTimes(1);
+          expect(CartDAO.prototype.getCart).toHaveBeenCalledWith(testUser);
+          expect(CartDAO.prototype.updateCurrentCart).toHaveBeenCalledTimes(1);
+          // expect(CartDAO.prototype.updateCurrentCart).toHaveBeenCalledWith(testUser, emptyCart);
+          expect(response).toEqual(true);
+      });
+      })
+    
 
 
+      describe("getCart test", () => {
+        test("It should return the cart for the logged in user", async () => {
+          jest.spyOn(CartDAO.prototype, "getCart").mockResolvedValueOnce(testCart);
+          const controller = new CartController();
+          const response = await controller.getCart(testUser);
+    
+          expect(CartDAO.prototype.getCart).toHaveBeenCalledTimes(1);
+          expect(CartDAO.prototype.getCart).toHaveBeenCalledWith(testUser);
+          expect(response).toEqual(testCart);
+        });
+
+        
 
 
-
-    describe("checkoutCart test cases", () => {
+    describe("checkoutCart test", () => {
       test("It should successfully checkout the cart for the logged in user", async () => {
         jest.spyOn(CartDAO.prototype, "getCart").mockResolvedValueOnce(testCart);
         jest.spyOn(ProductDAO.prototype, "getProductByModel")
@@ -64,7 +105,6 @@ describe("CartController unit testing", () => {
         expect(CartDAO.prototype.checkoutCart).toHaveBeenCalledWith(testUser);
         expect(response).toEqual(true);
     });
-
 
     test("It should throw LowProductStockError if a product has insufficient stock", async () => {
         const lowStockProduct = new Product(50.0, "Samsung GalaxyA54", Category.SMARTPHONE, "", "", 5);
@@ -97,6 +137,12 @@ describe("CartController unit testing", () => {
     });
 
     })
+
+
+
+
+
+    
     describe("getCustomer test", () => {
       test("It should return the carts for the logged in user", async () => {
         jest.spyOn(CartDAO.prototype, "getCustomerCarts").mockResolvedValueOnce([testCart]);
@@ -111,47 +157,17 @@ describe("CartController unit testing", () => {
     })
 
 
-    describe("addtoCart test" , () => {
-      test("It should successfully remove a product from the cart", async () => {
-        jest.spyOn(ProductDAO.prototype, "getProductByModel").mockResolvedValueOnce(testProduct);
-        jest.spyOn(CartDAO.prototype, "getCart").mockResolvedValueOnce(testCart);
-        jest.spyOn(CartDAO.prototype, "updateCurrentCart").mockResolvedValueOnce(true);
-
-        const controller = new CartController();
-        const response = await controller.removeProductFromCart(testUser, "Samsung GalaxyA54");
-
-        expect(ProductDAO.prototype.getProductByModel).toHaveBeenCalledTimes(1);
-        expect(ProductDAO.prototype.getProductByModel).toHaveBeenCalledWith("Samsung GalaxyA54");
-        expect(CartDAO.prototype.getCart).toHaveBeenCalledTimes(1);
-        expect(CartDAO.prototype.getCart).toHaveBeenCalledWith(testUser);
-        expect(CartDAO.prototype.updateCurrentCart).toHaveBeenCalledTimes(1);
-        // expect(CartDAO.prototype.updateCurrentCart).toHaveBeenCalledWith(testUser, updatedCart);
-        expect(response).toEqual(true);
-    });
-
-    
 
 
-    test("It should remove the product completely if the quantity is 1", async () => {
-        const cartWithOneProduct = new Cart("tcustomer", true, "11-06-2024", 50, [{ model: "Samsung GalaxyA54", quantity: 1, category: Category.SMARTPHONE, price: 50.00 }]);
 
-        jest.spyOn(ProductDAO.prototype, "getProductByModel").mockResolvedValueOnce(testProduct);
-        jest.spyOn(CartDAO.prototype, "getCart").mockResolvedValueOnce(cartWithOneProduct);
-        jest.spyOn(CartDAO.prototype, "updateCurrentCart").mockResolvedValueOnce(true);
 
-        const controller = new CartController();
-        const response = await controller.removeProductFromCart(testUser, "Samsung GalaxyA54");
 
-        expect(ProductDAO.prototype.getProductByModel).toHaveBeenCalledTimes(1);
-        expect(ProductDAO.prototype.getProductByModel).toHaveBeenCalledWith("Samsung GalaxyA54");
-        expect(CartDAO.prototype.getCart).toHaveBeenCalledTimes(1);
-        expect(CartDAO.prototype.getCart).toHaveBeenCalledWith(testUser);
-        expect(CartDAO.prototype.updateCurrentCart).toHaveBeenCalledTimes(1);
-        // expect(CartDAO.prototype.updateCurrentCart).toHaveBeenCalledWith(testUser, emptyCart);
-        expect(response).toEqual(true);
-    });
-    })
-  
+
+
+
+
+
+
 
 
 
