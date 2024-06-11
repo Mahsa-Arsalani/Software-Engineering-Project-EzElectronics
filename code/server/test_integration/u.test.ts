@@ -333,4 +333,83 @@ describe("User integration testing ", ()=>{
         })
     })
 
+    describe("DELETE /users/username",()=>{
+        test("access router as andmin and delete an other no admin user, it should return 200", async()=>{
+            await request(app)
+            .delete(baseURL + "/users/" + testManagerUser.username)
+            .set("Cookie", AdminCookie)
+            .expect(200)
+            
+            //verify user doesn't exist anymore
+            await request(app)
+            .get(baseURL + "/users/" + testManagerUser.username)
+            .set("Cookie", AdminCookie)
+            .expect(404)
+        })
+
+        test("access router as andmin and delete an other admin user, it should return 401", async()=>{
+            const newAdminUsername = "admin2"
+            await postUser({...testAdmin, username: newAdminUsername})
+
+            await request(app)
+            .delete(baseURL + "/users/" + newAdminUsername)
+            .set("Cookie", AdminCookie)
+            .expect(401)
+        })
+
+        test("try to delete an non existing user, it should return 404", async()=>{
+            await request(app)
+            .delete(baseURL + "/users/" + "Anonymous")
+            .set("Cookie", AdminCookie)
+            .expect(404)
+        })
+
+        test("access route as customer and delete own account, it should return 200", async()=>{
+            await request(app)
+            .delete(baseURL + "/users/" + testCustomerUser.username)
+            .set("Cookie", CustomerCookie)
+            .expect(200)
+            
+            //verify user doesn't exist anymore
+            await request(app)
+            .get(baseURL + "/users/" + testCustomerUser.username)
+            .set("Cookie", AdminCookie)
+            .expect(404)
+        })
+
+        test("access route as customer and delete own account, it should return 200", async()=>{
+            //add previously deleted manager and login
+            await postUser(testManager)
+            ManagerCookie = await login(testManager)
+
+            await request(app)
+            .delete(baseURL + "/users/" + testManagerUser.username)
+            .set("Cookie", ManagerCookie)
+            .expect(200)
+            
+            //verify user doesn't exist anymore
+            await request(app)
+            .get(baseURL + "/users/" + testManagerUser.username)
+            .set("Cookie", AdminCookie)
+            .expect(404)
+        })
+
+        test("access route as admin and delete own account, it should return 200", async()=>{
+            //login
+            const testNewAdmin = {...testAdmin, username: "admin2"}
+            const newAdminCookie = await login(testNewAdmin)
+
+            await request(app)
+            .delete(baseURL + "/users/" + testNewAdmin.username)
+            .set("Cookie", newAdminCookie)
+            .expect(200)
+            
+            //verify user doesn't exist anymore
+            await request(app)
+            .get(baseURL + "/users/" + testNewAdmin.username)
+            .set("Cookie", AdminCookie)
+            .expect(404)
+        })        
+    })
+
 })
