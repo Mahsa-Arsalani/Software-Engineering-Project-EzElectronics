@@ -35,7 +35,7 @@ jest.mock("express-validator", () =>{
 jest.mock('../../src/helper', () => {
     const ErrorHandlerModule: any = jest.requireActual('../../src/helper');
     const ErrorHandler = ErrorHandlerModule.default
-    ErrorHandler.prototype.validateRequest = jest.fn((req: any, res: any, next: any) => {return next()})
+    ErrorHandler.prototype.validateRequest = jest.fn()
   
     return {
       __esModule: true,
@@ -44,10 +44,12 @@ jest.mock('../../src/helper', () => {
 });
 
 const dummyMiddleware = (req: any, res: any, next: any) => {return next()}
+const validateRequestError = (req: any, res: any, next: any) => {return res.status(422).json({ error: "Validate Request Error" })}
 
-beforeAll(()=>{
-    jest.spyOn(Authenticator.prototype, "isAdmin").mockImplementation((req, res, next) => {return next()})
+beforeEach(()=>{
+    jest.spyOn(Authenticator.prototype, "isAdmin").mockImplementation(dummyMiddleware)
     jest.spyOn(Authenticator.prototype, "isLoggedIn").mockImplementation(dummyMiddleware)
+    jest.spyOn(ErrorHandler.prototype, "validateRequest").mockImplementation(dummyMiddleware)
 })
 
 afterEach(()=>{
@@ -108,12 +110,19 @@ describe("User Routes unit test", ()=>{
         })
 
         test("it should return 503 error code", async ()=>{
+            jest.spyOn(UserController.prototype, "createUser").mockRejectedValue("error")
 
-            jest.spyOn(UserController.prototype, "createUser").mockRejectedValue("error") //Mock the createUser method of the controller
-            const response = await request(app).post(baseURL + "/users").send(testUser) //Send a POST request to the route
+            const response = await request(app).post(baseURL + "/users").send(testUser)
             expect(response.status).toBe(503)
             expect(UserController.prototype.createUser).toHaveBeenCalledTimes(1)
 
+        })
+
+        test("it should return 422 error code due to some invalid parameter", async ()=>{
+            jest.spyOn(ErrorHandler.prototype, "validateRequest").mockImplementation(validateRequestError)
+
+            const response = await request(app).post(baseURL + "/users").send(testUser)
+            expect(response.status).toBe(422)
         })
 
     })
