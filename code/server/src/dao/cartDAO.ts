@@ -435,7 +435,7 @@ getAllCarts():Promise<Cart[]> {
                     reject (new CartNotFoundError)
                     return
                 } else {
-                    const carts: Cart[] = rows.map((row:any) => new Cart(row.customer, row.paid, row.paymentDate, row.total, row.products));
+                    const carts: Cart[] = rows.map((row:any) => new Cart(row.customer, row.paid, row.paymentDate, row.total, JSON.parse(row.products)));
                     resolve(carts)
                 }
             })           

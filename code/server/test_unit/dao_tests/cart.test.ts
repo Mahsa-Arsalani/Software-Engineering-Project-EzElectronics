@@ -56,7 +56,6 @@ describe("CartDAO unit testing", ()=>{
           const cartDAO = new CartDAO()
 
           const result = await cartDAO.getCart(mockUser);
-          console.log(result)
           expect(result).toEqual(
               new Cart('tusername', false, "null", 10, [{ model: 'Samsung GalaxyA54', quantity: 10, category: Category.SMARTPHONE, price: 50 }])
           );
@@ -64,20 +63,18 @@ describe("CartDAO unit testing", ()=>{
           jest.clearAllMocks();
           
       });
-      /*
-      test('should resolve with an empty Cart object when no unpaid cart is found', async () => {
+      
+      
+      test('should reject when no unpaid cart is found', async () => {
           jest.spyOn(db, "get").mockImplementation((sql, params, callback) => {
               if (sql.includes("SELECT * FROM cart WHERE customer = ? AND paid = 0") && params[0] === 'tusername') {
                   return callback(null, null);
               }
           });
-          const result = await CartDAO.prototype.getCart(mockUser);
-          const expectedCart = new Cart('tusername', false, null, 0, []);
-          expectedCart.setExist(false);
-          expect(result).toEqual(expectedCart);
-          expect(db.get).toHaveBeenCalledTimes(1);
+          await expect(CartDAO.prototype.getCart(mockUser)).rejects.toEqual(new CartNotFoundError());
+          
           jest.clearAllMocks();
-      });*/
+      });
       
       test('should reject with an error if an error occurs during retrieving the cart', async () => {
           const errorMessage = "Database error";
@@ -137,10 +134,11 @@ describe("CartDAO unit testing", ()=>{
         beforeEach(() => {
             jest.clearAllMocks();
         });
-        /*test('should resolve with an array of Cart objects when customer carts are retrieved successfully', async () => {
+        
+        test('should resolve with an array of Cart objects when customer carts are retrieved successfully', async () => {
             const mockRows = [
-                { customer: 'tusername', paid: true, paymentDate: '11-06-2024', total: 10, products: '[{"model":"Samsung GalaxyA54","quantity":10,"category":"SMARTPHONE","price":50}]' },
-                { customer: 'tusername', paid: true, paymentDate: '12-06-2024', total: 20, products: '[{"model":"iPhone 12","quantity":1,"category":"SMARTPHONE","price":1000}]' }
+                { customer: 'tusername', paid: true, paymentDate: '11-06-2024', total: 10, products: '[{"model":"Samsung GalaxyA54","quantity":10,"category":"Smartphone","price":50}]' },
+                { customer: 'tusername', paid: true, paymentDate: '12-06-2024', total: 20, products: '[{"model":"iPhone 12","quantity":1,"category":"Smartphone","price":1000}]' }
             ];
             jest.spyOn(db, "all").mockImplementation((sql, params, callback) => {
                 if (sql.includes("SELECT * FROM cart WHERE customer = ? AND paid = 1") && params[0] === 'tusername') {
@@ -155,7 +153,7 @@ describe("CartDAO unit testing", ()=>{
             expect(db.all).toHaveBeenCalledTimes(1);
             jest.clearAllMocks();
         });
-        */
+        
         test('should reject with an error if an error occurs during retrieving customer carts', async () => {
             const errorMessage = "Database error";
             jest.spyOn(db, "all").mockImplementation((sql, params, callback) => {
@@ -305,9 +303,10 @@ describe("CartDAO unit testing", ()=>{
       beforeEach(() => {
           jest.clearAllMocks();
       });
-      /*test('should resolve with an array of Cart objects when carts are retrieved successfully', async () => {
+
+      test('should resolve with an array of Cart objects when carts are retrieved successfully', async () => {
           const mockRows = [
-              { customer: 'tcustomer1', paid: true, paymentDate: '11-06-2024', total: 10, products: '[{"model":"Samsung GalaxyA54","quantity":10,"category":"SMARTPHONE","price":50}]' },
+              { customer: 'tcustomer1', paid: true, paymentDate: '11-06-2024', total: 10, products: '[{"model":"Samsung GalaxyA54","quantity":10,"category":"Smartphone","price":50}]' },
               { customer: 'tcustomer2', paid: false, paymentDate: '14-06-2024', total: 20, products: '[]' }
           ];
           jest.spyOn(db, "all").mockImplementation((sql, callback) => {
@@ -323,7 +322,7 @@ describe("CartDAO unit testing", ()=>{
           expect(db.all).toHaveBeenCalledTimes(1);
           jest.clearAllMocks();
       });
-      */
+      
       test('should reject with an error if an error occurs during retrieving carts', async () => {
           const errorMessage = "Database error";
           jest.spyOn(db, "all").mockImplementation((sql, callback) => {
