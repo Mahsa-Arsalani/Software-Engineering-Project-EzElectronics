@@ -147,9 +147,11 @@ getCart(user: User) : Promise<Cart> {
                     const cart: Cart = new Cart(row.customer, row.paid, row.paymentDate, row.total, JSON.parse(row.products));
                     resolve(cart)
                 }else{
-                    const cart: Cart = new Cart(username, false, null, 0, []);
-                    cart.setExist(false)
-                    resolve(cart)
+                    throw new CartNotFoundError()
+
+                    //const cart: Cart = new Cart(username, false, null, 0, []);
+                    //cart.setExist(false)
+                    //resolve(cart)
                 }       
             })
         } catch (error) {

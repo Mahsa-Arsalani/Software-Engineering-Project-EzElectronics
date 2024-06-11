@@ -14,7 +14,7 @@ jest.mock("../../src/db/db.ts")
 
 
 afterEach(()=>{
-    jest.restoreAllMocks()
+    //jest.restoreAllMocks()
     jest.clearAllMocks()
 })
 
@@ -34,28 +34,37 @@ describe("CartDAO unit testing", ()=>{
 
    describe('getCart', () => {
       beforeEach(() => {
-          jest.clearAllMocks();
+          //jest.clearAllMocks();
       });
-      /*test('should resolve with a Cart object when an unpaid cart is found', async () => {
+
+      
+      test('should resolve with a Cart object when an unpaid cart is found', async () => {
           const mockRow = {
               customer: 'tusername',
               paid: false,
               paymentDate: "null",
               total: 10,
-              products: '[{"model":"Samsung GalaxyA54","quantity":10,"category":"SMARTPHONE","price":50}]'
+              products: '[{"model":"Samsung GalaxyA54","quantity":10,"category":"Smartphone","price":50}]'
           };
+
           jest.spyOn(db, "get").mockImplementation((sql, params, callback) => {
-              if (sql.includes("SELECT * FROM cart WHERE customer = ? AND paid = false") && params[0] === 'tusername') {
-                  return callback(null, mockRow);
+              if (sql.includes("SELECT * FROM cart WHERE customer = ? AND paid = 0") && params[0] === 'tusername') {
+                return callback(null, mockRow)
               }
           });
-          const result = await CartDAO.prototype.getCart(mockUser);
+          
+          const cartDAO = new CartDAO()
+
+          const result = await cartDAO.getCart(mockUser);
+          console.log(result)
           expect(result).toEqual(
               new Cart('tusername', false, "null", 10, [{ model: 'Samsung GalaxyA54', quantity: 10, category: Category.SMARTPHONE, price: 50 }])
           );
           expect(db.get).toHaveBeenCalledTimes(1);
           jest.clearAllMocks();
+          
       });
+      /*
       test('should resolve with an empty Cart object when no unpaid cart is found', async () => {
           jest.spyOn(db, "get").mockImplementation((sql, params, callback) => {
               if (sql.includes("SELECT * FROM cart WHERE customer = ? AND paid = 0") && params[0] === 'tusername') {
@@ -69,6 +78,7 @@ describe("CartDAO unit testing", ()=>{
           expect(db.get).toHaveBeenCalledTimes(1);
           jest.clearAllMocks();
       });*/
+      
       test('should reject with an error if an error occurs during retrieving the cart', async () => {
           const errorMessage = "Database error";
           jest.spyOn(db, "get").mockImplementation((sql, params, callback) => {

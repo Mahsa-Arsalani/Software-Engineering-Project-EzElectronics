@@ -43,7 +43,7 @@ describe("cart routing test",()=>{
             const response = await request(app)
             .get(baseURL + "/")
             .set("user", JSON.stringify(mockUser))
-            console.log(response);
+            //console.log(response);
             
 
             expect(response.status).toBe(200)

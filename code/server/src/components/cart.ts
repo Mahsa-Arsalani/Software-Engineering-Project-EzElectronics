@@ -27,12 +27,16 @@ class Cart {
         this.total = total
         this.products = products
 
+        /*
         //this.existVal = true
         let existVal: Boolean = true
+        
         this.setExist = (state:Boolean)=>{existVal = state}
         this.exist = (): Boolean=>{return existVal}
+        */
+        
     }
-
+/*
     setExist(state: Boolean){
         //this.existVal = state
     }
@@ -40,6 +44,8 @@ class Cart {
     exist(): Boolean{
         return true//return this.existVal
     }
+        */
+    
 
 
 }

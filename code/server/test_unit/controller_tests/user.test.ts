@@ -2,7 +2,8 @@ import { test, expect, jest } from "@jest/globals"
 import UserController from "../../src/controllers/userController"
 import UserDAO from "../../src/dao/userDAO"
 import {Role, User} from "../../src/components/user"
-import { UserNotAdminError, UnauthorizedUserError } from "../../src/errors/userError";
+import { UserNotAdminError, UnauthorizedUserError, UserInvalidDate } from "../../src/errors/userError";
+import dayjs from "dayjs";
 
 jest.mock("../../src/dao/userDAO")
 
@@ -206,7 +207,16 @@ describe("UserController unit testing", ()=>{
             expect(response).toEqual(requested)
         })
 
-        //Customer or Manager try tu update others data
+        test("invalid birthdate, it should reject", async ()=>{
+            const caller = new User(testAdmin.username, testAdmin.name, testAdmin.surname, testAdmin.role, testAdmin.address, testAdmin.birthdate)
+            const requested = new User(testCustomer.username, testCustomer.name, testCustomer.surname, testCustomer.role, testCustomer.address, dayjs().add(1, 'day').format("YYYY-MM-DD"))
+
+            const controller = new UserController();
+            await expect(controller.updateUserInfo(caller, testCustomer.name, testCustomer.surname, testCustomer.address, requested.birthdate, requested.username)).rejects
+            .toEqual(new UserInvalidDate())
+        })
+
+        //Customer or Manager try to update others data
         test("it should rejest ", async ()=>{
             const caller = new User(testCustomer.username, testCustomer.name, testCustomer.surname, testCustomer.role, testCustomer.address, testCustomer.birthdate)
             const requested = new User(testAdmin.username, testAdmin.name, testAdmin.surname, testAdmin.role, testAdmin.address, testAdmin.birthdate)
@@ -218,7 +228,7 @@ describe("UserController unit testing", ()=>{
             
         })
 
-        //Admin try tu update another admin data
+        //Admin try to update another admin data
         test("it should rejest ", async ()=>{
             const caller = new User(testAdmin.username, testAdmin.name, testAdmin.surname, testAdmin.role, testAdmin.address, testAdmin.birthdate)
             const requested = new User("otherAdmin", testAdmin.name, testAdmin.surname, testAdmin.role, testAdmin.address, testAdmin.birthdate)

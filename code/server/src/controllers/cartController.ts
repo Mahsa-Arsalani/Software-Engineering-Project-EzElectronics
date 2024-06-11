@@ -34,8 +34,20 @@ class CartController {
         const newProduct: Product = await this.productDao.getProductByModel(model)
         if(newProduct.quantity < 1)
             throw new EmptyProductStockError()
+        
+        let currentCart: Cart 
+        let currentCartExist = true
+        try{
+            currentCart = await this.dao.getCart(user)
+        }catch(err){
+            if(err instanceof CartNotFoundError){
+                currentCartExist = false
+                currentCart = new Cart(user.username, false, null, 0, [])
+            }else{
+                throw err
+            }
+        }
 
-        const currentCart: Cart = await this.dao.getCart(user)
         const products: ProductInCart[] = currentCart.products 
         
         const idx = products.findIndex((item: ProductInCart) => item.model === model)
@@ -52,7 +64,7 @@ class CartController {
         products.forEach((item: ProductInCart) => {currentCart.total += item.price * item.quantity});
 
 
-        if(currentCart.exist()){
+        if(currentCartExist){
             return this.dao.updateCurrentCart(user, currentCart)
         }else{
             return this.dao.createCurrentCart(user, currentCart)
@@ -82,9 +94,11 @@ class CartController {
         const currentCart: Cart = await this.dao.getCart(user)
         const products = currentCart.products
         
+        /*
         if(!currentCart.exist()){
             throw new CartNotFoundError()
         }
+        */
 
         if(products.length === 0){
             throw new EmptyCartError()
@@ -133,8 +147,10 @@ class CartController {
         const currentCart: Cart = await this.dao.getCart(user)
         const products: ProductInCart[] = currentCart.products 
 
+        /*
         if(!currentCart.exist())
             throw new CartNotFoundError()
+        */
         
         const idx = products.findIndex((item: ProductInCart) => item.model === model)
         if(idx >= 0){
