@@ -2,6 +2,7 @@ import { User, Role } from "../components/user";
 import ReviewDAO from "../dao/reviewDAO";
 import {UnauthorizedUserError} from "../errors/userError";
 import ProductDAO from "../dao/productDAO";
+import { ProductNotFoundError } from "../../src/errors/productError";
 
 class ReviewController {
     private dao: ReviewDAO
@@ -22,11 +23,20 @@ class ReviewController {
      */
     async addReview(model: string, user: User, score: number, comment: string) /**:Promise<void> */ { 
         if(user.role !== Role.CUSTOMER)
-            throw new UnauthorizedUserError
+            throw new UnauthorizedUserError()
+            
+        try {
+            const productExists = await this.ProductDAO.getAllProducts(null,null,model);
+            if (productExists) {
+                await this.dao.addReview(model, user, score, comment);
+            } else {
+                throw new ProductNotFoundError();
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 
-        if(await this.ProductDAO.getAllProducts(null, null, model))
-            return this.dao.addReview(model,user,score,comment)
-    }    
     /**
      * Returns all reviews for a product
      * @param model The model of the product to get reviews from

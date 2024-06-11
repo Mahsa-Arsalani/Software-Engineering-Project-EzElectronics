@@ -113,42 +113,46 @@ class ProductDAO {
      * It gets all the products. They can be filtered by category (one between "Smartphone", "Laptop", "Appliance") or by model. If so,
      * "grouping" should be equal to the word "category" or "model"
      */
-    getAllProducts(grouping: string | null, category: string | null, model: string | null): Promise<Product[]> {
-        return new Promise((resolve, reject) => {
-            try {
-                let sql = "SELECT * FROM products";
-                let params: any[] = [];
-
-                // Checks errors and sets query parameters
-                if (grouping !== null) {
-                    if (grouping === "category" && category === null && model !== null) {
-                        sql += " WHERE category = ?";
-                        params = [category];
-                    } else if (grouping === "model" && model === null && category !== null) {
-                        sql += " WHERE model = ?";
-                        params = [model];
-                    } else {
-                        return reject(new Error("Invalid parameters"));
-                    }
-                } else {
-                    if (model !== null || category !== null) {
-                        return reject(new Error("Invalid parameters"));
-                    }
+    async getAllProducts(grouping: string | null, category: string | null, model: string | null): Promise<Product[]> {
+        try {
+            if (category === undefined) category = null;
+            if (model === undefined) model = null;
+            let sql = "SELECT * FROM products";
+            let params: any[] = [];
+    
+            // Verifica dei parametri e costruzione della query
+            if (grouping === "category") {
+                if (category === null || model !== null) {
+                    throw new Error("Invalid parameters for grouping by category");
                 }
-
-                // Runs the query
-                this.allSql(sql, params)
-                    .then((rows) => {
-                        if (rows.length === 0) return reject(new ProductNotFoundError());
-                        else resolve(rows);
-                    })
-                    .catch(err => {
-                        reject(err);
-                    });
-            } catch (err) {
-                reject(err);
+                sql += " WHERE category = ?";
+                params.push(category);
+            } else if (grouping === "model") {
+                if (model === null || category !== null) {
+                    throw new Error("Invalid parameters for grouping by model");
+                }
+                sql += " WHERE model = ?";
+                params.push(model);
+            } else {
+                if (model !== null || category !== null) {
+                    console.log(grouping);
+                    console.log(category);
+                    console.log(model);
+                    throw new Error("Invalid grouping parameter");
+                }
             }
-        });
+    
+            // Esecuzione della query
+            const rows = await this.allSql(sql, params);
+    
+            if (rows.length === 0 && model) {
+                throw new ProductNotFoundError();
+            }
+            return rows;
+
+        } catch (err) {
+            throw err;
+        }    
     }
 
     /**

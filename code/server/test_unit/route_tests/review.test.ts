@@ -48,6 +48,7 @@ test("It should return a 200 success code", async () => {
     expect(response.status).toBe(200) //Check if the response status is 200
     expect(Authenticator.prototype.isCustomer).toHaveBeenCalledTimes(1);
     expect(ReviewController.prototype.addReview).toHaveBeenCalledTimes(1) //Check if the addReview method has been called once
+    
 })
 test("It should return a 404 status code", async () => {
     jest.spyOn(Authenticator.prototype,"isCustomer").mockImplementation((req,res,next)=>next());
