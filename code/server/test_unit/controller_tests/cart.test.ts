@@ -5,6 +5,7 @@ import ProductDAO from "../../src/dao/productDAO";
 import { Cart, ProductInCart } from "../../src/components/cart";
 import { Product, Category } from "../../src/components/product";
 import { ProductNotFoundError, LowProductStockError, EmptyProductStockError } from "../../src/errors/productError";
+import { CartNotFoundError, ProductInCartError, ProductNotInCartError, WrongUserCartError, EmptyCartError } from "../../src/errors/cartError"
 import { User, Role } from "../../src/components/user";
 
 jest.mock("../../src/dao/cartDAO");
@@ -21,8 +22,18 @@ describe("CartController unit testing", () => {
   const testUser = new User("tusername","tname","tsurname", Role.CUSTOMER , "taddress", "10-10-1999");
   const testProduct = new Product(50.0, "Samsung GalaxyA54", Category.SMARTPHONE, "", "", 50);
   const testCart = new Cart("tcustomer", true, "11-06-2024", 10, [{model:"Samsung GalaxyA54", quantity: 10, category: Category.SMARTPHONE, price: 50.00 }]);
-  const updatedCart = new Cart("ucustomer", true, "12-06-2024", 450, [{ model: "Samsung GalaxyA54", quantity: 5, category: Category.SMARTPHONE, price: 50.00 }]);
+  const updatedCart = new Cart("ucustomer", true, "12-06-2024", 5, [{ model: "iPhone 13", quantity: 5, category: Category.SMARTPHONE, price: 80.00 }]);
   const emptyCart = new Cart("tcustomer", true, "11-06-2024", 0, []);
+  const tCarts = [
+    new Cart("customer1", true, "11-06-2024", 100, [
+      { model: "Samsung GalaxyA54", quantity: 2, category: Category.SMARTPHONE, price: 50.00 }
+    ]),
+    new Cart("customer2", true, "12-06-2024", 200, [
+      { model: "iPhone 13", quantity: 1, category: Category.SMARTPHONE, price: 200.00 }
+    ])
+  ];
+
+
 
 
 
@@ -102,7 +113,7 @@ describe("CartController unit testing", () => {
 
 
 
-    describe("getCustomer test", () => {
+    describe("getCustomerCarts test", () => {
       test("It should return the carts for the logged in user", async () => {
         jest.spyOn(CartDAO.prototype, "getCustomerCarts").mockResolvedValueOnce([testCart]);
 
@@ -116,7 +127,7 @@ describe("CartController unit testing", () => {
     })
 
 
-    
+   
 
 
     describe("addtoCart test" , () => {
@@ -151,14 +162,103 @@ describe("CartController unit testing", () => {
             expect(CartDAO.prototype.getCart).toHaveBeenCalledTimes(1);
             expect(CartDAO.prototype.getCart).toHaveBeenCalledWith(testUser);
             expect(CartDAO.prototype.updateCurrentCart).toHaveBeenCalledTimes(1);
-            // expect(CartDAO.prototype.updateCurrentCart).toHaveBeenCalledWith(testUser, emptyCart);
             expect(response).toEqual(true);
         });
     })
+
+
+
+
+
+    describe("removeProductFromCart test cases", () => {      
+        test("It should remove one quantity of the product from the cart", async () => {
+          jest.spyOn(ProductDAO.prototype, "getProductByModel").mockResolvedValueOnce(testProduct);
+          jest.spyOn(CartDAO.prototype, "getCart").mockResolvedValueOnce(testCart);
+          jest.spyOn(CartDAO.prototype, "updateCurrentCart").mockImplementationOnce((user, cart) => {
+            
+            expect(user).toEqual(testUser);
+            return Promise.resolve(true);
+          });
+      
+          const controller = new CartController();
+          const response = await controller.removeProductFromCart(testUser, "Samsung GalaxyA54");
+      
+          
+          expect(ProductDAO.prototype.getProductByModel).toHaveBeenCalledTimes(1);
+          expect(ProductDAO.prototype.getProductByModel).toHaveBeenCalledWith("Samsung GalaxyA54");
+          expect(CartDAO.prototype.getCart).toHaveBeenCalledTimes(1);
+          expect(CartDAO.prototype.getCart).toHaveBeenCalledWith(testUser);
+          expect(CartDAO.prototype.updateCurrentCart).toHaveBeenCalledTimes(1);
+          expect(response).toBe(true);
+        });
+      });
+
+
+
+
+
+    describe("clearCart test", () => {
+        test("It should clear the cart for the logged-in customer", async () => {
+          jest.spyOn(CartDAO.prototype, "clearCart").mockResolvedValueOnce(true);
+          const controller = new CartController();
+          const response = await controller.clearCart(testUser);
+    
+          expect(CartDAO.prototype.clearCart).toHaveBeenCalledTimes(1);
+          expect(CartDAO.prototype.clearCart).toHaveBeenCalledWith(testUser);
+          expect(response).toBe(true);
+        });
+      });
   
 
 
 
+
+
+
+      describe("deleteAllCarts test cases", () => {
+        test("It should delete all carts", async () => {
+          jest.spyOn(CartDAO.prototype, "deleteAllCarts").mockResolvedValueOnce(true);
+          const controller = new CartController();
+          const response = await controller.deleteAllCarts();
+    
+          expect(CartDAO.prototype.deleteAllCarts).toHaveBeenCalledTimes(1);
+          expect(response).toBe(true);
+        });
+    
+        test("It should handle errors when trying to delete all carts", async () => {
+          jest.spyOn(CartDAO.prototype, "deleteAllCarts").mockRejectedValueOnce(new Error("Database error"));
+          const controller = new CartController();
+    
+          await expect(controller.deleteAllCarts()).rejects.toThrow("Database error");
+          expect(CartDAO.prototype.deleteAllCarts).toHaveBeenCalledTimes(1);
+        });
+      });
+
+
+
+
+
+
+
+
+      describe("getAllCarts test cases", () => {
+        test("It should return all carts", async () => {
+          jest.spyOn(CartDAO.prototype, "getAllCarts").mockResolvedValueOnce(tCarts);
+          const controller = new CartController();
+          const response = await controller.getAllCarts();
+    
+          expect(CartDAO.prototype.getAllCarts).toHaveBeenCalledTimes(1);
+          expect(response).toEqual(tCarts);
+        });
+    
+        test("It should handle errors when trying to get all carts", async () => {
+          jest.spyOn(CartDAO.prototype, "getAllCarts").mockRejectedValueOnce(new Error("Database error"));
+          const controller = new CartController();
+    
+          await expect(controller.getAllCarts()).rejects.toThrow("Database error");
+          expect(CartDAO.prototype.getAllCarts).toHaveBeenCalledTimes(1);
+        });
+      });
 
 
 
