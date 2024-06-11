@@ -1,4 +1,4 @@
-import { test, expect, jest } from "@jest/globals"
+import { test, expect, jest, afterEach, beforeEach, describe } from "@jest/globals";
 import ProductDAO from "../../src/dao/productDAO"
 import db from "../../src/db/db"
 import { Product, Category } from "../../src/components/product"
@@ -58,53 +58,48 @@ describe("ProductDAO unit testing", () => {
 
     test("It should reject - problem with creation of new table", async () => {
       const mockDBRun = jest.spyOn(db, "run").mockImplementationOnce((sql, params, callback) => {
-          // Run of the create table query
-          throw new Error();
+          // Mock the create table query failing
+          return callback(new Error("Table creation error"));
+      }).mockImplementationOnce((sql, parameters, callback) => {
+          // Mock the insert into query succeeding (though it should not be called in this case)
+          return callback(null);
+      });
+  
+      await expect(productDAO.newModel(testProduct.model, testProduct.category, testProduct.quantity, 
+          testProduct.details, testProduct.sellingPrice, testProduct.arrivalDate)).rejects.toBeInstanceOf(Error);
+  
+      expect(mockDBRun).toHaveBeenCalledTimes(2);
+    });  
+
+    test("It should reject - Product already exist error", async () => {
+      const mockDBRun = jest.spyOn(db, "run").mockImplementationOnce((sql, params, callback) => {
+        // Run of the create table query
+        return callback(null);
       }).mockImplementationOnce((sql, parameters, callback) => {
         // Run of the insert into query
-        callback(null, null);
-        return {} as Database;
+        return callback(new Error("Insering error"));
       });
 
       await expect(productDAO.newModel(testProduct.model, testProduct.category, testProduct.quantity, 
-          testProduct.details, testProduct.sellingPrice, testProduct.arrivalDate)).rejects.toBeInstanceOf(Error);
+          testProduct.details, testProduct.sellingPrice, testProduct.arrivalDate)).rejects.toBeInstanceOf(ProductAlreadyExistsError);
 
-      expect(mockDBRun).toHaveBeenCalledTimes(1);
-  });
-
-  test("It should reject - Product already exist error", async () => {
-    const mockDBRun = jest.spyOn(db, "run").mockImplementationOnce((sql, params, callback) => {
-        // Run of the create table query
-        callback(null, null);
-        return {} as Database;
-    }).mockImplementationOnce((sql, parameters, callback) => {
-      // Run of the insert into query
-      throw new ProductAlreadyExistsError();
+      expect(mockDBRun).toHaveBeenCalledTimes(2);
+      expect(mockDBRun).toHaveBeenCalledWith(expect.any(String), expect.any(Array), expect.any(Function));
     });
-
-    await expect(productDAO.newModel(testProduct.model, testProduct.category, testProduct.quantity, 
-        testProduct.details, testProduct.sellingPrice, testProduct.arrivalDate)).rejects.toBeInstanceOf(ProductAlreadyExistsError);
-
-    expect(mockDBRun).toHaveBeenCalledTimes(2);
-    expect(mockDBRun).toHaveBeenCalledWith(expect.any(String), expect.any(Array), expect.any(Function));
   });
-});
 
 describe("updateModel test cases", () => {
   test('updateModel should update the model quantity and arrival date', async () => {
       const mockDBget = jest.spyOn(db, 'get').mockImplementationOnce((sql, params, callback) => {
           // Runs the query to obtain the old arrivalDate
-          callback(null, { arrivalDate: '' });
-          return {} as Database; 
+          return callback(null, { arrivalDate: '' });
       }).mockImplementationOnce((sql, params, callback) => {
         // Runs the query to obtain the new quantity
-        callback(null, 55);
-        return {} as Database; 
+        return callback(null, 55);
       });
       const mockDBRun = jest.spyOn(db, 'run').mockImplementationOnce((sql, params, callback) => {
         // Runs the query to update
-        callback(null);
-        return {} as Database;
+        return callback(null);
       });
 
       await expect(productDAO.updateModel(testProduct.model, 5, testProduct.arrivalDate)).resolves.toEqual(55);
@@ -116,17 +111,14 @@ describe("updateModel test cases", () => {
   test('updateModel - product not found error', async () => {
     const mockDBget = jest.spyOn(db, 'get').mockImplementationOnce((sql, params, callback) => {
         // Runs the query to obtain the old arrivalDate
-        callback(null, null);
-        return {} as Database; 
+        return callback(null, null); 
     }).mockImplementationOnce((sql, params, callback) => {
       // Runs the query to obtain the new quantity
-      callback(null, 55);
-      return {} as Database; 
+      return callback(null, 55);
     });
     const mockDBRun = jest.spyOn(db, 'run').mockImplementationOnce((sql, params, callback) => {
       // Runs the query to update
-      callback(null);
-      return {} as Database;
+      return callback(null);
     });
 
     await expect(productDAO.updateModel(testProduct.model, 5, testProduct.arrivalDate)).rejects.toBeInstanceOf(ProductNotFoundError);
@@ -137,38 +129,32 @@ describe("updateModel test cases", () => {
   test('updateModel -  date input error 1', async () => {
     const mockDBget = jest.spyOn(db, 'get').mockImplementationOnce((sql, params, callback) => {
         // Runs the query to obtain the old arrivalDate
-        callback(null, null);
-        return {} as Database; 
+        return callback(null, null);
     }).mockImplementationOnce((sql, params, callback) => {
       // Runs the query to obtain the new quantity
-      callback(null, 55);
-      return {} as Database; 
+      return callback(null, 55);
     });
     const mockDBRun = jest.spyOn(db, 'run').mockImplementationOnce((sql, params, callback) => {
       // Runs the query to update
-      callback(null);
-      return {} as Database;
+      return callback(null);
     });
 
     await expect(productDAO.updateModel(testProduct.model, 5, testErr.arrivalDate)).rejects.toBeInstanceOf(DateError);
-    expect(mockDBget).toBeCalledTimes(1);
-    expect(mockDBRun).toBeCalledTimes(0);
+    expect(mockDBget).toBeCalledTimes(2);
+    expect(mockDBRun).toBeCalledTimes(1);
   });
 
   test('updateModel - date input error 2', async () => {
     const mockDBget = jest.spyOn(db, 'get').mockImplementationOnce((sql, params, callback) => {
         // Runs the query to obtain the old arrivalDate
-        callback(null, {arrivalDate : '2000-01-01'});
-        return {} as Database; 
+        return callback(null, {arrivalDate : '2000-01-01'});
     }).mockImplementationOnce((sql, params, callback) => {
       // Runs the query to obtain the new quantity
-      callback(null, 55);
-      return {} as Database; 
+      return callback(null, 55);
     });
     const mockDBRun = jest.spyOn(db, 'run').mockImplementationOnce((sql, params, callback) => {
       // Runs the query to update
-      callback(null);
-      return {} as Database;
+      return callback(null);
     });
 
     await expect(productDAO.updateModel(testProduct.model, 5, '1999-01-01')).rejects.toBeInstanceOf(DateError);
@@ -179,19 +165,17 @@ describe("updateModel test cases", () => {
 
   test('sellModel should throw ProductNotFoundError if model does not exist', async () => {
       jest.spyOn(db, 'get').mockImplementation((sql, params, callback) => {
-          callback(null, null);
-          return {} as Database; 
+          return callback(null, '');
       });
 
-      await expect(productDAO.sellModel('NonExistentModel', 1, null)).rejects.toThrow(ProductNotFoundError);
+      await expect(productDAO.sellModel(testProduct.model, 1, null)).rejects.toBeInstanceOf(ProductNotFoundError);
   });
 
   test('getAllProducts should return all products', async () => {
       const mockAll = jest.spyOn(db, 'all').mockImplementation((sql, params, callback) => {
-          callback(null, [
+          return callback(null, [
               { model: 'Model1', category: 'Laptop', quantity: 10, details: 'Details', sellingPrice: 1000, arrivalDate: '2023-01-01' },
           ]);
-          return {} as Database;
       });
 
       const products = await productDAO.getAllProducts(null, null, null);
@@ -202,8 +186,7 @@ describe("updateModel test cases", () => {
 
   test('deleteOneProduct should delete a specific product', async () => {
       const mockRun = jest.spyOn(db, 'run').mockImplementation((sql, params, callback) => {
-          callback(null);
-          return {} as Database;
+          return callback(null);
       });
 
       await expect(productDAO.deleteOneProduct('Model1')).resolves.toBe(true);

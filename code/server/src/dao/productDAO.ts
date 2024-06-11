@@ -16,7 +16,6 @@ class ProductDAO {
      */
     newModel(model: string, category: string, quantity: number, details: string | null, sellingPrice: number, arrivalDate: string | null): Promise<void> {
         return new Promise((resolve, reject) => {
-
             // Verify the date
             if (arrivalDate === null || arrivalDate === undefined || arrivalDate === '') arrivalDate = dayjs().format("YYYY-MM-DD");
             else if (dayjs(arrivalDate).isAfter(dayjs())) return reject(new DateError());
@@ -30,23 +29,21 @@ class ProductDAO {
                 details TEXT,
                 sellingPrice REAL,
                 arrivalDate TEXT)`;
-
-            // Runs the query
-            if (model.length == 0 || 
-                !(category === Category.APPLIANCE || category === Category.LAPTOP || category === Category.SMARTPHONE) ||
-            sellingPrice <= 0)
-                reject(new Error());
+    
+            // Runs the create table query
             db.run(createTableSql, [], (err: Error | null) => {
                 if (err) reject(err);
-                else resolve;
-            });
-            const insertSql = "INSERT INTO products (model, category, quantity, details, sellingPrice, arrivalDate) VALUES (?, ?, ?, ?, ?, ?)";
-            db.run(insertSql, [model, category, quantity, details, sellingPrice, arrivalDate], (err: Error | null) => {
-                if (err) reject(new ProductAlreadyExistsError());
-                else resolve;
+    
+                // Runs the insert query after table creation
+                const insertSql = "INSERT INTO products (model, category, quantity, details, sellingPrice, arrivalDate) VALUES (?, ?, ?, ?, ?, ?)";
+                db.run(insertSql, [model, category, quantity, details, sellingPrice, arrivalDate], (err: Error | null) => {
+                    if (err) return reject(new ProductAlreadyExistsError());
+                    resolve();
+                });
             });
         });
     }
+    
 
     /** 
      * It updates a model's quantity and/or arrival date.

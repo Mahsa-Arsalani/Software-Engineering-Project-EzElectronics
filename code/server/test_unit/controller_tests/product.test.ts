@@ -1,4 +1,4 @@
-import { test, expect, jest } from "@jest/globals"
+import { test, expect, jest, afterEach, describe } from "@jest/globals";
 import ProductController from "../../src/controllers/productController"
 import ProductDAO from "../../src/dao/productDAO"
 import { Product, Category } from "../../src/components/product"
