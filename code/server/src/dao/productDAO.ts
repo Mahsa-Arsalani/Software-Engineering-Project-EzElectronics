@@ -126,6 +126,10 @@ class ProductDAO {
      */
     async getAllProducts(grouping: string | null, category: string | null, model: string | null): Promise<Product[]> {
         return new Promise<Product[]>((resolve, reject) => {
+            console.log(grouping);
+                    console.log(category);
+                    console.log(model);
+
             if (category === undefined || category === '') category = null;
             if (model === undefined || model === '') model = null;
             
@@ -170,12 +174,6 @@ class ProductDAO {
                     return new Product(row.sellingPrice, row.model, row.category, row.arrivalDate, row.details, row.quantity);
                 });
                 resolve(products);
-            });
-    
-            db.close((err) => {
-                if (err) {
-                    reject(err);
-                }
             });
         });
     }
@@ -228,7 +226,4 @@ class ProductDAO {
 }
 
 export default ProductDAO;
-function reject(err: Error) {
-    throw new Error("Function not implemented.");
-}
 

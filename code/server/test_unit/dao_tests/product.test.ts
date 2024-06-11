@@ -43,12 +43,10 @@ describe("ProductDAO unit testing", () => {
     test("It should resolve with undefined", async () => {
         const mockDBRun = jest.spyOn(db, "run").mockImplementationOnce((sql, params, callback) => {
             // Run of the create table query
-            callback(null, null);
-            return {} as Database;
+            return callback(null, null);
         }).mockImplementationOnce((sql, parameters, callback) => {
           // Run of the insert into query
-          callback(null, null);
-          return {} as Database;
+          return callback(null, null);
         });
 
         await expect(productDAO.newModel(testProduct.model, testProduct.category, testProduct.quantity, 
