@@ -1,6 +1,7 @@
 import { Role, User } from "../components/user"
 import UserDAO from "../dao/userDAO"
-import { UserNotAdminError, UnauthorizedUserError } from "../errors/userError";
+import { UserNotAdminError, UnauthorizedUserError, UserInvalidDate } from "../errors/userError";
+import dayjs from 'dayjs'
 
 /**
  * Represents a controller for managing users.
@@ -103,6 +104,9 @@ class UserController {
      * @returns A Promise that resolves to the updated user
      */
     async updateUserInfo(user: User, name: string, surname: string, address: string, birthdate: string, username: string) :Promise<User> {
+        if(dayjs(birthdate, "MM-DD-YYYY").valueOf() > dayjs().valueOf())
+            throw new UserInvalidDate()
+
         if(user.username !== username){
             if(user.role !== Role.ADMIN){
                 throw new UserNotAdminError()

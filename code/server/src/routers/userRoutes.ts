@@ -106,7 +106,7 @@ class UserRoutes {
          */
         this.router.get(
             "/:username",
-            //param("username").isString().isLength({ min: 1 }),
+            param("username").isString().isLength({ min: 1 }),
             this.errorHandler.validateRequest,
             this.authService.isLoggedIn,
             (req: any, res: any, next: any) => this.controller.getUserByUsername(req.user, req.params.username)

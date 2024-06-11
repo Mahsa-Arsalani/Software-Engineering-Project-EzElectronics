@@ -6,6 +6,7 @@ import db from "../src/db/db"
 import { resolve } from "path"
 import { User } from "../src/components/user"
 import { stringify } from "querystring"
+import dayjs from 'dayjs'
 
 const baseURL = "/ezelectronics"
 
@@ -110,11 +111,7 @@ describe("User integration testing ", ()=>{
                 .set("Cookie", AdminCookie)
                 .expect(200)
 
-            expect(body).toBeDefined()
-            expect(body.name).toBe(testCustomer.name)
-            expect(body.surname).toBe(testCustomer.surname)
-            expect(body.username).toBe(testCustomer.username)
-            expect(body.role).toBe(testCustomer.role)
+            expect(body).toEqual(testCustomerUser)
         })
 
         test("login as new added user, it should return 200", async ()=>{
@@ -377,7 +374,7 @@ describe("User integration testing ", ()=>{
             .expect(404)
         })
 
-        test("access route as customer and delete own account, it should return 200", async()=>{
+        test("access route as manager and delete own account, it should return 200", async()=>{
             //add previously deleted manager and login
             await postUser(testManager)
             ManagerCookie = await login(testManager)
@@ -412,4 +409,223 @@ describe("User integration testing ", ()=>{
         })        
     })
 
+    describe("PATCH /users/username",()=>{
+
+        test("Try to update an non existing user, it should return 404", async()=>{
+            await request(app)
+            .patch(baseURL + "/users/" + testManagerUser.username)
+            .set("Cookie", AdminCookie)
+            .send({...testManager,address: "address" , birthdate: "2001-01-30"})
+            .expect(404)
+        })
+
+        test("Access router as andmin and update an other non admin user, it should return 200", async()=>{
+            //add user
+            await postUser(testManager)
+
+            //modify user
+            testManagerUser.address = testManager.address = "address"
+            testManagerUser.birthdate = testManager.birthdate = "2001-01-30"
+
+            //update user
+            await request(app)
+            .patch(baseURL + "/users/" + testManagerUser.username)
+            .set("Cookie", AdminCookie)
+            .send(testManager)
+            .expect(200)
+            
+            //verify was updated
+            const {body} = await request(app)
+                .get(baseURL + "/users/" + testManagerUser.username)
+                .set("Cookie", AdminCookie)
+                .expect(200)
+
+            expect(body).toEqual(testManagerUser)
+        })
+        
+        test("access router as andmin and update an other admin user, it should return 401", async()=>{
+            const admin2 = {...testAdmin, username: "admin2"}
+            await postUser(admin2)
+
+            await request(app)
+            .patch(baseURL + "/users/" + admin2.username)
+            .set("Cookie", AdminCookie)
+            .send({...admin2,address: "address" , birthdate: "2001-01-30"})
+            .expect(401)
+        })
+
+        test("Access router as andmin and update own account, it should return 200", async()=>{
+            //modify user
+            testAdminUser.address = testAdmin.address = "address"
+            testAdminUser.birthdate = testAdmin.birthdate = "2001-01-30"
+
+            //update user
+            await request(app)
+            .patch(baseURL + "/users/" + testAdminUser.username)
+            .set("Cookie", AdminCookie)
+            .send(testAdmin)
+            .expect(200)
+            
+            //verify was updated
+            const {body} = await request(app)
+                .get(baseURL + "/users/" + testAdminUser.username)
+                .set("Cookie", AdminCookie)
+                .expect(200)
+
+            expect(body).toEqual(testAdminUser)
+        })
+
+        test("Access router as manager and update own account, it should return 200", async()=>{
+            //login
+            ManagerCookie = await login(testManager)
+
+            //modify user
+            testManagerUser.address = testManager.address = "address2"
+            testManagerUser.birthdate = testManager.birthdate = "2000-01-30"
+
+            //update user
+            await request(app)
+            .patch(baseURL + "/users/" + testManagerUser.username)
+            .set("Cookie", ManagerCookie)
+            .send(testManager)
+            .expect(200)
+            
+            //verify was updated
+            const {body} = await request(app)
+                .get(baseURL + "/users/" + testManagerUser.username)
+                .set("Cookie", AdminCookie)
+                .expect(200)
+
+            expect(body).toEqual(testManagerUser)
+        })
+
+        test("Access router as customer and update own account, it should return 200", async()=>{
+            //add and login
+            await postUser(testCustomer)
+            CustomerCookie = await login(testCustomer)
+
+            //modify user
+            testCustomerUser.address = testCustomer.address = "address"
+            testCustomerUser.birthdate = testCustomer.birthdate = "2001-01-30"
+
+            //update user
+            await request(app)
+            .patch(baseURL + "/users/" + testCustomerUser.username)
+            .set("Cookie", CustomerCookie)
+            .send(testCustomer)
+            .expect(200)
+            
+            //verify was updated
+            const {body} = await request(app)
+                .get(baseURL + "/users/" + testCustomerUser.username)
+                .set("Cookie", AdminCookie)
+                .expect(200)
+
+            expect(body).toEqual(testCustomerUser)
+        })
+
+        
+
+        test("invalid name, should return 422", async()=>{
+            //empty
+            await request(app)
+            .patch(baseURL + "/users/" + testAdminUser.username)
+            .set("Cookie", AdminCookie)
+            .send({...testAdmin, name:""})
+            .expect(422)
+
+            //not string 
+            await request(app)
+            .patch(baseURL + "/users/" + testAdminUser.username)
+            .set("Cookie", AdminCookie)
+            .send({...testAdmin, name: 111})
+            .expect(422)
+        })
+
+        test("invalid surname, should return 422", async()=>{
+            //empty
+            await request(app)
+            .patch(baseURL + "/users/" + testAdminUser.username)
+            .set("Cookie", AdminCookie)
+            .send({...testAdmin, surname:""})
+            .expect(422)
+
+            //not string 
+            await request(app)
+            .patch(baseURL + "/users/" + testAdminUser.username)
+            .set("Cookie", AdminCookie)
+            .send({...testAdmin, surname: 111})
+            .expect(422)
+        })
+        
+        test("invalid address, should return 422", async()=>{
+            //empty
+            await request(app)
+            .patch(baseURL + "/users/" + testAdminUser.username)
+            .set("Cookie", AdminCookie)
+            .send({...testAdmin, address:""})
+            .expect(422)
+
+            //not string 
+            await request(app)
+            .patch(baseURL + "/users/" + testAdminUser.username)
+            .set("Cookie", AdminCookie)
+            .send({...testAdmin, address: 111})
+            .expect(422)
+        })
+
+        test("invalid birthdate format, should return 422", async()=>{
+            //empty
+            await request(app)
+            .patch(baseURL + "/users/" + testAdminUser.username)
+            .set("Cookie", AdminCookie)
+            .send({...testAdmin, birthdate:"01/02/2000"})
+            .expect(422)
+        })
+
+        test("invalid birthdate is after the current date, should return 400", async()=>{
+            //empty
+            await request(app)
+            .patch(baseURL + "/users/" + testAdminUser.username)
+            .set("Cookie", AdminCookie)
+            .send({...testAdmin, birthdate: dayjs().add(1, 'day').format("YYYY-MM-DD")})
+            .expect(400)
+        })
+    })
+
+    describe("DELETE /users",()=>{
+        test("access route as admin, it should delete all users non admin users", async()=>{
+            await request(app)
+            .delete(baseURL + "/users")
+            .set("Cookie", AdminCookie)
+            .expect(200)
+
+            //verifies there are only admin in the db
+            const {body} = await request(app)
+                                .get(baseURL + "/users")
+                                .set("Cookie", AdminCookie)
+                                .expect(200)
+                
+            expect(body).toBeDefined()
+            body.forEach((el: any) => {
+                expect(el.role).toBe(Role.ADMIN)
+            });
+
+
+        })
+
+        test("access route as customer, it should return 401", async()=>{
+            await request(app)
+            .delete(baseURL + "/users")
+            .set("Cookie", CustomerCookie)
+            .expect(401)
+        })
+
+        test("access route as manager, it should return 401", async()=>{
+            await request(app)
+            .delete(baseURL + "/users")
+            .set("Cookie", ManagerCookie)
+            .expect(401)
+        })
+    })
 })
