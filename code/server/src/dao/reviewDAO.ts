@@ -2,6 +2,8 @@ import db from "../db/db"
 import { User} from "../components/user"
 import { ProductReview} from "../components/review"
 import { ExistingReviewError, NoReviewProductError} from "../errors/reviewError";
+import ProductDAO from "../dao/productDAO";
+import { ProductNotFoundError } from "../../src/errors/productError";
 /**
  * A class that implements the interaction with the database for all review-related operations.
  * You are free to implement any method you need here, as long as the requirements are satisfied.
@@ -15,10 +17,8 @@ class ReviewDAO {
      * @param comment The comment made by the user
      * @returns A Promise that resolves to nothing
      */
-addReview(model:string,user:User,score:number,comment:string):Promise<void>{
-    return new Promise<void>((resolve,reject)=>{
-        try{
-            /*const createTableSql = 
+    private ProductDAO: ProductDAO
+/*const createTableSql = 
                 `CREATE TABLE IF NOT EXISTS reviews (
                 model TEXT PRIMARY KEY,
                 user TEXT,
@@ -28,28 +28,39 @@ addReview(model:string,user:User,score:number,comment:string):Promise<void>{
 
             // Runs the query
             db.run(createTableSql, [], (err: Error | null) => { });*/
-
-            const checkSql = "SELECT COUNT(*) AS count FROM reviews WHERE user = ? AND model = ?";
-            db.get(checkSql, [user.username, model], (err: Error | null, row: any) => {
-                if (err) {
-                    reject();
-                }
-                if (row.count > 0) {
-                    reject(new ExistingReviewError());
-                }
-                const date = new Date().toISOString().split('T')[0];
-                const insertsql="INSERT INTO reviews(model,user,score,date, comment) VALUES (?,?,?,?,?)";
-            db.run(insertsql, [model,user.username,score,date,comment], (err: Error | null) => {
+addReview(model:string,user:User,score:number,comment:string):Promise<void>{
+    return new Promise<void>((resolve,reject)=>{
+        try{
+            const checkSql1 = "SELECT model FROM products WHERE model = ?";
+            db.get(checkSql1, [model], (err: Error | null, row: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve();
+                if (row) {  
+                    const checkSql2 = "SELECT * FROM reviews WHERE model = ? and user = ?";
+                    db.get(checkSql2, [user.username, model], (err: Error | null, row: any) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        if (row) {
+                            reject(new ExistingReviewError());
+                        }
+                        const date = new Date().toISOString().split('T')[0];
+                        const insertsql="INSERT INTO reviews(model,user,score,date, comment) VALUES (?,?,?,?,?)";
+                        db.run(insertsql, [model,user.username,score,date,comment], (err: Error | null) => {
+                            if (err) {
+                                reject(err);
+                            }   
+                            resolve();
+                        });
+                    });
+                }
+                else throw new ProductNotFoundError();
             });
-        });
-    } catch (error) {
-        reject(error);
-    }
-});
+        } catch (error) {
+            reject(error);
+        }    
+    });
 }
  /**
      * Returns all reviews for a product
@@ -86,26 +97,35 @@ addReview(model:string,user:User,score:number,comment:string):Promise<void>{
  deleteReview(model: string, user: User) :Promise<void>{
     return new Promise<void>((resolve,reject)=>{
         try{
-            const checkSql = "SELECT COUNT(*) AS count FROM reviews WHERE user = ? AND model = ?";
-            db.get(checkSql, [user.username, model], (err: Error | null, row: any) => {
+            const checkSql1 = "SELECT model FROM products WHERE model = ?";
+            db.get(checkSql1, [model], (err: Error | null, row: any) => {
                 if (err) {
                     reject(err);
                 }
-                if (row.count < 1) {
-                    reject(new NoReviewProductError());
+                if (row) {
+                    const checkSql2 = "SELECT * FROM reviews WHERE model = ? and user = ?";
+                    db.get(checkSql2, [model,user.username], (err: Error | null, row: any) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        if (row) {
+                            const sql = "DELETE FROM reviews WHERE model= ? AND user= ?";
+                            db.run(sql,[model,user.username],(err:Error | null) =>{
+                                if(err) {
+                                    reject(err);
+                                }
+                                resolve();
+                            });
+                        }
+                        else throw new NoReviewProductError
+                    });
                 }
-            const sql = "DELETE FROM reviews WHERE model= ? AND user= ?";
-            db.run(sql,[model,user.username],(err:Error | null) =>{
-                if(err) {
-                    reject(err);
-                }
-                resolve();
-            });
-        });    
-    } catch(error){
-        reject(error);
-    }
-});
+                else throw new ProductNotFoundError();
+            });    
+        } catch(error){
+            reject(error);
+        }
+    });
 }
  /**
      * Deletes all reviews for a product
@@ -115,13 +135,22 @@ addReview(model:string,user:User,score:number,comment:string):Promise<void>{
  deleteReviewsOfProduct(model: string) :Promise<void> {
     return new Promise<void>((resolve,reject)=>{
         try{
-            const sql = "DELETE FROM reviews WHERE model= ?";
-            db.run(sql,[model],(err:Error | null) =>{
-                if(err) {
+            const checkSql = "SELECT model FROM products WHERE model = ?";
+            db.get(checkSql, [model], (err: Error | null, row: any) => {
+                if (err) {
                     reject(err);
                 }
-                resolve();
-            })
+                if (row) {
+                    const sql = "DELETE FROM reviews WHERE model= ?";
+                    db.run(sql,[model],(err:Error | null) =>{
+                        if(err) {
+                            reject(err);
+                        }
+                        resolve();
+                    })
+                }
+                else throw new ProductNotFoundError();
+            });
         } catch(error){
             reject(error);
         }
