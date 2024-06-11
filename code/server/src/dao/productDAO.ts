@@ -63,7 +63,7 @@ class ProductDAO {
             const sql = "SELECT arrivalDate FROM products WHERE model = ?";
             db.get(sql, [model], (err: Error | null, row : any) => {
                 if (err) reject(err);
-                else if (!row) reject(new ProductNotFoundError());
+                else if (row === null || row === undefined || row === '') reject(new ProductNotFoundError());
                 if (dayjs(arrivalDate).isBefore(dayjs(row.arrivalDate))) reject(new DateError());
                     arrivalDate = dayjs(arrivalDate).format("YYYY-MM-DD");
                 const updateSql = "UPDATE products SET quantity = quantity + ?, arrivalDate = ? WHERE model = ?";

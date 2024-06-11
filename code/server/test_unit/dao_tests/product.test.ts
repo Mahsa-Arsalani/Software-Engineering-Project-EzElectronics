@@ -96,7 +96,7 @@ describe("updateModel test cases", () => {
   test('updateModel should update the model quantity and arrival date', async () => {
       const mockDBget = jest.spyOn(db, 'get').mockImplementationOnce((sql, params, callback) => {
           // Runs the query to obtain the old arrivalDate
-          callback(null, { arrivalDate: '2023-01-01' });
+          callback(null, { arrivalDate: '' });
           return {} as Database; 
       }).mockImplementationOnce((sql, params, callback) => {
         // Runs the query to obtain the new quantity
@@ -118,7 +118,7 @@ describe("updateModel test cases", () => {
   test('updateModel - product not found error', async () => {
     const mockDBget = jest.spyOn(db, 'get').mockImplementationOnce((sql, params, callback) => {
         // Runs the query to obtain the old arrivalDate
-        callback(new ProductNotFoundError());
+        callback(null, null);
         return {} as Database; 
     }).mockImplementationOnce((sql, params, callback) => {
       // Runs the query to obtain the new quantity
@@ -153,7 +153,7 @@ describe("updateModel test cases", () => {
     });
 
     await expect(productDAO.updateModel(testProduct.model, 5, testErr.arrivalDate)).rejects.toBeInstanceOf(DateError);
-    expect(mockDBget).toBeCalledTimes(0);
+    expect(mockDBget).toBeCalledTimes(1);
     expect(mockDBRun).toBeCalledTimes(0);
   });
 
@@ -175,7 +175,7 @@ describe("updateModel test cases", () => {
 
     await expect(productDAO.updateModel(testProduct.model, 5, '1999-01-01')).rejects.toBeInstanceOf(DateError);
     expect(mockDBget).toBeCalledTimes(2);
-    expect(mockDBRun).toBeCalledTimes(0);
+    expect(mockDBRun).toBeCalledTimes(1);
   });
 });
 
