@@ -1,16 +1,16 @@
 import { User, Role } from "../components/user";
 import ReviewDAO from "../dao/reviewDAO";
-import {UnauthorizedUserError} from "../errors/userError";
-import ProductDAO from "../dao/productDAO";
-import { ProductNotFoundError } from "../../src/errors/productError";
+//import {UnauthorizedUserError} from "../errors/userError";
+//import ProductDAO from "../dao/productDAO";
+//import { ProductNotFoundError } from "../../src/errors/productError";
 
 class ReviewController {
     private dao: ReviewDAO
-    private ProductDAO: ProductDAO
+    //private ProductDAO: ProductDAO
 
     constructor() {
         this.dao = new ReviewDAO
-        this.ProductDAO = new ProductDAO
+        //this.ProductDAO = new ProductDAO
     }
 
     /**
@@ -22,19 +22,19 @@ class ReviewController {
      * @returns A Promise that resolves to nothing
      */
     async addReview(model: string, user: User, score: number, comment: string) /**:Promise<void> */ { 
-        if(user.role !== Role.CUSTOMER)
-            throw new UnauthorizedUserError()
+        //if(user.role !== Role.CUSTOMER)
+            //throw new UnauthorizedUserError()
             
-        try {
-            const productExists = await this.ProductDAO.getAllProducts(null,null,model);
-            if (productExists) {
-                await this.dao.addReview(model, user, score, comment);
-            } else {
-                throw new ProductNotFoundError();
-            }
-        } catch (error) {
-            throw error;
-        }
+        //try {
+            //const productExists = await this.ProductDAO.getAllProducts(null,null,model);
+            //if (productExists) {
+        return this.dao.addReview(model, user, score, comment);
+            //} else {
+                //throw new ProductNotFoundError();
+            //}
+        //} catch (error) {
+            //throw error;
+        //}
     }
 
     /**
@@ -52,8 +52,8 @@ class ReviewController {
      * @returns A Promise that resolves to nothing
      */
     async deleteReview(model: string, user: User) /**:Promise<void> */ { 
-        if(user.role !== Role.CUSTOMER)
-            throw new UnauthorizedUserError
+        //if(user.role !== Role.CUSTOMER)
+        //    throw new UnauthorizedUserError
         return this.dao.deleteReview(model,user)
     }
     /**
