@@ -90,8 +90,15 @@ describe("ReviewDAO unit testing", ()=>{
         });
         test("It should handle database error when review exists", async () => {
             reviewdao = new ReviewDAO();
-            jest.spyOn(db, "get").mockImplementationOnce((sql, params, callback) => {
-                return callback(null, {model: testReview.model, user: testReview.user.username});
+            //jest.spyOn(db, "get").mockImplementationOnce((sql, params, callback) => {
+            //    return callback(null, {model: testReview.model, user: testReview.user.username});
+            //});
+            jest.spyOn(db, "get").mockImplementation((sql, params, callback) => {
+                if (sql.includes("SELECT model FROM products")) {
+                    return callback(null, { model: testReview.model });
+                } else if (sql.includes("SELECT * FROM reviews WHERE model = ? and user = ?")) {
+                    return callback(null, {model: testReview.model, user: testReview.user.username});
+                }
             });
             jest.spyOn(db, "run").mockImplementation((sql, params, callback) => {
                 return callback(new Error("Database error"));
@@ -127,13 +134,16 @@ describe("ReviewDAO unit testing", ()=>{
         });
         test("It should handle database error when product exists", async () => {
             reviewdao = new ReviewDAO();
-            jest.spyOn(db, "get").mockImplementation((sql, params, callback) => {
-                if (sql.includes("SELECT model FROM products")) {
-                    return callback(null, { model: testReview.model });
-                } else if (sql.includes("SELECT * FROM reviews WHERE model = ? and user = ?")) {
-                    return callback(null, null);
-                }
+            jest.spyOn(db, "get").mockImplementationOnce((sql, params, callback) => {
+                return callback(null, { model: testReview.model });
             });
+            //jest.spyOn(db, "get").mockImplementation((sql, params, callback) => {
+            //    if (sql.includes("SELECT model FROM products")) {
+            //        return callback(null, { model: testReview.model });
+            //    } else if (sql.includes("SELECT * FROM reviews WHERE model = ? and user = ?")) {
+            //        return callback(null, null);
+            //    }
+            //});
             jest.spyOn(db, "run").mockImplementation((sql, params, callback) => {
                 return callback(new Error("Database error"));
             });
@@ -181,7 +191,7 @@ describe("ReviewDAO unit testing", ()=>{
         test("It should handle no ReviewProduct error", async () => {
             reviewdao = new ReviewDAO();
             jest.spyOn(db, "get").mockImplementation((sql, params, callback) => {
-                console.log(sql)
+                //console.log(sql)
                 if (sql.includes("SELECT model FROM products")) {
                     return callback(null, {model: testReview.model});
                 }
@@ -249,9 +259,16 @@ describe("ReviewDAO unit testing", ()=>{
         });
         test("It should handle database error when product exists", async () => {
             reviewdao = new ReviewDAO();
-            jest.spyOn(db, "get").mockImplementationOnce((sql, params, callback) => {
-                return callback(null, { model: testReview.model });
+            jest.spyOn(db, "get").mockImplementation((sql, params, callback) => {
+                if (sql.includes("SELECT model FROM products")) {
+                    return callback(null, { model: testReview.model });
+                } else if (sql.includes("SELECT * FROM reviews WHERE model = ? and user = ?")) {
+                    return callback(null, null);
+                }
             });
+            //jest.spyOn(db, "get").mockImplementationOnce((sql, params, callback) => {
+            //    return callback(null, { model: testReview.model });
+            //});
             jest.spyOn(db, "run").mockImplementation((sql, params, callback) => {
                 return callback(new Error("Database error"));
             });
