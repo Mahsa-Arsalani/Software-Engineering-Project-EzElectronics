@@ -58,4 +58,47 @@ describe("Route tests product", () => {
             expect(ProductController.prototype.registerProducts).toHaveBeenCalledTimes(1)
         })
     })
+
+    describe("PATCH /products/:model", () => {
+        let quantitytoadd : number = 5;
+        test("It should return a 200 success code", async () => {
+            jest.spyOn(Authenticator.prototype,"isManager").mockImplementation((req,res,next)=>next());
+            jest.spyOn(ProductController.prototype, "changeProductQuantity").mockResolvedValueOnce(testproduct1.quantity+quantitytoadd) 
+
+            const response = await request(app).post(baseURL + `/products/${testproduct1.model}`)
+            .send({model : testproduct1.model, quantity: quantitytoadd, arrivalDate : ""}).expect(200)
+            expect(Authenticator.prototype.isManager).toHaveBeenCalledTimes(1);
+            expect(ProductController.prototype.changeProductQuantity).toHaveBeenCalledTimes(1)
+        })
+
+        test("It should return a 400 error code - new arrivalDate before the old one", async () => {
+            jest.spyOn(Authenticator.prototype,"isManager").mockImplementation((req,res,next)=>next());
+            jest.spyOn(ProductController.prototype, "changeProductQuantity").mockRejectedValue(new DateError()) 
+
+            const response = await request(app).post(baseURL + `/products/${testproduct1.model}`)
+            .send({model : testproduct1.model, quantity: quantitytoadd, arrivalDate : "2000/01/01"}).expect(400)
+            expect(Authenticator.prototype.isManager).toHaveBeenCalledTimes(1);
+            expect(ProductController.prototype.changeProductQuantity).toHaveBeenCalledTimes(1)
+        })
+
+        test("It should return a 400 error code - arrivalDate is in the future", async () => {
+            jest.spyOn(Authenticator.prototype,"isManager").mockImplementation((req,res,next)=>next());
+            jest.spyOn(ProductController.prototype, "changeProductQuantity").mockRejectedValue(new DateError()) 
+
+            const response = await request(app).post(baseURL + `/products/${testproduct1.model}`)
+            .send({model : testproduct1.model, quantity: quantitytoadd, arrivalDate : "2100/01/01"}).expect(400)
+            expect(Authenticator.prototype.isManager).toHaveBeenCalledTimes(1);
+            expect(ProductController.prototype.changeProductQuantity).toHaveBeenCalledTimes(1)
+        })
+
+        test("It should return a 404 error code - ProductNotFoundError", async () => {
+            jest.spyOn(Authenticator.prototype,"isManager").mockImplementation((req,res,next)=>next());
+            jest.spyOn(ProductController.prototype, "changeProductQuantity").mockRejectedValue(new ProductNotFoundError()) 
+
+            const response = await request(app).post(baseURL + `/products/${testproduct1.model}`)
+            .send({model : testproduct1.model, quantity: quantitytoadd, arrivalDate : ""}).expect(404)
+            expect(Authenticator.prototype.isManager).toHaveBeenCalledTimes(0);
+            expect(ProductController.prototype.changeProductQuantity).toHaveBeenCalledTimes(0)
+        })
+    })
 })
