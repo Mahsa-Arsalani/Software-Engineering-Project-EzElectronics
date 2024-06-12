@@ -1,6 +1,7 @@
 import { test, expect, jest, afterEach, it, beforeAll, beforeEach, describe } from "@jest/globals";
 import request from "supertest";
 import ProductController from "../../src/controllers/productController";
+import ProductDAO from "../../src/dao/productDAO";
 import { app } from "../..";
 import { Role, User } from "../../src/components/user";
 import { Category, Product } from "../../src/components/product";
@@ -11,8 +12,13 @@ const baseURL = "/ezelectronics/products";
 jest.mock("../../src/routers/auth");
 jest.mock("../../src/controllers/productController");
 
+
+afterEach(()=>{
+    jest.clearAllMocks()
+})
+
 describe("product routing test", () => {
-    const mockUser = new User("tusername", "tname", "tsurname", Role.MANAGER, "taddress", "10-10-1999");
+    const mockUser = new User("username", "name", "surname", Role.MANAGER, "address", "10-10-1999");
     const product: Product = {
         model: "Samsung GalaxyA54",
         category: Category.SMARTPHONE,
@@ -23,7 +29,7 @@ describe("product routing test", () => {
     };
 
     describe("POST /products", () => {
-        test("should register a new product", async () => {
+        test("It should return a 200 success code", async () => {
             jest.spyOn(Authenticator.prototype, "isLoggedIn")
                 .mockImplementation((req, res, next) => next());
 
@@ -48,7 +54,6 @@ describe("product routing test", () => {
                 product.sellingPrice,
                 product.arrivalDate
             );
-
             jest.resetAllMocks();
         });
     });
@@ -79,6 +84,39 @@ describe("product routing test", () => {
             );
 
             jest.resetAllMocks();
+        });
+
+        test("it should return 503 error code", async () => {
+            jest.spyOn(Authenticator.prototype, "isLoggedIn")
+                .mockImplementation((req, res, next) => next());
+
+            jest.spyOn(Authenticator.prototype, "isManager")
+                .mockImplementation((req, res, next) => next());
+
+            jest.spyOn(ProductController.prototype, "changeProductQuantity").mockImplementation((req, res : any, next) => {
+                return res.status(400).json({ error: "Unauthorized" });
+            })
+
+            const response = await request(app).get(baseURL + "/Samsung GalaxyA54")
+                .set("user", JSON.stringify(mockUser))
+                .send({ quantity: -5 });
+            expect(response.status).toBe(404)
+        });
+    });
+
+    describe("GET /products", () => {
+        test("should return all products", async () => {
+            const mockProducts: Product[] = [{ model: product.model, category: product.category, quantity: product.quantity, 
+                details: product.details, sellingPrice: product.sellingPrice, arrivalDate: product.arrivalDate }];
+            jest.spyOn(Authenticator.prototype, "isLoggedIn").mockImplementation((req, res, next) => next());
+            jest.spyOn(Authenticator.prototype, "isAdminOrManager").mockImplementation((req, res, next) => next());
+            jest.spyOn(ProductController.prototype, "getProducts").mockResolvedValueOnce(mockProducts);
+
+            const response = await request(app).get(baseURL + "/").set("user", JSON.stringify({ role: "admin" }));
+
+            expect(response.status).toBe(200);
+            expect(response.body).toEqual(mockProducts);
+            expect(ProductController.prototype.getProducts).toHaveBeenCalledTimes(1);
         });
     });
 
