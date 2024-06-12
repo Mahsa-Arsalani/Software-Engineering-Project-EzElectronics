@@ -106,9 +106,9 @@ class ProductDAO {
                     const updateSql = "UPDATE products SET quantity = quantity - ? WHERE model = ?";
                     db.run(updateSql, [quantity, model], (err: Error | null) => {
                         if (err) {
-                            return reject(err);
+                            reject(err);
                         } else {
-                            return resolve(row.quantity - quantity);
+                            resolve(row.quantity - quantity);
                         }
                     });
                 }
@@ -135,37 +135,28 @@ class ProductDAO {
         
             if (grouping === "category") {
                 if (category === null || model !== null) {
-                    console.log(grouping);
-                    console.log(category);
-                    console.log(model);
                     return reject(new Error("Invalid parameters for grouping by category"));
                 }
                 sql += " WHERE category = ?";
                 params.push(category);
             } else if (grouping === "model") {
                 if (model === null || category !== null) {
-                    console.log(grouping);
-                    console.log(category);
-                    console.log(model);
                     return reject(new Error("Invalid parameters for grouping by model"));
                 }
                 sql += " WHERE model = ?";
                 params.push(model);
             } else {
                 if (model !== null || category !== null) {
-                    console.log(grouping);
-                    console.log(category);
-                    console.log(model);
                     return reject(new Error("Invalid grouping parameter"));
                 }
             }
             
             db.all(sql, params, (err: Error | null, rows: any[]) => {
                 if (err) {
-                    return reject(err);
+                    reject(err);
                 }
-                if (rows.length === 0 && model) {
-                    return reject(new ProductNotFoundError());
+                if (rows.length === 0) {
+                    reject(new ProductNotFoundError());
                 }
                 const products: Product[] = rows.map((row: any) => {
                     return new Product(row.sellingPrice, row.model, row.category, row.arrivalDate, row.details, row.quantity);
@@ -215,8 +206,8 @@ class ProductDAO {
                     reject(new ProductNotFoundError())
                     return
                 }
-                const user: Product = new Product(row.sellingPrice, row.model, row.category, row.arrivalDate, row.details, row.quantity)
-                resolve(user)
+                const product: Product = new Product(row.sellingPrice, row.model, row.category, row.arrivalDate, row.details, row.quantity)
+                resolve(product)
             })
         });
     }
