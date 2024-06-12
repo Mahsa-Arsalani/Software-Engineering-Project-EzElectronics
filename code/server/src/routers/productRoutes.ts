@@ -190,8 +190,6 @@ class ProductRoutes {
                 .then(() => res.status(200).end())
                 .catch((err: any) => next(err))
         )
-
-
     }
 }
 
