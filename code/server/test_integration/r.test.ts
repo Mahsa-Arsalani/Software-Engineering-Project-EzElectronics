@@ -25,7 +25,7 @@ function cleanup() {
             })
         })
         db.serialize(() => {
-            db.run("DELETE FROM carts", (err)=>{
+            db.run("DELETE FROM cart", (err)=>{
                 if(err)
                     reject(err)
                 resolve(true)
@@ -189,14 +189,7 @@ describe("Review integration testing ", ()=>{
             await logout(ManagerCookie)
             await postUser(testCustomer)
             CustomerCookie = await login(testCustomer)
-            //const addResponse = await request(app)
-            //    .post(baseURL + "/carts")
-            //    .set("Cookie", CustomerCookie)
-            //    .send({ model: "testmodel" });
-            //console.log(addResponse)
-            //expect(addResponse.status).toBe(200);
             await addtocart(CustomerCookie)
-            //console.log("h")
             const cartResponse = await request(app)
                 .get(baseURL + "/carts")
                 .set("Cookie", CustomerCookie);
@@ -204,15 +197,16 @@ describe("Review integration testing ", ()=>{
             expect(cartResponse.body.products).toEqual(
                 expect.arrayContaining([
                     expect.objectContaining({
-                        model: "test"
+                        model: "testmodel"
                     })
                 ])
             );
             await makepayment(CustomerCookie)
             await makereview(CustomerCookie,testreview,testproduct)
+            console.log("OLLEY")
         })
-    })
-/*    
+    })  
+    /*  
     describe("scenario 17.2",()=>{
         test("delete a review to a product", async () => {          
             await postUser(testManager)
@@ -229,7 +223,7 @@ describe("Review integration testing ", ()=>{
             expect(cartResponse.body.products).toEqual(
                 expect.arrayContaining([
                     expect.objectContaining({
-                        model: "test"
+                        model: "testmodel"
                     })
                 ])
             );
@@ -254,7 +248,7 @@ describe("Review integration testing ", ()=>{
             expect(cartResponse.body.products).toEqual(
                 expect.arrayContaining([
                     expect.objectContaining({
-                        model: "test"
+                        model: "testmodel"
                     })
                 ])
             );
@@ -292,7 +286,7 @@ describe("Review integration testing ", ()=>{
             expect(cartResponse.body.products).toEqual(
                 expect.arrayContaining([
                     expect.objectContaining({
-                        model: "test"
+                        model: "testmodel"
                     })
                 ])
             );
@@ -324,7 +318,7 @@ describe("Review integration testing ", ()=>{
             expect(cartResponse.body.products).toEqual(
                 expect.arrayContaining([
                     expect.objectContaining({
-                        model: "test"
+                        model: "testmodel"
                     })
                 ])
             );
