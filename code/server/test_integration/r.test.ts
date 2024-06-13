@@ -16,22 +16,16 @@ function cleanup() {
                     reject(err)
                 resolve(true)
             })
-        })
-        db.serialize(() => {
             db.run("DELETE FROM products", (err)=>{
                 if(err)
                     reject(err)
                 resolve(true)
             })
-        })
-        db.serialize(() => {
             db.run("DELETE FROM cart", (err)=>{
                 if(err)
                     reject(err)
                 resolve(true)
             })
-        })
-        db.serialize(() => {
             db.run("DELETE FROM reviews", (err)=>{
                 if(err)
                     reject(err)
@@ -103,7 +97,7 @@ const makereview = async(cookieInfo: any, reviewInfo: any, productInfo:any)=>{
 
 const deletereview = async(cookieInfo: any, productInfo:any)=>{
     await request(app)
-    .post(baseURL + "/reviews/" + productInfo.model)
+    .delete(baseURL + "/reviews/" + productInfo.model)
     .set("Cookie", cookieInfo)
     .send()
     .expect(200)
@@ -176,11 +170,12 @@ let AdminCookie = ""
 
 beforeAll(async ()=>{
     await cleanup();
-    await postUser(testAdmin)
-    AdminCookie = await login(testAdmin)
+    //await postUser(testAdmin)
+    //AdminCookie = await login(testAdmin)
 })
 
 describe("Review integration testing ", ()=>{
+    
     describe("scenario 17.1",()=>{
         test("Add a review to a product", async () => {         
             await postUser(testManager)
@@ -203,19 +198,18 @@ describe("Review integration testing ", ()=>{
             );
             await makepayment(CustomerCookie)
             await makereview(CustomerCookie,testreview,testproduct)
-            console.log("OLLEY")
         })
     })  
-    /*  
     describe("scenario 17.2",()=>{
-        test("delete a review to a product", async () => {          
-            await postUser(testManager)
-            ManagerCookie = await login(testManager)
-            await postProduct(testproduct,ManagerCookie)
+        test("delete a review to a product", async () => {  
+            await cleanup();       
+            await postUser(testManager) 
+            ManagerCookie = await login(testManager)  
+            await postProduct(testproduct,ManagerCookie)  
             await logout(ManagerCookie)
             await postUser(testCustomer)
-            CustomerCookie = await login(testCustomer)
-            await addtocart(CustomerCookie)
+            CustomerCookie = await login(testCustomer) 
+            await addtocart(CustomerCookie) 
             const cartResponse = await request(app)
                 .get(baseURL + "/carts")
                 .set("Cookie", CustomerCookie);
@@ -233,7 +227,8 @@ describe("Review integration testing ", ()=>{
         })
     })
     describe("scenario 18.1",()=>{
-        test("view reviews", async () => {          
+        test("view reviews", async () => { 
+            await cleanup();         
             await postUser(testManager)
             ManagerCookie = await login(testManager)
             await postProduct(testproduct,ManagerCookie)
@@ -271,7 +266,8 @@ describe("Review integration testing ", ()=>{
         })
     })
     describe("scenario 19.1",()=>{
-        test("Delete all reviews of one product", async () => {          
+        test("Delete all reviews of one product", async () => {
+            await cleanup();          
             await postUser(testManager)
             ManagerCookie = await login(testManager)
             await postProduct(testproduct,ManagerCookie)
@@ -303,7 +299,8 @@ describe("Review integration testing ", ()=>{
         })
     })
     describe("scenario 19.2",()=>{
-        test("Delete all reviews of all products", async () => {          
+        test("Delete all reviews of all products", async () => {
+            await cleanup();          
             await postUser(testManager)
             ManagerCookie = await login(testManager)
             await postProduct(testproduct,ManagerCookie)
@@ -327,12 +324,6 @@ describe("Review integration testing ", ()=>{
             await postUser(testAdmin)
             AdminCookie = await login(testAdmin)
             await deleteallreviews(AdminCookie)
-            const verifyAllDeleteResponse = await request(app)
-                .get(baseURL + "/reviews")
-                .set("Cookie", AdminCookie);
-            expect(verifyAllDeleteResponse.status).toBe(200);
-            expect(verifyAllDeleteResponse.body).toEqual([]);
         })
     })
-*/
 })

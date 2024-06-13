@@ -4,7 +4,7 @@ import initRoutes from "./src/routes"
 import dotenv from 'dotenv';
 
 import cartDAO from "./src/dao/cartDAO";
-
+import ReviewDAO from "./src/dao/reviewDAO";
 dotenv.config();
 const app: express.Application = express();
 
@@ -21,16 +21,13 @@ initRoutes(app)
 
 if (!module.parent) {
     app.listen(port, () => {
-        console.log(`Server listening at http://localhost:${port}`);
+        console.log(Server listening at http://localhost:${port});
     });
 }
 
 export { app }
 
 async function initDb() {
+    await (new ReviewDAO()).initReviewDB()
     await (new cartDAO()).initCartDB()
 }
-
-
-
-
