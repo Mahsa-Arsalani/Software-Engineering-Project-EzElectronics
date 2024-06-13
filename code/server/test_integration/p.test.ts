@@ -3,9 +3,8 @@ import request from 'supertest'
 import { app } from "../index"
 import db from "../src/db/db"
 import { Role } from "../src/components/user"
-import { Category } from "../src/components/product"
+import { Category, Product } from "../src/components/product"
 import { ok } from "assert"
-import dayjs from "dayjs"
 
 const baseURL = "/ezelectronics"
 
@@ -72,6 +71,13 @@ const postProduct = async(productInfo: any,cookieInfo: any)=>{
     .expect(200)
 }
 
+const insertTheProduct = async (product : Product, PersonCookie : string) => {
+    await request(app)
+        .post(`${baseURL}/products`)
+        .set({"Cookie" : PersonCookie})
+        .send(product)
+}
+
 const testManager = {
     username: "testManagerUsername",
     name: "testManagerName",
@@ -101,10 +107,19 @@ const Okproduct = {
     quantity: 100,
 };
 
+const Okproduct2 = {
+    sellingPrice: 102,
+    model: "testmodel2",
+    category: Category.SMARTPHONE,
+    arrivalDate: "2024-01-02",
+    details: "testdetails2",
+    quantity: 102,
+};
+
 const futureDateProduct = {
     sellingPrice: 100,
     model: "testmodel",
-    category: "Laptop",
+    category: Category.APPLIANCE,
     arrivalDate: "2100-01-01",
     details: "testdetails",
     quantity: 4,
@@ -113,7 +128,7 @@ const futureDateProduct = {
 const pastDateProduct = {
     sellingPrice: 100,
     model: "testmodel",
-    category: "Laptop",
+    category: Category.SMARTPHONE,
     arrivalDate: "1200-01-01",
     details: "testdetails",
     quantity: 0,
@@ -140,11 +155,7 @@ describe("Product routes integration tests", () => {
         
         test("It should return a 200 success code", async () => {
             // The manager insert a new product model in the db
-            await request(app)
-            .post(`${baseURL}/products`)
-            .set({"Cookie" : ManagerCookie})
-            .send(Okproduct)
-            .expect(200);
+            await insertTheProduct(Okproduct, ManagerCookie)
 
             // The response status = 200 means the product is in the database
             let response = await request(app)
@@ -186,7 +197,9 @@ describe("Product routes integration tests", () => {
     describe("PATCH products/:model", () => {
         let addQuantity = 5
 
-        /*test("It should return a 200 success code", async () => {
+        test("It should return a 200 success code", async () => {
+            await insertTheProduct(Okproduct, ManagerCookie)
+
             await request(app)
             .patch(`${baseURL}/products/${Okproduct.model}`)
             .set({"Cookie" : ManagerCookie})
@@ -201,7 +214,7 @@ describe("Product routes integration tests", () => {
 
             let prod = response.body.find((prod : any) => prod.model = Okproduct.model);
             expect(prod.quantity).toBe(Okproduct.quantity + addQuantity);
-        })*/
+        })
 
         test("It should return 401 error code - Unathorized", async () => {
             await request(app)
@@ -212,36 +225,38 @@ describe("Product routes integration tests", () => {
         })
 
         test("It should return a 400 error code - AfterCurrentDateError", async () => {
-
             await request(app)
             .patch(`${baseURL}/products/${futureDateProduct.model}`)
             .set({"Cookie" : ManagerCookie})
-            .send({model: futureDateProduct.model, quantity : addQuantity, changeDate: futureDateProduct.arrivalDate})
+            .send({quantity : addQuantity, changeDate: futureDateProduct.arrivalDate})
             .expect(400);
         })
 
-        /*test("It should return a 404 error code", async () => {
+        test("It should return a 404 error code", async () => {
             await request(app)
-            .patch(`${baseURL}/products/${Okproduct.model}"invalidator"`)
+            .patch(`${baseURL}/products/ciao/invalidator"`)
             .set({"Cookie" : ManagerCookie})
-            .send({model: Okproduct.model, quantity : addQuantity, changeDate: Okproduct.arrivalDate})
+            .send({quantity : addQuantity})
             .expect(404);
-        })*/
+        })
 
-        /*
         test("It should return a 400 error code - New arrivalDate before old arrivalDate ", async () => {
+            await insertTheProduct(Okproduct, ManagerCookie)
+
             await request(app)
-            .patch(`${baseURL}/products/${pastDateProduct.model}`)
+            .patch(`${baseURL}/products/${Okproduct.model}`)
             .set({"Cookie" : ManagerCookie})
             .send({quantity : addQuantity, changeDate : pastDateProduct.arrivalDate})
             .expect(400);
-        }) */
+        })
     })
 
     describe("PATCH products/:model/sell", () => {
         let sellQuantity = 5
 
-        /*test("It should return a 200 success code and decrease the quantity of the product",async () => {
+        test("It should return a 200 success code and decrease the quantity of the product",async () => {
+            await insertTheProduct(Okproduct, ManagerCookie)
+
             await request(app)
             .patch(`${baseURL}/products/${Okproduct.model}/sell`)
             .set({"Cookie" : ManagerCookie})
@@ -257,25 +272,25 @@ describe("Product routes integration tests", () => {
             let prod = response.body.find((prod : any) => prod.model = Okproduct.model);
             expect(prod.quantity).toBe(Okproduct.quantity-sellQuantity);
         })
-    */
 
-        /*test("It should return a 400 error code - AfterCurrentDateError", async () => {
+        test("It should return a 400 error code - AfterCurrentDateError", async () => {
             await request(app)
             .patch(`${baseURL}/products/${Okproduct.model}/sell`)
             .set({"Cookie" : ManagerCookie})
             .send({quantity : sellQuantity, sellingDate : futureDateProduct.arrivalDate})
             .expect(400);
-        })*/
+        })
         
-/*
+
         test("It should return a 400 error code - BeforeArrivalDateError", async () => {
+            await insertTheProduct(Okproduct, ManagerCookie)
 
             await request(app)
             .patch(`${baseURL}/products/${Okproduct.model}/sell`)
             .set({"Cookie" : ManagerCookie})
-            .send({quantity : sellQuantity, sellingDate : pastDateProduct})
+            .send({quantity : sellQuantity, sellingDate : pastDateProduct.arrivalDate})
             .expect(400);
-        })*/
+        })
 
         test("It should return a 404 error code - ProductNotFoundError", async () => {
             await request(app)
@@ -285,45 +300,31 @@ describe("Product routes integration tests", () => {
             .expect(404);
         })
 
-        test("It should return a 409 error code ( LowProductStockError )",async() => {
-            await request(app)
-            .post(`${baseURL}/products`)
-            .set({"Cookie" : ManagerCookie})
-            .send(futureDateProduct)
-            .expect(200);
+        test("It should return a 409 error code - LowProductStockError", async() => {
+            await insertTheProduct(Okproduct, ManagerCookie)
 
             await request(app)
-            .patch(`${baseURL}/products/${futureDateProduct}/sell`)
+            .patch(`${baseURL}/products/${Okproduct.model}/sell`)
             .set({"Cookie" : ManagerCookie})
-            .send({quantity : futureDateProduct.quantity + sellQuantity})
+            .send({quantity : sellQuantity + 100})
             .expect(409);
         })
-/*
-        test("It should return a 409 error code ( EmptyProductStockError )",async() => {
-            await request(app)
-            .post(`${routePath}/products`)
-            .set({"Cookie" : managerCookie})
-            .send(TArray[2])
-            .expect(200);
+
+        test("It should return a 409 error code - EmptyProductStockError", async() => {
+            await insertTheProduct(pastDateProduct, ManagerCookie)
 
             await request(app)
-            .patch(`${routePath}/products/${TArray[2].model}/sell`)
-            .set({"Cookie" : managerCookie})
-            .send({quantity : TArray[2].quantity })
-            .expect(200);
-
-            await request(app)
-            .patch(`${routePath}/products/${TArray[2].model}/sell`)
-            .set({"Cookie" : managerCookie})
-            .send({quantity : sellQuantity})
+            .patch(`${baseURL}/products/${pastDateProduct.model}/sell`)
+            .set({"Cookie" : ManagerCookie})
+            .send({quantity : sellQuantity })
             .expect(409);
             
         }) 
 
-        test("It should return 401 error code ( Unauthorized )",async () => {
+        test("It should return 401 error code - Unauthorized", async () => {
             await request(app)
-            .patch(`${routePath}/products/${TArray[0].model}/sell`)
-            .set({"Cookie" : customerCookie})
+            .patch(`${baseURL}/products/${Okproduct.model}/sell`)
+            .set({"Cookie" : CustomerCookie})
             .send({quantity : sellQuantity})
             .expect(401);
         })
@@ -331,253 +332,59 @@ describe("Product routes integration tests", () => {
 
     describe("GET /products",() => {
 
-        test("It should return a 200 success code and all the products in the database",async() => {
-            //Inserisco il resto dei prodotti, ma prima li rimuovo tutti
-
-            await request(app)
-            .delete(`${routePath}/products`)
-            .set({'Cookie' : managerCookie}).expect(200);
-            
-
-            for ( let prod of TArray){
-                await request(app)
-                .post(`${routePath}/products`)
-                .set({"Cookie" : managerCookie})
-                .send(prod);
-            }
+        test("It should return a 200 success code and the products", async() => {
+            await insertTheProduct(Okproduct, ManagerCookie)
+            await insertTheProduct(Okproduct2, ManagerCookie)
 
             let response = await request(app)
-            .get(`${routePath}/products`)
-            .set({'Cookie' : managerCookie})
+            .get(`${baseURL}/products`)
+            .set({'Cookie' : ManagerCookie})
             .expect(200);
 
-            expect(response.body).toHaveLength(TArray.length);
+            expect(response.body).toEqual(expect.arrayContaining([Okproduct, Okproduct2]));
+        });
 
-            for( let i = 1; i < response.body.length; i++){
-                expect(response.body[i]).toEqual(TArray[i]);
-            }
+        test("It should return a 200 success code and all the Smartphones", async() => {
+            let grouping = "category";
+            let category = "Smartphone";
 
-
-        })
-
-        test("It should return a 200 success code and all the Smartphone products",async() => {
-           let grouping = "category";
-           let category = "Smartphone";
+            await insertTheProduct(Okproduct, ManagerCookie)
+            await insertTheProduct(Okproduct2, ManagerCookie)
 
             let response = await request(app)
-            .get(`${routePath}/products`)
-            .set({'Cookie' : managerCookie})
+            .get(`${baseURL}/products`)
+            .set({'Cookie' : ManagerCookie})
             .query({grouping,category})
             .expect(200);
 
-            expect(response.body).toEqual(TArray.filter(p => p.category == category));
+            expect(response.body).toEqual(expect.arrayContaining([Okproduct, Okproduct2]));
 
         })
 
-        test("It should return a 200 success code and all the products labeled as TestModel1",async() => {
+        test("It should return a 200 success code and testmodel1", async() => {
             let grouping = "model";
-            let model= "TestModel1";
+            let model = "testmodel";
+
+            await insertTheProduct(Okproduct, ManagerCookie)
 
             let response = await request(app)
-            .get(`${routePath}/products`)
-            .set({'Cookie' : managerCookie})
+            .get(`${baseURL}/products`)
+            .set({'Cookie' : ManagerCookie})
             .query({grouping,model})
             .expect(200);
 
-            expect(response.body).toEqual(TArray.filter(p => p.model == model));
+            expect(response.body).toEqual(expect.arrayContaining([Okproduct]));
         })
 
-        test ("It should return a 422 error code (grouping is set to one parameter but the other one is not null)",async() => {
-            let category = 'Smartphone'
-            let model= "TestModel1";
+        /*test ("It should return a 422 error code - grouping = model but category is not null", async() => {
+            let category = Category.SMARTPHONE
+            let model = "testmodel"
 
             await request(app)
-            .get(`${routePath}/products`)
-            .set({'Cookie' : managerCookie})
-            .query({grouping : "model",model,category})
+            .get(`${baseURL}/products`)
+            .set({'Cookie' : ManagerCookie})
+            .query({grouping : "model", category : category, model : model})
             .expect(422);
-
-            await request(app)
-            .get(`${routePath}/products`)
-            .set({'Cookie' : managerCookie})
-            .query({grouping : "category",model,category})
-            .expect(422);
-            
-        })
-
-        test ("It should return a 422 error code (grouping is set to one parameter but the other one is not null)",async() => {
-            let category = 'Smartphone'
-            let model= "TestModel1";
-
-            
-            await request(app)
-            .get(`${routePath}/products`)
-            .set({'Cookie' : managerCookie})
-            .query({category})
-            .expect(422);
-            
-        })
-
-        
-
-        test ("It should return a 404 error code ",async() => {
-            let category = 'Smartphone'
-            let model= "TestModelNotExisting";
-            let grouping = "model"
-
-            await request(app)
-            .get(`${routePath}/products`)
-            .set({'Cookie' : managerCookie})
-            .query({grouping ,model})
-            .expect(404)
-            
-        })
-
-        test("It should return 401 error code ( Unathorized )",async() => {
-           
-            await request(app)
-            .get(`${routePath}/products`)
-            .set({'Cookie' : customerCookie})
-            .expect(401);
-
-        })
+        })*/
     })
-
-    describe("GET /products/available",() => {
-        test("It should return a 200 success code and all the available products in the database",async() => {
-            //Rendo i prodotti 2 e 3 non disponibili, sia nel db che nell'array di testing
-
-            await request(app)
-            .patch(`${routePath}/products/${TArray[2].model}/sell`)
-            .set({"Cookie" : managerCookie})
-            .send({quantity : TArray[2].quantity})
-            .expect(200);
-
-            await request(app)
-            .patch(`${routePath}/products/${TArray[3].model}/sell`)
-            .set({"Cookie" : managerCookie})
-            .send({quantity : TArray[3].quantity})
-            .expect(200);
-
-            TArray[2].quantity = 0;
-            TArray[3].quantity = 0;
-
-            let response = await request(app)
-            .get(`${routePath}/products/available`)
-            .set({'Cookie' : managerCookie})
-            .expect(200);
-            expect(response.body).toEqual(TArray.filter(p => p.quantity != 0));
-
-
-        })
-
-        test("It should return a 200 success code and all the available Smartphone products",async() => {
-           let grouping = "category";
-           let category = "Smartphone";
-
-            let response = await request(app)
-            .get(`${routePath}/products/available`)
-            .set({'Cookie' : managerCookie})
-            .query({grouping,category})
-            .expect(200);
-
-            expect(response.body).toEqual(TArray.filter(p => p.quantity != 0 && p.category === 'Smartphone'));
-
-
-        })
-
-        test("It should return a 200 success code and all the products labeled as TestModel1",async() => {
-            let grouping = "model";
-            let model= "TestModel1";
-
-            let response = await request(app)
-            .get(`${routePath}/products/available`)
-            .set({'Cookie' : managerCookie})
-            .query({grouping,model})
-            .expect(200);
-
-            expect(response.body).toEqual(TArray.filter(p => p.model == model && p.quantity != 0));
-        })
-
-        test ("It should return a 422 error code (grouping is set to one parameter but the other one is not null)",async() => {
-            let category = 'Smartphone'
-            let model= "TestModel1";
-
-            await request(app)
-            .get(`${routePath}/products/available`)
-            .set({'Cookie' : managerCookie})
-            .query({grouping : "model",model,category})
-            .expect(422);
-
-            await request(app)
-            .get(`${routePath}/products/available`)
-            .set({'Cookie' : managerCookie})
-            .query({grouping : "category",model,category})
-            .expect(422);
-            
-        })
-
-        test ("It should return a 404 error code ",async() => {
-            let model= "TestModelNotExisting";
-            let grouping = "model"
-
-            await request(app)
-            .get(`${routePath}/products/available`)
-            .set({'Cookie' : managerCookie})
-            .query({grouping ,model})
-            .expect(404)
-            
-        })
-
-        test("It should return 200 success code ( customer case )",async() => {
-           
-            let response = await request(app)
-            .get(`${routePath}/products/available`)
-            .set({'Cookie' : customerCookie})
-            .expect(200);
-
-        })
-    })
-
-    describe("DELETE /products/:model",() => {
-        test("It should return a 200 success code and delete the first product in the test array from the database",async()=>{
-            await request(app)
-            .delete(`${routePath}/products/${TArray[0].model}`)
-            .set({'Cookie' : managerCookie})
-            .expect(200);
-
-            let response = await request(app).get(`${routePath}/products/`).set({'Cookie' : managerCookie}).expect(200);
-            expect(response.body).toEqual(TArray.slice(1));
-        })
-
-        test("It should return a 404 error code",async()=>{
-            await request(app)
-            .delete(`${routePath}/products/${TArray[0].model}`)
-            .set({'Cookie' : managerCookie})
-            .expect(404);
-        })
-
-        test("It should return 401 error code ( Unathorized )",async()=>{
-            await request(app)
-            .delete(`${routePath}/products/${TArray[0].model}`)
-            .set({'Cookie' : customerCookie})
-            .expect(401);
-        })
-    })
-
-    describe("DELETE /products",() => {
-        test("It should return a 200 ok code and delete all products in the database",async() => {
-            await request(app)
-            .delete(`${routePath}/products`)
-            .set({'Cookie' : managerCookie})
-            .expect(200);
-        })
-
-        test("It should return 401 error code ( Unathorized )",async() => {
-            await request(app)
-            .delete(`${routePath}/products`)
-            .set({'Cookie' : customerCookie})
-            .expect(401);
-        */})
-    
 })
