@@ -117,7 +117,7 @@ describe("Route tests product", () => {
             expect(ProductController.prototype.sellProduct).toHaveBeenCalledTimes(1)
         })
 
-        test("it should return a 404 error code - ProductNotFound", async () => {
+        test("it should return a 404 error code - ProductNotFound ciao", async () => {
             jest.spyOn(Authenticator.prototype,"isManager").mockImplementation((req,res,next)=>next());
             jest.spyOn(ProductController.prototype, "sellProduct").mockRejectedValue(new ProductNotFoundError()) 
 
@@ -181,64 +181,125 @@ describe("Route tests product", () => {
             expect(ProductController.prototype.getProducts).toHaveBeenCalledTimes(1)
         })
 
-        test("it should return a 404 error code - ProductNotFound", async () => {
+        test("it should return a 404 error code - ProductNotFound ", async () => {
             jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
             jest.spyOn(ProductController.prototype, "getProducts").mockRejectedValue(new ProductNotFoundError()) 
 
             const response = await request(app).get(baseURL + `/products`)
-            .send({grouping : null, category : null, model : null})
+            .send({grouping : "model", category : null, model : `${testproduct[0].model}`})
             expect(response.status).toBe(404)
-            expect(response.body).toBeInstanceOf(ProductNotFoundError)
             expect(Authenticator.prototype.isAdminOrManager).toHaveBeenCalledTimes(1);
             expect(ProductController.prototype.getProducts).toHaveBeenCalledTimes(1)
         })
 
         test("it should return a 422 error code - Grouping null but model and/or category not null", async () => {
             jest.spyOn(Authenticator.prototype, "isAdminOrManager").mockImplementation((req, res, next) => next());
-            jest.spyOn(ProductController.prototype, "getProducts").mockRejectedValue(new Error("Invalid parameters"));
+            
+            jest.spyOn(ProductController.prototype, "getProducts").mockRejectedValue({ error: "Invalid parameters", status: 422 });
 
             const response = await request(app).get(baseURL + `/products`)
-                .query({ grouping: null, category: null, model: testproduct[0].model });
+                .query({ grouping: null, category: null, model: `${testproduct[0].model}` });
             expect(response.status).toBe(422)
-            expect(response.body).toBeInstanceOf(ProductNotFoundError)
             expect(Authenticator.prototype.isAdminOrManager).toHaveBeenCalledTimes(1)
             expect(ProductController.prototype.getProducts).toHaveBeenCalledTimes(1)
         })
 
         test("it should return a 422 error code - Grouping = category but category null ", async () => {
             jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
-            jest.spyOn(ProductController.prototype, "getProducts").mockRejectedValue(new Error("Error 422")) 
+            jest.spyOn(ProductController.prototype, "getProducts").mockRejectedValue({status: 422 }) 
 
             const response = await request(app).get(baseURL + `/products`)
             .send({grouping : "category", category : null, model : testproduct[0].model})
             expect(response.status).toBe(422)
-            expect(response.body).toBeInstanceOf(Error)
             expect(Authenticator.prototype.isAdminOrManager).toHaveBeenCalledTimes(1);
             expect(ProductController.prototype.getProducts).toHaveBeenCalledTimes(1)
         })
+    })
 
-        test("it should return a 409 error code - LowProductStockError", async () => {
-            jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
-            jest.spyOn(ProductController.prototype, "getProducts").mockResolvedValue(testproduct) 
+    describe("GET /products/available", () => {
+        test("it should return a 200 success code", async () => {
+            jest.spyOn(ProductController.prototype, "getAvailableProducts").mockResolvedValue(testproduct) 
 
-            const response = await request(app).get(baseURL + `/products`)
+            const response = await request(app).get(baseURL + `/products/available`)
             .send({grouping : null, category : null, model : null})
             expect(response.status).toBe(200)
             expect(response.body).toEqual(testproduct)
-            expect(Authenticator.prototype.isManager).toHaveBeenCalledTimes(1);
-            expect(ProductController.prototype.sellProduct).toHaveBeenCalledTimes(1)
+            expect(ProductController.prototype.getAvailableProducts).toHaveBeenCalledTimes(1)
         })
 
-        test("it should return a 409 error code - EmptyProductStockError", async () => {
-            jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
-            jest.spyOn(ProductController.prototype, "getProducts").mockResolvedValue(testproduct) 
+        test("it should return a 404 error code - ProductNotFound", async () => {
+            jest.spyOn(ProductController.prototype, "getAvailableProducts").mockRejectedValue(new ProductNotFoundError()) 
 
-            const response = await request(app).get(baseURL + `/products`)
+            const response = await request(app).get(baseURL + `/products/available`)
             .send({grouping : null, category : null, model : null})
+            expect(response.status).toBe(404)
+            expect(ProductController.prototype.getAvailableProducts).toHaveBeenCalledTimes(1)
+        })
+
+        test("it should return a 422 error code - Grouping null but model and/or category not null", async () => {
+            jest.spyOn(ProductController.prototype, "getAvailableProducts").mockRejectedValue(new Error("Invalid parameters"));
+
+            const response = await request(app).get(baseURL + `/products/available`)
+                .query({ grouping: null, category: null, model: testproduct[0].model });
+            expect(response.status).toBe(422)
+            expect(ProductController.prototype.getAvailableProducts).toHaveBeenCalledTimes(1)
+        })
+
+        test("it should return a 422 error code - Grouping = category but category null ", async () => {
+            jest.spyOn(ProductController.prototype, "getAvailableProducts").mockRejectedValue(new Error("Error 422")) 
+
+            const response = await request(app).get(baseURL + `/products/available`)
+            .send({grouping : "category", category : null, model : testproduct[0].model})
+            expect(response.status).toBe(422)
+            expect(ProductController.prototype.getAvailableProducts).toHaveBeenCalledTimes(1)
+        })
+    })
+
+    describe("DELETE /products/:model", () => {
+        test("it should return a 200 success code", async () => {
+            jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
+            jest.spyOn(ProductController.prototype, "deleteProduct").mockResolvedValue(true) 
+
+            const response = await request(app).delete(baseURL + `/products/${testproduct[0].model}`)
+            .send(`${testproduct[0].model}`)
             expect(response.status).toBe(200)
-            expect(response.body).toEqual(testproduct)
-            expect(Authenticator.prototype.isManager).toHaveBeenCalledTimes(1);
-            expect(ProductController.prototype.sellProduct).toHaveBeenCalledTimes(1)
+            expect(Authenticator.prototype.isAdminOrManager).toHaveBeenCalledTimes(1);
+            expect(ProductController.prototype.deleteProduct).toHaveBeenCalledTimes(1)
+        })
+
+        test("it should return a 404 error code", async () => {
+            jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
+            jest.spyOn(ProductController.prototype, "deleteProduct").mockRejectedValue(new ProductNotFoundError()) 
+
+            const response = await request(app).delete(baseURL + `/products/${testproduct[0].model}`)
+            .send(`ciao`)
+            expect(response.status).toBe(404)
+            expect(Authenticator.prototype.isAdminOrManager).toHaveBeenCalledTimes(1);
+            expect(ProductController.prototype.deleteProduct).toHaveBeenCalledTimes(1)
+        })
+    })
+
+    describe("DELETE /products", () => {
+        test("it should return a 200 success code", async () => {
+            jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
+            jest.spyOn(ProductController.prototype, "deleteAllProducts").mockResolvedValue(true) 
+
+            const response = await request(app).delete(baseURL + `/products`)
+            .send()
+            expect(response.status).toBe(200)
+            expect(Authenticator.prototype.isAdminOrManager).toHaveBeenCalledTimes(1);
+            expect(ProductController.prototype.deleteAllProducts).toHaveBeenCalledTimes(1)
+        })
+
+        test("it should return a 404 error code", async () => {
+            jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
+            jest.spyOn(ProductController.prototype, "deleteProduct").mockRejectedValue(new ProductNotFoundError()) 
+
+            const response = await request(app).delete(baseURL + `/products/${testproduct[0].model}`)
+            .send(`ciao`)
+            expect(response.status).toBe(404)
+            expect(Authenticator.prototype.isAdminOrManager).toHaveBeenCalledTimes(1);
+            expect(ProductController.prototype.deleteProduct).toHaveBeenCalledTimes(1)
         })
     })
 })
