@@ -3,6 +3,8 @@ import express from 'express';
 import initRoutes from "./src/routes"
 import dotenv from 'dotenv';
 
+import cartDAO from "./src/dao/cartDAO";
+
 dotenv.config();
 const app: express.Application = express();
 
@@ -13,6 +15,9 @@ const corsOptions = {
     credentials: true,
 };
 app.use(cors(corsOptions));
+
+initDb();
+
 initRoutes(app)
 if (!module.parent) {
     app.listen(port, () => {
@@ -21,6 +26,10 @@ if (!module.parent) {
 }
 
 export { app }
+
+async function initDb() {
+    await (new cartDAO()).initCartDB()
+}
 
 
 

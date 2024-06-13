@@ -89,12 +89,6 @@ describe("CartDAO unit testing", ()=>{
       });
     });
 
-
-
-
-
-
-
     describe('checkoutCart', () => {
       beforeEach(() => {
           jest.clearAllMocks();

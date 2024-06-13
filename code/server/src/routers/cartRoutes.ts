@@ -76,6 +76,7 @@ class CartRoutes {
             (req: any, res: any, next: any) => this.controller.addToCart(req.user, req.body.model)
                 .then(() => res.status(200).end())
                 .catch((err) => {
+                    console.log(err)
                     next(err)
                 })
         )

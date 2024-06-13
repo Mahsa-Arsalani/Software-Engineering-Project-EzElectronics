@@ -25,7 +25,6 @@ jest.mock("express-validator", () =>{
     fakeMiddleware.isFloat = fakeValidator
 
     return {
-        
         param: jest.fn(()=>fakeMiddleware),
         body: jest.fn(()=>fakeMiddleware)
     }

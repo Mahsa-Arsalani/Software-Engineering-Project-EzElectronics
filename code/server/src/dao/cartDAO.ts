@@ -128,6 +128,40 @@ addToCart(user : User, product : Product):Promise<Boolean>{
 
 */
 
+initCartDB(): Promise<Boolean> {
+    return new Promise<Boolean>((resolve, reject) => {
+        const createTableSql = 
+                `CREATE TABLE IF NOT EXISTS cart (
+                cartID INTEGER AUTO_INCREMENT,
+                customer TEXT,
+                paid INTEGER,
+                paymentDate TEXT,
+                total FLOAT,
+                products TEXT,
+                PRIMARY KEY(cartID))`;
+    
+            // Runs the create table query
+            db.run(createTableSql, [], (err: Error | null) => {
+                if(err)
+                    reject(err)
+                resolve(true)
+            })
+    })
+}
+
+deleteTable(): Promise<Boolean> {
+    return new Promise<Boolean>((resolve, reject) => {
+        const sql = "DROP TABLE cart"
+    
+            // Runs the create table query
+            db.run(sql, [], (err: Error | null) => {
+                if(err)
+                    reject(err)
+                resolve(true)
+            })
+    })
+}
+
 /**
  * Retrieves the current cart for a specific user.
  * @param user - The user for whom to retrieve the cart.
@@ -147,7 +181,7 @@ getCart(user: User) : Promise<Cart> {
                     const cart: Cart = new Cart(row.customer, row.paid, row.paymentDate, row.total, JSON.parse(row.products));
                     resolve(cart)
                 }else{
-                    throw new CartNotFoundError()
+                    reject(new CartNotFoundError())
 
                     //const cart: Cart = new Cart(username, false, null, 0, []);
                     //cart.setExist(false)
