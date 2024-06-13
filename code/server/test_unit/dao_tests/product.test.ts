@@ -167,6 +167,15 @@ describe("ProductDAO unit testing", () => {
       expect(mockDBget).toBeCalledTimes(1);
     });
 
+    test('sellModel should throw generic Error', async () => {
+      const mockDBget = jest.spyOn(db, 'get').mockImplementationOnce((sql, params, callback) => {
+        return callback(new Error(), null); 
+      });
+
+      await expect(productDAO.sellModel(testProduct.model, 5, '2024-02-02')).rejects.toBeInstanceOf(Error);
+      expect(mockDBget).toBeCalledTimes(1);
+    });
+
     test('sellModel should throw DateError', async () => {
       const mockDBget = jest.spyOn(db, 'get').mockImplementationOnce((sql, params, callback) => {
         return callback(null, { arrivalDate: '2040-01-01', quantity: 15 });  // Mock future arrival date
@@ -174,6 +183,29 @@ describe("ProductDAO unit testing", () => {
 
       await expect(productDAO.sellModel(testProduct.model, 5, '2024-02-02')).rejects.toBeInstanceOf(DateError);
       expect(mockDBget).toBeCalledTimes(1);
+    });
+
+    test('sellModel should throw DateError', async () => {
+      const mockDBget = jest.spyOn(db, 'get').mockImplementationOnce((sql, params, callback) => {
+        return callback(null, { arrivalDate: '2020-01-01', quantity: 15 });  // Mock future arrival date
+      });
+
+      await expect(productDAO.sellModel(testProduct.model, 5, '2100-02-02')).rejects.toBeInstanceOf(DateError);
+      expect(mockDBget).toBeCalledTimes(0);
+    });
+
+    test('sellModel should throw generic Error', async () => {
+      const mockDBget = jest.spyOn(db, 'get').mockImplementationOnce((sql, params, callback) => {
+        return callback(null, { arrivalDate: '2024-01-01', quantity: 17 });  // Mock fetching product
+      });
+
+      const mockDBRun = jest.spyOn(db, 'run').mockImplementationOnce((sql, params, callback) => {
+        return callback(new Error());  
+      });
+
+      await expect(productDAO.sellModel(testProduct.model, 5, '2024-02-02')).rejects.toBeInstanceOf(Error);
+      expect(mockDBget).toBeCalledTimes(1);
+      expect(mockDBRun).toBeCalledTimes(1);
     });
   });
 
@@ -193,6 +225,21 @@ describe("ProductDAO unit testing", () => {
       expect(mockAll).toHaveBeenCalledWith(expect.any(String), expect.any(Array), expect.any(Function));
     });
 
+    test('getAllProducts should return all products', async () => {
+      const mockAll = jest.spyOn(db, 'all').mockImplementation((sql, params, callback) => {
+        return callback(null, [
+          { model: 'prod', category: Category.SMARTPHONE, quantity: 10, details: '', sellingPrice: 1000, arrivalDate: '2023-01-01' },
+          { model: 'prod1', category: Category.SMARTPHONE, quantity: 10, details: '', sellingPrice: 1000, arrivalDate: '2023-01-01' },
+          { model: 'prod2', category: Category.SMARTPHONE, quantity: 10, details: '', sellingPrice: 1000, arrivalDate: '2023-01-01' },
+          { model: 'prod3', category: Category.SMARTPHONE, quantity: 10, details: '', sellingPrice: 1000, arrivalDate: '2023-01-01' },
+        ]);
+      });
+
+      const products = await productDAO.getAllProducts("category", Category.SMARTPHONE, null);
+      expect(products.length).toEqual(4);
+      expect(mockAll).toHaveBeenCalledWith(expect.any(String), expect.any(Array), expect.any(Function));
+    });
+
     test('getAllProducts should return a product not found error', async () => {
       const mockAll = jest.spyOn(db, 'all').mockImplementation((sql, params, callback) => {
         return callback(null, []);
@@ -207,6 +254,30 @@ describe("ProductDAO unit testing", () => {
       });
 
       await expect(productDAO.getAllProducts("model", null, "prod0")).rejects.toBeInstanceOf(Error);
+    });
+
+    test('getAllProducts should return a generic Error', async () => {
+      const mockAll = jest.spyOn(db, 'all').mockImplementation((sql, params, callback) => {
+        return callback(new Error(), []);
+      });
+
+      await expect(productDAO.getAllProducts("model", null, null)).rejects.toBeInstanceOf(Error);
+    });
+
+    test('getAllProducts should return a generic Error', async () => {
+      const mockAll = jest.spyOn(db, 'all').mockImplementation((sql, params, callback) => {
+        return callback(new Error(), []);
+      });
+
+      await expect(productDAO.getAllProducts("category", null, "prod0")).rejects.toBeInstanceOf(Error);
+    });
+
+    test('getAllProducts should return a generic Error', async () => {
+      const mockAll = jest.spyOn(db, 'all').mockImplementation((sql, params, callback) => {
+        return callback(new Error(), []);
+      });
+
+      await expect(productDAO.getAllProducts(null, null, "prod0")).rejects.toBeInstanceOf(Error);
     });
   });
 
@@ -242,11 +313,12 @@ describe("ProductDAO unit testing", () => {
 
   describe("getProductByModel test cases", () => {
     test('should return a ProductNotFoundError when no product is found', async () => {
+      jest.resetAllMocks();
       const mockGet = jest.spyOn(db, 'get').mockImplementation((sql, params, callback) => {
         return callback(null, null);
       });
 
-      await expect(productDAO.getProductByModel('nonExistentModel')).rejects.toBeInstanceOf(ProductNotFoundError);
+      await expect(productDAO.getProductByModel('nonExistentModel1')).rejects.toBeInstanceOf(ProductNotFoundError);
     });
 
     test('should return an error when there is a database error', async () => {
