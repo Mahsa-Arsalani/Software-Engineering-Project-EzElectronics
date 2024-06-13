@@ -16,6 +16,10 @@ jest.mock("../../src/routers/auth")
 const dummyMiddleware = (req: any, res: any, next: any) => next()
 
 beforeEach(()=>{
+    jest.resetAllMocks()
+    jest.clearAllMocks()
+    jest.restoreAllMocks(
+    )
     jest.spyOn(ErrorHandler.prototype, "validateRequest").mockImplementation(dummyMiddleware)
     jest.spyOn(Authenticator.prototype, "isLoggedIn").mockImplementation(dummyMiddleware)
 })
@@ -23,6 +27,7 @@ beforeEach(()=>{
 afterEach(()=>{
     jest.resetAllMocks()
     jest.clearAllMocks()
+    jest.resetAllMocks()
 })
 
 const testuser1 = new User("testcust","testname1","testsurname1",Role.CUSTOMER,"testaddress1","testbirthdate1")
@@ -31,6 +36,17 @@ const testproduct2 = {sellingPrice: 1000, model: "telephone", category: Category
 const testproduct3 = {sellingPrice: 1000, model: "telephone3", category: Category.SMARTPHONE, arrivalDate: "2030-01-01", details: "", quantity: 0};
 const testproduct4 = {sellingPrice: 1000, model: "telephone4", category: Category.SMARTPHONE, arrivalDate: "2030-01-01", details: "", quantity: 2};
 let testproduct = [testproduct1, testproduct2, testproduct3, testproduct4]
+
+class Error422 extends Error {
+    customMessage: string
+    customCode: number
+
+    constructor() {
+        super()
+        this.customMessage = "Invalid parameters"
+        this.customCode = 422
+    }
+}
 
 describe("Route tests product", () => {
     describe("POST /products", () => {
@@ -165,8 +181,8 @@ describe("Route tests product", () => {
             .send({sellingDate: "", quantity: quantitySold}).expect(409)
             expect(Authenticator.prototype.isManager).toHaveBeenCalledTimes(1);
             expect(ProductController.prototype.sellProduct).toHaveBeenCalledTimes(1)
-        })
-    })
+        });
+    });
 
     describe("GET /products", () => {
         test("it should return a 200 success code", async () => {
@@ -195,7 +211,7 @@ describe("Route tests product", () => {
         test("it should return a 422 error code - Grouping null but model and/or category not null", async () => {
             jest.spyOn(Authenticator.prototype, "isAdminOrManager").mockImplementation((req, res, next) => next());
             
-            jest.spyOn(ProductController.prototype, "getProducts").mockRejectedValue({ error: "Invalid parameters", status: 422 });
+            jest.spyOn(ProductController.prototype, "getProducts").mockRejectedValue(new Error422());
 
             const response = await request(app).get(baseURL + `/products`)
                 .query({ grouping: null, category: null, model: `${testproduct[0].model}` });
@@ -206,28 +222,30 @@ describe("Route tests product", () => {
 
         test("it should return a 422 error code - Grouping = category but category null ", async () => {
             jest.spyOn(Authenticator.prototype,"isAdminOrManager").mockImplementation((req,res,next)=>next());
-            jest.spyOn(ProductController.prototype, "getProducts").mockRejectedValue({status: 422 }) 
+            jest.spyOn(ProductController.prototype, "getProducts").mockRejectedValue(new Error422()) 
 
             const response = await request(app).get(baseURL + `/products`)
             .send({grouping : "category", category : null, model : testproduct[0].model})
             expect(response.status).toBe(422)
             expect(Authenticator.prototype.isAdminOrManager).toHaveBeenCalledTimes(1);
             expect(ProductController.prototype.getProducts).toHaveBeenCalledTimes(1)
-        })
-    })
+        });
+    });
 
     describe("GET /products/available", () => {
         test("it should return a 200 success code", async () => {
-            jest.spyOn(ProductController.prototype, "getAvailableProducts").mockResolvedValue(testproduct) 
-
+            jest.spyOn(Authenticator.prototype,"isCustomer").mockImplementation((req,res,next)=>next());
+            jest.spyOn(ProductController.prototype, "getAvailableProducts").mockResolvedValue([testproduct1, testproduct2, testproduct4]) 
+            
             const response = await request(app).get(baseURL + `/products/available`)
             .send({grouping : null, category : null, model : null})
             expect(response.status).toBe(200)
-            expect(response.body).toEqual(testproduct)
+            expect(response.body).toEqual([testproduct1, testproduct2, testproduct4])
             expect(ProductController.prototype.getAvailableProducts).toHaveBeenCalledTimes(1)
         })
 
         test("it should return a 404 error code - ProductNotFound", async () => {
+            jest.spyOn(Authenticator.prototype,"isCustomer").mockImplementation((req,res,next)=>next());
             jest.spyOn(ProductController.prototype, "getAvailableProducts").mockRejectedValue(new ProductNotFoundError()) 
 
             const response = await request(app).get(baseURL + `/products/available`)
@@ -237,7 +255,8 @@ describe("Route tests product", () => {
         })
 
         test("it should return a 422 error code - Grouping null but model and/or category not null", async () => {
-            jest.spyOn(ProductController.prototype, "getAvailableProducts").mockRejectedValue(new Error("Invalid parameters"));
+            jest.spyOn(Authenticator.prototype,"isCustomer").mockImplementation((req,res,next)=>next());
+            jest.spyOn(ProductController.prototype, "getAvailableProducts").mockRejectedValue(new Error422());
 
             const response = await request(app).get(baseURL + `/products/available`)
                 .query({ grouping: null, category: null, model: testproduct[0].model });
@@ -246,7 +265,8 @@ describe("Route tests product", () => {
         })
 
         test("it should return a 422 error code - Grouping = category but category null ", async () => {
-            jest.spyOn(ProductController.prototype, "getAvailableProducts").mockRejectedValue(new Error("Error 422")) 
+            jest.spyOn(Authenticator.prototype,"isCustomer").mockImplementation((req,res,next)=>next());
+            jest.spyOn(ProductController.prototype, "getAvailableProducts").mockRejectedValue(new Error422()) 
 
             const response = await request(app).get(baseURL + `/products/available`)
             .send({grouping : "category", category : null, model : testproduct[0].model})
