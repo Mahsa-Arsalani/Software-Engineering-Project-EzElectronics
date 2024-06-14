@@ -1,7 +1,7 @@
 import db from "../db/db";
 import { Category, Product } from "../components/product";
 import dayjs from 'dayjs';
-import { ProductAlreadyExistsError, ProductNotFoundError, LowProductStockError, EmptyProductStockError } from "../errors/productError";
+import { ProductAlreadyExistsError, ProductNotFoundError, LowProductStockError, EmptyProductStockError, GroupingError } from "../errors/productError";
 import { DateError } from "../utilities";
 
 /**
@@ -123,9 +123,6 @@ class ProductDAO {
      */
     async getAllProducts(grouping: string | null, category: string | null, model: string | null): Promise<Product[]> {
         return new Promise<Product[]>((resolve, reject) => {
-            console.log(grouping);
-                    console.log(category);
-                    console.log(model);
 
             if (category === undefined || category === '') category = null;
             if (model === undefined || model === '') model = null;
@@ -135,19 +132,19 @@ class ProductDAO {
         
             if (grouping === "category") {
                 if (category === null || model !== null) {
-                    return reject(new Error("Invalid parameters for grouping by category"));
+                    return reject(new GroupingError());
                 }
                 sql += " WHERE category = ?";
                 params.push(category);
             } else if (grouping === "model") {
                 if (model === null || category !== null) {
-                    return reject(new Error("Invalid parameters for grouping by model"));
+                    return reject(new GroupingError());
                 }
                 sql += " WHERE model = ?";
                 params.push(model);
             } else {
                 if (model !== null || category !== null) {
-                    return reject(new Error("Invalid grouping parameter"));
+                    return reject(new GroupingError());
                 }
             }
             
