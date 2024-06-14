@@ -11,27 +11,9 @@ const baseURL = "/ezelectronics"
 function cleanup() {
     return new Promise((resolve, reject)=>{
         db.serialize(() => {
-            db.run("DELETE FROM users", (err)=>{
-                if(err)
-                    reject(err)
-                resolve(true)
-            })
-        })
-        db.serialize(() => {
-            db.run("DELETE FROM products", (err)=>{
-                if(err)
-                    reject(err)
-                resolve(true)
-            })
-        })
-        db.serialize(() => {
-            db.run("DELETE FROM cart", (err)=>{
-                if(err)
-                    reject(err)
-                resolve(true)
-            })
-        })
-        db.serialize(() => {
+            db.run("DELETE FROM users")
+            db.run("DELETE FROM products")
+            db.run("DELETE FROM cart")
             db.run("DELETE FROM reviews", (err)=>{
                 if(err)
                     reject(err)
@@ -236,7 +218,7 @@ describe("Product routes integration tests", () => {
             await request(app)
             .patch(`${baseURL}/products/${Okproduct.model}`)
             .set({"Cookie" : ManagerCookie})
-            .send({model: Okproduct.model, quantity : addQuantity, arrivalDate: "2050-01-01"})
+            .send({quantity : addQuantity, changeDate: "2051-01-01"})
             .expect(400);
         })
 
@@ -253,9 +235,10 @@ describe("Product routes integration tests", () => {
             await request(app)
             .patch(`${baseURL}/products/${Okproduct.model}`)
             .set({"Cookie" : ManagerCookie})
-            .send({model: Okproduct.model, quantity : addQuantity, arrivalDate: "2000/01/01"})
+            .send({model: Okproduct.model, quantity : addQuantity, changeDate: "2000/01/01"})
             .expect(400);
         })
+            
     })
 
     describe("PATCH products/:model/sell", () => {
@@ -501,4 +484,5 @@ describe("Product routes integration tests", () => {
             .expect(401);
         })
     })
+        
 })

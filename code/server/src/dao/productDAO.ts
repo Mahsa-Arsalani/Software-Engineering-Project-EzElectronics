@@ -54,25 +54,34 @@ class ProductDAO {
         return new Promise((resolve, reject) => {
 
             // Checks the date
-            if (arrivalDate === null || arrivalDate === undefined || arrivalDate === '') arrivalDate = dayjs().format("YYYY-MM-DD");
-            else if (dayjs(arrivalDate).isAfter(dayjs())) reject(new DateError());
+            if (arrivalDate === null || arrivalDate === undefined || arrivalDate === '')
+                arrivalDate = dayjs().format("YYYY-MM-DD");
 
-            const sql = "SELECT arrivalDate FROM products WHERE model = ?";
+            else if (dayjs(arrivalDate, "YYYY-MM-DD").isAfter(dayjs())){
+                console.log("ia after")
+                return reject(new DateError())
+                
+            }
+
+            const sql = "SELECT quantity,arrivalDate FROM products WHERE model = ?";
             db.get(sql, [model], (err: Error | null, row : any) => {
-                if (err) reject(err);
-                else if (row === null || row === undefined || row === '') reject(new ProductNotFoundError());
-                if (dayjs(arrivalDate).isBefore(dayjs(row.arrivalDate))) reject(new DateError());
+                if (err) return reject(err);
+                else if (row === null || row === undefined || row === '') return reject(new ProductNotFoundError());
+                if (dayjs(arrivalDate).isBefore(dayjs(row.arrivalDate))) return reject(new DateError());
                     arrivalDate = dayjs(arrivalDate).format("YYYY-MM-DD");
-                const updateSql = "UPDATE products SET quantity = quantity + ?, arrivalDate = ? WHERE model = ?";
-                db.run(updateSql, [quantity, arrivalDate, model], (err: Error | null) =>  {
-                    if (err) reject(err);
+                const updateSql = "UPDATE products SET quantity = ?, arrivalDate = ? WHERE model = ?";
+                db.run(updateSql, [quantity + row.quantity, arrivalDate, model], (err: Error | null) =>  {
+                    if (err) return reject(err);
+                    return resolve(quantity + row.quantity)
                 });
             });
+                /*
                 const sqlnewquantity = "SELECT quantity FROM products WHERE model = ?";
                 db.get(sqlnewquantity, [model], (err: Error | null, row : any) => {
                     if (err) reject(err);
                     else resolve(row);
             });
+            */
         });
     }
 
@@ -86,7 +95,7 @@ class ProductDAO {
             // Check the date la data
             if (sellingDate === null || sellingDate === undefined || sellingDate === '') {
                 sellingDate = dayjs().format("YYYY-MM-DD");
-            } else if (dayjs(sellingDate).isAfter(dayjs())) {
+            } else if (dayjs(sellingDate, "YYYY-MM-DD").isAfter(dayjs())) {
                 return reject(new DateError());
             }
     
@@ -96,7 +105,7 @@ class ProductDAO {
                     return reject(err);
                 } else if (!row) {
                     return reject(new ProductNotFoundError());
-                } else if (dayjs(sellingDate).isBefore(dayjs(row.arrivalDate))) {
+                } else if (dayjs(sellingDate, "YYYY-MM-DD").isBefore(dayjs(row.arrivalDate, "YYYY-MM-DD"))) {
                     return reject(new DateError());
                 } else if (row.quantity === 0) {
                     return reject(new EmptyProductStockError());
@@ -106,9 +115,9 @@ class ProductDAO {
                     const updateSql = "UPDATE products SET quantity = quantity - ? WHERE model = ?";
                     db.run(updateSql, [quantity, model], (err: Error | null) => {
                         if (err) {
-                            reject(err);
+                            return reject(err);
                         } else {
-                            resolve(row.quantity - quantity);
+                            return resolve(row.quantity - quantity);
                         }
                     });
                 }

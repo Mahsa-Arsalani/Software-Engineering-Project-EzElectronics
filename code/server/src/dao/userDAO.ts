@@ -84,15 +84,14 @@ class UserDAO {
                 const sql = "SELECT * FROM users WHERE username = ?"
                 db.get(sql, [username], (err: Error | null, row: any) => {
                     if (err) {
-                        reject(err)
-                        return
+                        return reject(err)
                     }
                     if (!row) {
-                        reject(new UserNotFoundError())
-                        return
+                        return reject(new UserNotFoundError())
+                        
                     }
                     const user: User = new User(row.username, row.name, row.surname, row.role, row.address, row.birthdate)
-                    resolve(user)
+                    return resolve(user)
                 })
             } catch (error) {
                 reject(error)
@@ -107,14 +106,14 @@ class UserDAO {
                 const sql = "SELECT * FROM users"
                 db.all(sql, [], (err: Error | null, rows: any) => {
                     if (err) {
-                        reject(err)
-                        return
+                        return reject(err)
+                        
                     }
                     const users: User[] = rows.map((row: any) => new User(row.username, row.name, row.surname, row.role, row.address, row.birthdate))
-                    resolve(users)
+                    return resolve(users)
                 })
             } catch (error) {
-                reject(error)
+                return reject(error)
             }
 
         })
@@ -126,14 +125,13 @@ class UserDAO {
                 const sql = "SELECT * FROM users WHERE role = ?"
                 db.all(sql, [role], (err: Error | null, rows: any) => {
                     if (err) {
-                        reject(err)
-                        return
+                        return reject(err)
                     }
                     const users: User[] = rows.map((row: any) => new User(row.username, row.name, row.surname, row.role, row.address, row.birthdate))
-                    resolve(users)
+                    return resolve(users)
                 })
             } catch (error) {
-                reject(error)
+                return reject(error)
             }
 
         })
@@ -145,12 +143,12 @@ class UserDAO {
                 const sql = "DELETE FROM users WHERE username = ?"
                 db.run(sql, [username], (err: Error | null) => {
                     if (err) {
-                        reject(err)
+                        return reject(err)
                     }
-                    resolve(true)
+                    return resolve(true)
                 })
             } catch (error) {
-                reject(error)
+                return reject(error)
             }
 
         })
@@ -162,12 +160,12 @@ class UserDAO {
                 const sql = "DELETE FROM users WHERE role != ?"
                 db.run(sql, [Role.ADMIN], (err: Error | null) => {
                     if (err) {
-                        reject(err)
+                        return reject(err)
                     }
-                    resolve(true)
+                    return resolve(true)
                 })
             } catch (error) {
-                reject(error)
+                return reject(error)
             }
         })
     }
@@ -178,12 +176,12 @@ class UserDAO {
                 const sql = "UPDATE users SET name = ?, surname = ?, address = ?, birthdate = ? WHERE username = ?"
                 db.run(sql, [name, surname, address, birthdate, username], (err: Error | null) => {
                     if (err) {
-                        reject(err)
+                        return reject(err)
                     }
-                    resolve(true)
+                    return resolve(true)
                 })
             } catch (error) {
-                reject(error)
+                return reject(error)
             }
 
         })
