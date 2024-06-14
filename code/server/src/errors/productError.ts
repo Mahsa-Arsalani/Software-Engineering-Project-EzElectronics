@@ -3,6 +3,7 @@ const PRODUCT_ALREADY_EXISTS = "The product already exists"
 const PRODUCT_SOLD = "Product already sold"
 const EMPTY_PRODUCT_STOCK = "Product stock is empty"
 const LOW_PRODUCT_STOCK = "Product stock cannot satisfy the requested quantity"
+const INVALID_GROUPING_PARAMETERS = "Invalid grouping parameters"
 
 /**
  * Represents an error that occurs when a product is not found.
@@ -68,4 +69,15 @@ class LowProductStockError extends Error {
     }
 }
 
-export { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, EmptyProductStockError, LowProductStockError }
+class GroupingError extends Error {
+    customMessage: string
+    customCode: number
+
+    constructor() {
+        super()
+        this.customMessage = INVALID_GROUPING_PARAMETERS
+        this.customCode = 422
+    }
+}
+
+export { ProductNotFoundError, ProductAlreadyExistsError, ProductSoldError, EmptyProductStockError, LowProductStockError, GroupingError }
