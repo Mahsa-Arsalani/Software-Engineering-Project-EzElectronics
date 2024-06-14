@@ -80,32 +80,37 @@ describe("cart routing test",()=>{
 
 
 
-    // describe("POST /carts", () => {
-    //     test("should add a product to the cart", async () => {
-    //         jest.spyOn(Authenticator.prototype, "isLoggedIn").mockImplementation((req, res, next) => next());
-    //         jest.spyOn(Authenticator.prototype, "isCustomer").mockImplementation((req, res, next) => next());
-    //         jest.spyOn(ErrorHandler.prototype, "validateRequest").mockImplementation((req, res, next) => next());
-    //         jest.spyOn(CartController.prototype, "addToCart").mockResolvedValueOnce(true);
-    //         const response = await request(app)
-    //             .post(baseURL + "/carts")
-    //             .set("user", JSON.stringify(mockUser))
-    //             .send(mockProduct.model);
-    //         expect(response.status).toBe(200);
-    //         expect(CartController.prototype.addToCart).toHaveBeenCalledTimes(1);
-    //         expect(CartController.prototype.addToCart).toHaveBeenCalledWith(mockProduct.model);
-    //         jest.resetAllMocks();
-    //     });
-    //     test("should return 409 error code if product is already in the cart", async () => {
-    //         jest.spyOn(CartController.prototype, "addToCart").mockRejectedValue(new ProductInCartError());
-    //         const response = await request(app)
-    //             .post(baseURL + "/carts")
-    //             .set("user", JSON.stringify(mockUser))
-    //             .send(mockProduct.model);
-    //         expect(response.status).toBe(409);
-    //         expect(CartController.prototype.addToCart).toHaveBeenCalledTimes(1);
-    //         jest.resetAllMocks();
-    //     });
-    // });
+     describe("POST /carts", () => {
+         test("should add a product to the cart", async () => {
+             jest.spyOn(Authenticator.prototype, "isCustomer").mockImplementation((req, res, next) => {req.user = mockUser; next()});
+
+             jest.spyOn(ErrorHandler.prototype, "validateRequest").mockImplementation((req, res, next) => next());
+             jest.spyOn(CartController.prototype, "addToCart").mockResolvedValueOnce(true);
+
+             const response = await request(app)
+                 .post(baseURL + "/")
+                 //.set("user", "hi")//JSON.stringify(mockUser))
+                 .send({model : mockProduct.model});
+
+             expect(response.status).toBe(200);
+             expect(CartController.prototype.addToCart).toHaveBeenCalledTimes(1);
+             expect(CartController.prototype.addToCart).toHaveBeenCalledWith(mockUser, mockProduct.model);
+             jest.resetAllMocks();
+         });
+
+         
+         test("should return 409 error code if product is already in the cart", async () => {
+            jest.spyOn(Authenticator.prototype, "isCustomer").mockImplementation((req, res, next) => {next()});
+             jest.spyOn(CartController.prototype, "addToCart").mockRejectedValue(new ProductInCartError());
+             const response = await request(app)
+                 .post(baseURL + "/")
+                 //.set("user", JSON.stringify(mockUser))
+                 .send({model : mockProduct.model});
+             expect(response.status).toBe(409);
+             expect(CartController.prototype.addToCart).toHaveBeenCalledTimes(1);
+             jest.resetAllMocks();
+         });
+     });
 
 
 
@@ -152,22 +157,23 @@ describe("cart routing test",()=>{
 
 
 
-    // describe("DELETE /carts/products/:model", () => {
-    //     test("should remove a product from the cart", async () => {
-    //         jest.spyOn(Authenticator.prototype, "isLoggedIn").mockImplementation((req, res, next) => next());
-    //         jest.spyOn(Authenticator.prototype, "isCustomer").mockImplementation((req, res, next) => next());
-    //         jest.spyOn(CartController.prototype, "removeProductFromCart").mockResolvedValueOnce(true);
-    //         const response = await request(app)
-    //             .delete(`${baseURL}/products/${mockModel}`)
-    //             .set("user", JSON.stringify(mockUser));
-    //         expect(response.status).toBe(200);
-    //         expect(response.body).toEqual({});
-    //         expect(CartController.prototype.removeProductFromCart).toHaveBeenCalledTimes(1);
-    //         expect(CartController.prototype.removeProductFromCart).toHaveBeenCalledWith(mockUser, mockModel);
+     describe("DELETE /carts/products/:model", () => {
+         test("should remove a product from the cart", async () => {
+             //jest.spyOn(Authenticator.prototype, "isLoggedIn").mockImplementation((req, res, next) => next());
 
-    //         jest.resetAllMocks();
-    //     });
-    // });
+             jest.spyOn(Authenticator.prototype, "isCustomer").mockImplementation((req, res, next) => {req.user = mockUser; next()});
+             jest.spyOn(CartController.prototype, "removeProductFromCart").mockResolvedValueOnce(true);
+             const response = await request(app)
+                 .delete(`${baseURL}/products/${mockProduct.model}`)
+                 //.set("user", JSON.stringify(mockUser));
+             expect(response.status).toBe(200);
+             expect(response.body).toEqual({});
+             expect(CartController.prototype.removeProductFromCart).toHaveBeenCalledTimes(1);
+             expect(CartController.prototype.removeProductFromCart).toHaveBeenCalledWith(mockUser, mockProduct.model);
+
+             jest.resetAllMocks();
+         });
+     });
 
 
 

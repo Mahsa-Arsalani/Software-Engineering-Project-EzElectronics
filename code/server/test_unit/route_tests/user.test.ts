@@ -277,7 +277,7 @@ describe("User Routes unit test", ()=>{
         test("it should return 200 success code", async ()=>{
             jest.spyOn(UserController.prototype, "updateUserInfo").mockResolvedValue(testCustomerUser)
 
-            const response = await request(app).patch(baseURL + "/users/" + testCustomer.username)
+            const response = await request(app).patch(baseURL + "/users/" + testCustomer.username).send(testCustomer)
             expect(response.status).toBe(200)
             expect(UserController.prototype.updateUserInfo).toHaveBeenCalledTimes(1)
 
