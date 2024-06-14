@@ -438,7 +438,7 @@ describe("Product routes integration tests", () => {
             expect(response.body).toEqual([Okproduct]);
         })
 
-        test ("It should return a 422 error code - grouping = category but category is null",async() => {
+        test ("It should return a 422 error code - grouping = category but category is null", async() => {
             await request(app)
             .get(`${baseURL}/products/available`)
             .set({'Cookie' : ManagerCookie})
@@ -446,7 +446,7 @@ describe("Product routes integration tests", () => {
             .expect(422);
         })
 
-        test ("It should return a 404 error code ",async() => {
+        test ("It should return a 404 error code ", async() => {
 
             await request(app)
             .get(`${baseURL}/products/available`)
@@ -458,7 +458,7 @@ describe("Product routes integration tests", () => {
     })
 
     describe("DELETE /products/:model", () => {
-        test("It should return a 200 success code and delete okproduct",async()=>{
+        test("It should return a 200 success code and delete okproduct", async()=>{
             await request(app)
             .delete(`${baseURL}/products/${Okproduct}`)
             .set({'Cookie' : ManagerCookie})
@@ -486,8 +486,8 @@ describe("Product routes integration tests", () => {
         })
     })
 
-    describe("DELETE /products",() => {
-        test("It should return a 200 ok code and delete all products in the database",async() => {
+    describe("DELETE /products", () => {
+        test("It should return a 200 ok code and delete all products in the database", async() => {
             await request(app)
             .delete(`${baseURL}/products`)
             .set({'Cookie' : ManagerCookie})
