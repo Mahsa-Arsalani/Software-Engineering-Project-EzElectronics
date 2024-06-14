@@ -58,7 +58,7 @@ class ProductDAO {
                 arrivalDate = dayjs().format("YYYY-MM-DD");
 
             else if (dayjs(arrivalDate, "YYYY-MM-DD").isAfter(dayjs())){
-                console.log("ia after")
+                //console.log("is after")
                 return reject(new DateError())
                 
             }
@@ -138,7 +138,7 @@ class ProductDAO {
             
             let sql = "SELECT * FROM products";
             let params: any[] = [];
-        
+            
             if (grouping === "category") {
                 if (category === null || model !== null) {
                     return reject(new GroupingError());
@@ -159,10 +159,10 @@ class ProductDAO {
             
             db.all(sql, params, (err: Error | null, rows: any[]) => {
                 if (err) {
-                    reject(err);
+                    return reject(err);
                 }
                 if (rows.length === 0) {
-                    reject(new ProductNotFoundError());
+                    return reject(new ProductNotFoundError());
                 }
                 const products: Product[] = rows.map((row: any) => {
                     return new Product(row.sellingPrice, row.model, row.category, row.arrivalDate, row.details, row.quantity);

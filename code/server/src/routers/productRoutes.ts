@@ -111,7 +111,6 @@ class ProductRoutes {
             (req: any, res: any, next: any) => this.controller.sellProduct(req.params.model, req.body.quantity, req.body.sellingDate)
                 .then((quantity: any /**number */) => res.status(200).json({ quantity: quantity }))
                 .catch((err) => {
-                    console.log(err)
                     next(err)
                 })
         )
@@ -127,9 +126,9 @@ class ProductRoutes {
          */
         this.router.get(
             "/",
-            body("grouping").optional().isString().isIn(["category", "model"]),
-            body("model").optional().isString().isLength({ min : 1}),
-            body("category").optional().isString().isLength({ min : 1}).isIn(["Smartphone", "Laptop", "Appliance"]),
+            query("grouping").optional().isString().isIn(["category", "model"]),
+            query("model").optional().isString().isLength({ min : 1}),
+            query("category").optional().isString().isLength({ min : 1}).isIn(["Smartphone", "Laptop", "Appliance"]),
             this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             (req: any, res: any, next: any) => this.controller.getProducts(req.query.grouping, req.query.category, req.query.model)
@@ -183,7 +182,7 @@ class ProductRoutes {
          */
         this.router.delete(
             "/:model",
-            body("model").isString().isLength({ min : 1}),
+            param("model").isString().isLength({ min : 1}),
             this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             (req: any, res: any, next: any) => this.controller.deleteProduct(req.params.model)
