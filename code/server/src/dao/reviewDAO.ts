@@ -36,16 +36,6 @@ class ReviewDAO {
             });
         });
     }
-deleteTable(): Promise<Boolean> {
-    return new Promise<Boolean>((resolve, reject) => {
-        const sql = "DROP TABLE reviews"
-            db.run(sql, [], (err: Error | null) => {
-                if(err)
-                    reject(err)
-                resolve(true)
-            })
-    })
-}
         
 addReview(model:string,user:User,score:number,comment:string):Promise<void>{
     return new Promise<void>((resolve,reject)=>{
