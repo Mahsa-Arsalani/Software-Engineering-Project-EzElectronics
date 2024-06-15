@@ -67,13 +67,12 @@ describe("ProductController unit testing", ()=>{
             expect(response).toBe(undefined); //Check if the response is undefined
         });
 
-        it('Should throws DateError', async () => {
+        it('It should throws DateError', async () => {
 
         // Configure mock to reject the Promise
         const error = new DateError();
         const controller = new ProductController(); //Create a new instance of the controller
 
-        // Configura il mock per rifiutare la Promise
         jest.spyOn(ProductDAO.prototype, "newModel").mockRejectedValueOnce(error);
 
         await expect(controller.registerProducts(testAppliance.model, 
@@ -84,13 +83,12 @@ describe("ProductController unit testing", ()=>{
             testAppliance.arrivalDate)).rejects.toThrow(error);
         });
 
-        it('Should throws ProductAlreadyExistsError', async () => {
+        it('It should throws ProductAlreadyExistsError', async () => {
 
             // Configure mock to reject the Promise
             const error = new ProductAlreadyExistsError();
             const controller = new ProductController(); //Create a new instance of the controller
     
-            // Configura il mock per rifiutare la Promise
             jest.spyOn(ProductDAO.prototype, "newModel").mockRejectedValueOnce(error);
     
             await expect(controller.registerProducts(testSmartphone.model, 
@@ -116,34 +114,31 @@ describe("ProductController unit testing", ()=>{
             expect(response).toBe(55); //Check if the response is the quantity, so 50, + 5
         });
 
-        it('Should reject DateError 1', async () => {
+        it('It should reject DateError 1', async () => {
 
             // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
     
-            // Configura il mock per rifiutare la Promise
             jest.spyOn(ProductDAO.prototype, "updateModel").mockRejectedValueOnce(new DateError());
     
             await expect(controller.changeProductQuantity(testAppliance.model, 5, testAppliance.arrivalDate)).rejects.toEqual(new DateError());
         });
 
-        it('Should reject DateError 2', async () => {
+        it('It should reject DateError 2', async () => {
 
             // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
     
-            // Configura il mock per rifiutare la Promise
             jest.spyOn(ProductDAO.prototype, "updateModel").mockRejectedValueOnce(new DateError());
     
             await expect(controller.changeProductQuantity(testAppliance.model, 5, "1900/01/01")).rejects.toEqual(new DateError());
         });
 
-        it('Should reject ProductNotFoundError', async () => {
+        it('It should reject ProductNotFoundError', async () => {
 
             // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
     
-            // Configura il mock per rifiutare la Promise
             jest.spyOn(ProductDAO.prototype, "updateModel").mockRejectedValueOnce(new ProductNotFoundError());
     
             await expect(controller.changeProductQuantity("ababababa", 5, "")).rejects.toEqual(new ProductNotFoundError());
@@ -164,12 +159,11 @@ describe("ProductController unit testing", ()=>{
             expect(response).toBe(45); //Check if the response is the quantity, so 50, - 5
         });
 
-        it('Should reject DateError', async () => {
+        it('It should reject DateError', async () => {
 
             // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
     
-            // Configura il mock per rifiutare la Promise
             jest.spyOn(ProductDAO.prototype, "sellModel").mockRejectedValueOnce(new DateError());
             // ArrivalDate used as sellingDate only because it is 2050/01/01 and it works
             await expect(controller.sellProduct(testAppliance.model, 5, testAppliance.arrivalDate)).rejects.toEqual(new DateError());
@@ -180,7 +174,6 @@ describe("ProductController unit testing", ()=>{
             // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
     
-            // Configura il mock per rifiutare la Promise
             jest.spyOn(ProductDAO.prototype, "sellModel").mockRejectedValueOnce(new LowProductStockError());
             // ArrivalDate used as sellingDate only because it is 2050/01/01 and it works
             await expect(controller.sellProduct(testSmartphone.model, 500, testSmartphone.arrivalDate)).rejects.toEqual(new LowProductStockError());
@@ -191,7 +184,6 @@ describe("ProductController unit testing", ()=>{
             // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
     
-            // Configura il mock per rifiutare la Promise
             jest.spyOn(ProductDAO.prototype, "sellModel").mockRejectedValueOnce(new EmptyProductStockError());
             // ArrivalDate used as sellingDate only because it is 2050/01/01 and it works
             await expect(controller.sellProduct(testLaptop.model, 500, testLaptop.arrivalDate)).rejects.toEqual(new EmptyProductStockError());
@@ -227,7 +219,7 @@ describe("ProductController unit testing", ()=>{
             expect(response).toEqual(requested)
         });
 
-        test("it should resolve to a list of one product - grouped by model", async ()=>{
+        test("It should resolve to a list of one product - grouped by model", async ()=>{
             const requested = [new Product( testSmartphone.sellingPrice, 
                 testSmartphone.model, 
                 testSmartphone.category, 
@@ -242,7 +234,7 @@ describe("ProductController unit testing", ()=>{
             expect(response).toEqual(requested)
         });
 
-        test("it should resolve to a list of one product - grouped by category", async ()=>{
+        test("It should resolve to a list of one product - grouped by category", async ()=>{
             const requested = [new Product( testSmartphone.sellingPrice, 
                 testSmartphone.model, 
                 testSmartphone.category, 
@@ -283,7 +275,7 @@ describe("ProductController unit testing", ()=>{
     });
 
     describe("getAvailableProducts test cases", ()=>{
-        test("it should resolve to a product list", async ()=>{
+        test("It should resolve to a product list", async ()=>{
             const requested = [new Product( testSmartphone.sellingPrice, 
                 testSmartphone.model, 
                 testSmartphone.category, 
@@ -304,7 +296,7 @@ describe("ProductController unit testing", ()=>{
             expect(response).toEqual(requested)
         });
 
-        test("it should resolve to a list of one product - grouped by model", async ()=>{
+        test("It should resolve to a list of one product - grouped by model", async ()=>{
             const requested = [new Product( testSmartphone.sellingPrice, 
                 testSmartphone.model, 
                 testSmartphone.category, 
@@ -319,7 +311,7 @@ describe("ProductController unit testing", ()=>{
             expect(response).toEqual(requested)
         });
 
-        test("it should resolve to a list of one product - grouped by categpry", async ()=>{
+        test("It should resolve to a list of one product - grouped by categpry", async ()=>{
             const requested = [new Product( testSmartphone.sellingPrice, 
                 testSmartphone.model, 
                 testSmartphone.category, 
