@@ -32,13 +32,13 @@ class ProductDAO {
     
             // Runs the create table query
             db.run(createTableSql, [], (err: Error | null) => {
-                if (err) reject(err);
+                if (err) return reject(err);
     
                 // Runs the insert query after table creation
                 const insertSql = "INSERT INTO products (model, category, quantity, details, sellingPrice, arrivalDate) VALUES (?, ?, ?, ?, ?, ?)";
                 db.run(insertSql, [model, category, quantity, details, sellingPrice, arrivalDate], (err: Error | null) => {
                     if (err) return reject(new ProductAlreadyExistsError());
-                    resolve();
+                    return resolve();
                 });
             });
         });
@@ -75,13 +75,6 @@ class ProductDAO {
                     return resolve(quantity + row.quantity)
                 });
             });
-                /*
-                const sqlnewquantity = "SELECT quantity FROM products WHERE model = ?";
-                db.get(sqlnewquantity, [model], (err: Error | null, row : any) => {
-                    if (err) reject(err);
-                    else resolve(row);
-            });
-            */
         });
     }
 
@@ -92,7 +85,7 @@ class ProductDAO {
      */
     sellModel(model: string, quantity: number, sellingDate: string | null): Promise<number> {
         return new Promise((resolve, reject) => {
-            // Check the date la data
+            // Check the date
             if (sellingDate === null || sellingDate === undefined || sellingDate === '') {
                 sellingDate = dayjs().format("YYYY-MM-DD");
             } else if (dayjs(sellingDate, "YYYY-MM-DD").isAfter(dayjs())) {
@@ -167,7 +160,7 @@ class ProductDAO {
                 const products: Product[] = rows.map((row: any) => {
                     return new Product(row.sellingPrice, row.model, row.category, row.arrivalDate, row.details, row.quantity);
                 });
-                resolve(products);
+                return resolve(products);
             });
         });
     }
@@ -179,8 +172,8 @@ class ProductDAO {
         return new Promise((resolve, reject) => {
             const sqlDeleteProducts = "DELETE FROM products";
             db.run(sqlDeleteProducts, [], (err: Error | null) => {
-                if (err) reject(err);
-                resolve(true);
+                if (err) return reject(err);
+                return resolve(true);
             });
         });
     }
@@ -195,7 +188,7 @@ class ProductDAO {
             const sql = "DELETE FROM products WHERE model = ?";
             db.run(sql, [model], (err : Error | null) => {
                 if(err) reject(err);
-                resolve(true);
+                return resolve(true);
             });
         });
     }
@@ -213,7 +206,7 @@ class ProductDAO {
                     return
                 }
                 const product: Product = new Product(row.sellingPrice, row.model, row.category, row.arrivalDate, row.details, row.quantity)
-                resolve(product)
+                return resolve(product)
             })
         });
     }

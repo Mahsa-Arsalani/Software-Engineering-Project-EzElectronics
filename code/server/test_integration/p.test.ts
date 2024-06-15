@@ -408,7 +408,6 @@ describe("Product routes integration tests", () => {
             .query({grouping : "category", category : Category.SMARTPHONE, model : null})
             .expect(200);
 
-            console.log(response.body)
             expect(response.body).toEqual([Okproduct, Okproduct2]);
 
 

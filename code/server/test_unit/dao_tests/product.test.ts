@@ -31,10 +31,14 @@ describe("ProductDAO unit testing", () => {
   beforeEach(() => {
     productDAO = new ProductDAO();
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.restoreAllMocks();
   });
 
   afterEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.restoreAllMocks();
   });
 
   describe("createProduct test cases", () => {
@@ -62,12 +66,12 @@ describe("ProductDAO unit testing", () => {
       await expect(productDAO.newModel(testProduct.model, testProduct.category, testProduct.quantity, 
         testProduct.details, testProduct.sellingPrice, testProduct.arrivalDate)).rejects.toBeInstanceOf(Error);
   
-      expect(mockDBRun).toHaveBeenCalledTimes(2);
+      expect(mockDBRun).toHaveBeenCalledTimes(1);
     });
 
     test("It should reject - Product already exists error", async () => {
       const mockDBRun = jest.spyOn(db, "run").mockImplementationOnce((sql, params, callback) => {
-        return callback(null);  // Mock table creation
+        return callback(null, null);  // Mock table creation
       }).mockImplementationOnce((sql, parameters, callback) => {
         return callback(new Error("Inserting error"));  // Mock insert error
       });
@@ -113,7 +117,7 @@ describe("ProductDAO unit testing", () => {
       });
 
       await expect(productDAO.updateModel(testProduct.model, 5, '1999-01-01')).rejects.toBeInstanceOf(DateError);
-      expect(mockDBget).toBeCalledTimes(2);
+      expect(mockDBget).toBeCalledTimes(1);
     });
   });
 
