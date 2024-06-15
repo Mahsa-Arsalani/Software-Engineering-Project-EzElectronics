@@ -131,6 +131,36 @@ describe("cart routing test",()=>{
 
             jest.resetAllMocks();
         });
+        test("should checkout the cart", async () => {
+            jest.spyOn(Authenticator.prototype, "isLoggedIn").mockImplementation((req, res, next) => next());
+            jest.spyOn(Authenticator.prototype, "isCustomer").mockImplementation((req, res, next) => next());
+            jest.spyOn(CartController.prototype, "checkoutCart").mockRejectedValue(new EmptyCartError());
+
+            const response = await request(app)
+                .patch(baseURL + "/")
+                .set("user", JSON.stringify(mockUser));
+            expect(response.status).toBe(400);
+            expect(response.body.error).toEqual("Cart is empty");
+            expect(CartController.prototype.checkoutCart).toHaveBeenCalledTimes(1);
+            expect(CartController.prototype.checkoutCart).toHaveBeenCalledWith(undefined);
+
+            jest.resetAllMocks();
+        });
+        test("should checkout the cart", async () => {
+            jest.spyOn(Authenticator.prototype, "isLoggedIn").mockImplementation((req, res, next) => next());
+            jest.spyOn(Authenticator.prototype, "isCustomer").mockImplementation((req, res, next) => next());
+            jest.spyOn(CartController.prototype, "checkoutCart").mockRejectedValue(new ProductNotInCartError());
+
+            const response = await request(app)
+                .patch(baseURL + "/")
+                .set("user", JSON.stringify(mockUser));
+            expect(response.status).toBe(404);
+            expect(response.body.error).toEqual("Product not in cart");
+            expect(CartController.prototype.checkoutCart).toHaveBeenCalledTimes(1);
+            expect(CartController.prototype.checkoutCart).toHaveBeenCalledWith(undefined);
+
+            jest.resetAllMocks();
+        });
     });
 
 
@@ -188,6 +218,18 @@ describe("cart routing test",()=>{
             const response = await request(app).delete(baseURL + "/current").set("user", JSON.stringify(mockUser));
             expect(response.status).toBe(200);
             expect(response.body).toEqual({});
+            expect(CartController.prototype.clearCart).toHaveBeenCalledTimes(1);
+            expect(CartController.prototype.clearCart).toHaveBeenCalledWith(undefined);
+
+            jest.resetAllMocks();
+        });
+        test("should clear the current cart", async () => {
+            jest.spyOn(Authenticator.prototype, "isLoggedIn").mockImplementation((req, res, next) => next());
+            jest.spyOn(Authenticator.prototype, "isCustomer").mockImplementation((req, res, next) => next());
+            jest.spyOn(CartController.prototype, "clearCart").mockRejectedValue(new CartNotFoundError());
+            const response = await request(app).delete(baseURL + "/current").set("user", JSON.stringify(mockUser));
+            expect(response.status).toBe(404);
+            expect(response.body.error).toEqual("Cart not found");
             expect(CartController.prototype.clearCart).toHaveBeenCalledTimes(1);
             expect(CartController.prototype.clearCart).toHaveBeenCalledWith(undefined);
 
