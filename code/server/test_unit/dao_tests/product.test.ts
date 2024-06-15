@@ -87,9 +87,7 @@ describe("ProductDAO unit testing", () => {
   describe("updateModel test cases", () => {
     test('updateModel should update the model quantity and arrival date', async () => {
       const mockDBget = jest.spyOn(db, 'get').mockImplementationOnce((sql, params, callback) => {
-        return callback(null, { arrivalDate: '' });  // Mock fetching old arrival date
-      }).mockImplementationOnce((sql, params, callback) => {
-        return callback(null, 55);  // Mock fetching new quantity
+        return callback(null, { quantity : 50, arrivalDate: '' });  // Mock fetching old arrival date
       });
 
       const mockDBRun = jest.spyOn(db, 'run').mockImplementationOnce((sql, params, callback) => {
@@ -97,7 +95,7 @@ describe("ProductDAO unit testing", () => {
       });
 
       await expect(productDAO.updateModel(testProduct.model, 5, '')).resolves.toEqual(55);
-      expect(mockDBget).toBeCalledTimes(2);
+      expect(mockDBget).toBeCalledTimes(1);
       expect(mockDBRun).toBeCalledTimes(1);
       expect(mockDBRun).toHaveBeenCalledWith(expect.any(String), expect.any(Array), expect.any(Function));
     });
@@ -113,7 +111,7 @@ describe("ProductDAO unit testing", () => {
 
     test('updateModel - date input error', async () => {
       const mockDBget = jest.spyOn(db, 'get').mockImplementationOnce((sql, params, callback) => {
-        return callback(null, { arrivalDate: '2000-01-01' });  // Mock fetching old arrival date
+        return callback(null, { quantity : 50, arrivalDate: '2000-01-01' });  // Mock fetching old arrival date
       });
 
       await expect(productDAO.updateModel(testProduct.model, 5, '1999-01-01')).rejects.toBeInstanceOf(DateError);
