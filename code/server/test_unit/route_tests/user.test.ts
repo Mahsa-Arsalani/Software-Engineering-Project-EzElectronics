@@ -4,7 +4,7 @@ import { app } from "../../index"
 import {Role, User} from "../../src/components/user"
 import Authenticator from "../../src/routers/auth"
 import ErrorHandler from "../../src/helper"
-import {UserNotFoundError, UserInvalidDate, UserAlreadyExistsError, UserNotAdminError, UnauthorizedUserError} from "../../src/errors/userError"
+import {UserNotFoundError, UserInvalidDate, UserAlreadyExistsError, UserNotAdminError, UnauthorizedUserError, UserIsAdminError} from "../../src/errors/userError"
 
 import UserController from "../../src/controllers/userController"
 import { DateError } from "../../src/utilities"
@@ -239,7 +239,7 @@ describe("User Routes unit test", ()=>{
         })
         test("it should return 401 error code", async ()=>{
 
-            jest.spyOn(UserController.prototype, "deleteUser").mockRejectedValue(new UnauthorizedUserError())
+            jest.spyOn(UserController.prototype, "deleteUser").mockRejectedValue(new UserIsAdminError())
 
             const response = await request(app).delete(baseURL + "/users/" + testCustomer.username)
             expect(response.status).toBe(401)

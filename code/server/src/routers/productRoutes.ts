@@ -126,9 +126,9 @@ class ProductRoutes {
          */
         this.router.get(
             "/",
-            query("grouping").optional().isString().isIn(["category", "model"]),
-            query("model").optional().isString().isLength({ min : 1}),
-            query("category").optional().isString().isLength({ min : 1}).isIn(["Smartphone", "Laptop", "Appliance"]),
+            body("grouping").optional().isString().isIn(["category", "model"]),
+            body("model").optional().isString().isLength({ min : 1}),
+            body("category").optional().isString().isLength({ min : 1}).isIn(["Smartphone", "Laptop", "Appliance"]),
             this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             (req: any, res: any, next: any) => this.controller.getProducts(req.query.grouping, req.query.category, req.query.model)
