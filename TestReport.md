@@ -61,27 +61,27 @@
 | :------------: | :--------------: | :--------: | :------------: |           
 |createUser - It should resolve true| UserDAO | Unit | BB/eq partitioning |
 |createUser - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
-    |createUser - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
-    |getUserByUsername - it should resolve to the correct user| UserDAO | Unit | BB/eq partitioning |
-    |getUserByUsername - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
-    |getUserByUsername - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
-    |getUserByUsername - it should reject, user not found| UserDAO | Unit | BB/eq partitioning |
-    |getUsers - it should resolve to the correct users list| UserDAO | Unit | BB/eq partitioning |
-    |getUsers - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
-    |getUsers - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
-    |getUsersByRole - it should resolve to the correct users list| UserDAO | Unit | BB/eq partitioning |
-    |getUsersByRole - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
-    |getUsersByRole - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
-    |getUsersByRole - deletedeleteAllNonAdmin test cases| UserDAO | Unit | BB/eq partitioning |
-    |getUsersByRole - it should resolve to true| UserDAO | Unit | BB/eq partitioning |
-    |getUsersByRole - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
-    |getUsersByRole - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
-    |deleteAllNonAdmin - it should resolve to true| UserDAO | Unit | BB/eq partitioning |                                                      
-    |deleteAllNonAdmin - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
-    |deleteAllNonAdmin - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
-    |updateUserByUsername - it should resolve to true   | UserDAO | Unit | BB/eq partitioning |
-    |updateUserByUsername - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |  
-    |updateUserByUsername - it should reject, db error | UserDAO | Unit | BB/eq partitioning |
+|createUser - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
+|getUserByUsername - it should resolve to the correct user| UserDAO | Unit | BB/eq partitioning |
+|getUserByUsername - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
+|getUserByUsername - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
+|getUserByUsername - it should reject, user not found| UserDAO | Unit | BB/eq partitioning |
+|getUsers - it should resolve to the correct users list| UserDAO | Unit | BB/eq partitioning |
+|getUsers - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
+|getUsers - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
+|getUsersByRole - it should resolve to the correct users list| UserDAO | Unit | BB/eq partitioning |
+|getUsersByRole - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
+|getUsersByRole - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
+|getUsersByRole - deletedeleteAllNonAdmin test cases| UserDAO | Unit | BB/eq partitioning |
+|getUsersByRole - it should resolve to true| UserDAO | Unit | BB/eq partitioning |
+|getUsersByRole - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
+|getUsersByRole - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
+|deleteAllNonAdmin - it should resolve to true| UserDAO | Unit | BB/eq partitioning |                                                      
+|deleteAllNonAdmin - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
+|deleteAllNonAdmin - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
+|updateUserByUsername - it should resolve to true   | UserDAO | Unit | BB/eq partitioning |
+|updateUserByUsername - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |  
+|updateUserByUsername - it should reject, db error | UserDAO | Unit | BB/eq partitioning |
 
 ### ProductController unit testing
 | Test case name | Object(s) tested | Test level | Technique used |
