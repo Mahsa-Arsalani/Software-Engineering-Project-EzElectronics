@@ -16,7 +16,8 @@
 # Dependency graph
 
      <report the here the dependency graph of EzElectronics>
-     ![UserModule Dependency graph](./image/userdep.jpg)
+
+![UserModule Dependency graph](./image/userdep.jpg)
 
 # Integration approach
 <!--
