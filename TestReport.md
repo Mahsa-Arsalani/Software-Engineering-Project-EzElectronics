@@ -403,6 +403,21 @@ DELETE ezelectronics/reviews/ - It should return a 401 success code             
 |getAllCarts - It should handle errors when trying to get all carts| CartController | Unit       | WB/Statement coverage |
 
 
+### CartRoute unit testing
+| Test case name | Object(s) tested | Test level | Technique used |
+| :------------: | :--------------: | :--------: | :------------: | 
+|GET /carts - It should return a 200 success code| CartRoute | Unit       | WB/Statement coverage |
+|POST /carts - should add a product to the cart| CartRoute | Unit       | WB/Statement coverage |
+|POST /carts - should return 409 error code if product is already in the cart| CartRoute | Unit       | WB/Statement coverage |
+|PATCH /carts - should checkout the cart| CartRoute | Unit       | WB/Statement coverage |
+|PATCH /carts - should checkout the cart| CartRoute | Unit       | WB/Statement coverage |
+|PATCH /carts - should checkout the cart| CartRoute | Unit       | WB/Statement coverage |
+|GET /carts/history - should get the customer's cart history| CartRoute | Unit       | WB/Statement coverage |
+|DELETE /carts/products/:model - should remove a product from the cart| CartRoute | Unit       | WB/Statement coverage |
+|DELETE /carts/current - should clear the current cart| CartRoute | Unit       | WB/Statement coverage |
+|DELETE /carts/current - should clear the current cart| CartRoute | Unit       | WB/Statement coverage |
+|DELETE /carts - should delete all carts| CartRoute | Unit       | WB/Statement coverage |
+|GET /carts/all - should get all carts| CartRoute | Unit       | WB/Statement coverage |
 
 # Coverage
 
