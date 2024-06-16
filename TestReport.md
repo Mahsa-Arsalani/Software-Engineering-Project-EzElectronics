@@ -187,13 +187,14 @@
 
 | Functional Requirement  | Test(s) |
 | :--------------------------------: | :-----: |
-|FR1.3 Create a new user account| 10|
+**|FR1.3 Create a new user account| 10|
 | FR2.1 Show the list of all users             |     3    |
 | FR2.2 Show the list of all users with a specific role                |     4    |
 | FR2.3 Show the information of a single user                 |    8     |
 | FR2.4 Update the information of a single user                 |   11      |
 | FR2.5 Delete a single non Admin user                 |  6       |
-| FR2.6 Delete all non Admin users                |     3    |
+| FR2.6 Delete all non Admin users                |     3    |**
+
 
 
 | Scenario  | Test(s) |
