@@ -506,6 +506,17 @@ DELETE ezelectronics/reviews/ - It should return a 401 success code             
 | Scenario 19.2 | Delete all reviews of all products | 1 |
 | **FR4.2 Get reviews of a model**  | **1** |
 | Scenario 18.1 | View the reviews of a product | 1 |
+|**FR5.1 Show the information of the current cart**| **1**|
+|scenario 10.1 View information of the current cart| 1|
+|**FR5.2 Add a product to the current cart**| **3**|
+|scenario 10.3 Add a product to the cart| 1|
+|**FR5.3 Checkout the current cart**| **3**|
+|scenario 10.6 Pay for the current cart| 1|
+|**FR5.4 Show the history of the paid carts**| **1**|
+|**FR5.5 Remove a product from the current cart**| **3**|
+|**FR5.6 Delete the current cart**| **2**|
+|**FR5.7 See the list of all carts of all users**| **1**|
+|**FR5.8 Delete all carts**| **1**|
 
 
 
