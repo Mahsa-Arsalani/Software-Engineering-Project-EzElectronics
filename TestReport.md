@@ -362,4 +362,4 @@
 
 ## Coverage white box
 
-Report here the screenshot of coverage values obtained with jest-- coverage
+![Coverage Image](./Images/coverageImage.jpg)
