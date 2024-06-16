@@ -299,6 +299,68 @@
 | DELETE /products/:model - It should return a 401 error code - Unauthorized       | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
 | DELETE /products - It should return a 200 ok code and delete all products | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
 | DELETE /products - It should return a 401 error code - Unauthorized       | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+### Review Routes Unit Tests
+| Test case name | Object(s) tested | Test level | Technique used |
+| :------------- | :--------------- | :--------- | :------------- |
+| POST /reviews/:model - It should return a 200 success code                   | Review Routes | Unit Test | WB/statement coverage     |
+| POST /reviews/:model - It should return a 404 success code                   | Review Routes | Unit Test | WB/statement coverage     |
+| POST /reviews/:model - It should return a 409 success code                   | Review Routes | Unit Test | WB/statement coverage     |
+| GET /reviews/:model - It should return a 200 success code                   | Review Routes | Unit Test | WB/statement coverage     |
+| GET /reviews/:model - It should return a 401 success code                   | Review Routes | Unit Test | WB/statement coverage     |
+| DELETE /reviews/:model - It should return a 200 success code                   | Review Routes | Unit Test | WB/statement coverage     |
+| DELETE /reviews/:model - It should return a 404 success code                   | Review Routes | Unit Test | WB/statement coverage     |
+| DELETE /reviews/:model - It should return a 404 success code                   | Review Routes | Unit Test | WB/statement coverage     |
+DELETE ezelectronics/reviews/:model/all - It should return a 200 success code                   | Review Routes | Unit Test | WB/statement coverage     |
+DELETE ezelectronics/reviews/:model/all - It should return a 404 success code                   | Review Routes | Unit Test | WB/statement coverage     |
+DELETE ezelectronics/reviews/ - It should return a 200 success code                   | Review Routes | Unit Test | WB/statement coverage     |
+DELETE ezelectronics/reviews/ - It should return a 401 success code                   | Review Routes | Unit Test | WB/statement coverage     |
+### Review Controller Unit Tests
+| Test case name | Object(s) tested | Test level | Technique used |
+| :------------- | :--------------- | :--------- | :------------- |
+| addReview - It should add a review        | ReviewController | Unit       | WB/statement coverage |
+| getProductReviews - It should return reviews of a product        | ReviewController | Unit       | WB/statement coverage |
+| deleteReview - It should delete a user's review of a product        | ReviewController | Unit       | WB/statement coverage |
+| deleteReviewsOfProduct - It should delete all reviews of a product        | ReviewController | Unit       | WB/statement coverage |
+| deleteAllReviews - It should delete all reviews        | ReviewController | Unit       | WB/statement coverage |
+
+### ReviewDAO Unit Tests
+| Test case name | Object(s) tested | Test level | Technique used |
+| :------------- | :--------------- | :--------- | :------------- |
+| addReview - It should add a new review | ReviewDAO | Unit | WB/statement coverage |
+| addReview - It should handle product not found error | ReviewDAO | Unit | WB/statement coverage |
+| addReview - It should handle product not found error when the product does not exist | ReviewDAO | Unit | WB/statement coverage |
+| addReview - It should handle existing review error | ReviewDAO | Unit | WB/statement coverage |
+| addReview - It should handle database error | ReviewDAO | Unit | WB/statement coverage |
+| addReview - It should handle database error when product exists | ReviewDAO | Unit | WB/statement coverage |
+| addReview - It should handle database error when review exists | ReviewDAO | Unit | WB/statement coverage |
+| GetProductReviews - It should get product reviews | ReviewDAO | Unit | WB/statement coverage |
+| GetProductReviews - It should return empty array if there is no review | ReviewDAO | Unit | WB/statement coverage |
+| GetProductReviews - It should handle database error | ReviewDAO | Unit | WB/statement coverage |
+| GetProductReviews - It should handle database error when product exists | ReviewDAO | Unit | WB/statement coverage |
+| GetProductReviews - It should handle database error when review exists | ReviewDAO | Unit | WB/statement coverage |
+| deleteReview - It should delete a user's review of a product | ReviewDAO | Unit | WB/statement coverage |
+| deleteReview - It should handle product not found error | ReviewDAO | Unit | WB/statement coverage |
+| deleteReview - It should handle product not found error when the product does not exist | ReviewDAO | Unit | WB/statement coverage |
+| deleteReview - It should handle no ReviewProduct error | ReviewDAO | Unit | WB/statement coverage |
+| deleteReview - It should handle database error | ReviewDAO | Unit | WB/statement coverage |
+| deleteReview - It should handle database error when product exists | ReviewDAO | Unit | WB/statement coverage |
+| deleteReview - It should handle database error when review exists | ReviewDAO | Unit | WB/statement coverage |
+| deleteReviewsOfProduct - It should delete all reviews of a product | ReviewDAO | Unit | WB/statement coverage |
+| deleteReviewsOfProduct - It should handle product not found error | ReviewDAO | Unit | WB/statement coverage |
+| deleteReviewsOfProduct - It should handle database error | ReviewDAO | Unit | WB/statement coverage |
+| deleteReviewsOfProduct - It should handle database error when product exists | ReviewDAO | Unit | WB/statement coverage |
+| deleteAllReviews - It should delete all reviews | ReviewDAO | Unit | WB/statement coverage |
+| deleteAllReviews - It should handle database error | ReviewDAO | Unit | WB/statement coverage |
+
+### Review Routes Integration Tests 
+
+| Test case name | Object(s) tested | Test level | Technique used |
+| :------------- | :--------------- | :--------- | :------------- |
+| POST ezelectronics/reviews/:model - It should return a 200 success code | ReviewRoute + ReviewController +ReviewDAO | Integration | BB/eq partitioning |
+| GET ezelectronics/reviews/:model - It should return a 200 success code | ReviewRoute + ReviewController +ReviewDAO | Integration | BB/eq partitioning |
+| DELETE ezelectronics/reviews/:model - It should return a 200 success code | ReviewRoute + ReviewController +ReviewDAO | Integration | BB/eq partitioning |
+| DELETE ezelectronics/reviews/:model/all - It should return a 200 success code | ReviewRoute + ReviewController +ReviewDAO | Integration | BB/eq partitioning |
+| DELETE ezelectronics/reviews - It should return a 200 success code | ReviewRoute + ReviewController +ReviewDAO | Integration | BB/eq partitioning |
 
 
 # Coverage
