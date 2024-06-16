@@ -83,6 +83,26 @@
 |updateUserByUsername - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |  
 |updateUserByUsername - it should reject, db error | UserDAO | Unit | BB/eq partitioning |
 
+### UserController unit testing
+| Test case name | Object(s) tested | Test level | Technique used |
+| :------------: | :--------------: | :--------: | :------------: | 
+|createUser - It should return true| UserController | Unit       | BB/eq partitioning |
+|getUsers - it should resolve to an user list| UserController | Unit       | BB/eq partitioning |
+|getUsersByRole - it should resolve to an user list| UserController | Unit       | BB/eq partitioning |
+|getUserByUsername - it should resolve to an user list| UserController | Unit       | BB/eq partitioning |
+|getUserByUsername - it should resolve to an user list| UserController | Unit       | BB/eq partitioning |
+|getUserByUsername - it should reject| UserController | Unit       | BB/eq partitioning |
+|deleteUser - it should resolve to true| UserController | Unit       | BB/eq partitioning |
+|deleteUser - it should resolve to true| UserController | Unit       | BB/eq partitioning |
+|deleteUser - it should reject| UserController | Unit       | BB/eq partitioning |
+|deleteUser - it should reject| UserController | Unit       | BB/eq partitioning |
+|deleteAll - it should resolve to true| UserController | Unit       | BB/eq partitioning |
+|updateUserInfo - it should resolve to the updated user| UserController | Unit       | BB/eq partitioning |
+|updateUserInfo - it should resolve to the updated user| UserController | Unit       | BB/eq partitioning |
+|updateUserInfo - invalid birthdate, it should reject| UserController | Unit       | BB/eq partitioning |
+|updateUserInfo - it should rejest| UserController | Unit       | BB/eq partitioning |
+|updateUserInfo - it should rejest| UserController | Unit       | BB/eq partitioning | 
+
 ### ProductController unit testing
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------: | :--------------: | :--------: | :------------: |
