@@ -385,6 +385,25 @@ DELETE ezelectronics/reviews/ - It should return a 401 success code             
 |getAllCarts - should reject with CartNotFoundError if no carts are found| CartDAO | Unit | WB/Statement coverage |
 
 
+### CartController unit testing 
+| Test case name | Object(s) tested | Test level | Technique used |
+| :------------: | :--------------: | :--------: | :------------: | 
+|getCart - It should return the cart for the logged in user| CartController | Unit       | WB/Statement coverage |
+|checkoutCart - It should successfully checkout the cart for the logged in user| CartController | Unit       | WB/Statement coverage |
+|checkoutCart - It should throw LowProductStockError if a product has insufficient stock| CartController | Unit       | WB/Statement coverage |
+|checkoutCart - It should throw EmptyProductStockError if a product is out of stock| CartController | Unit       | WB/Statement coverage |
+|getCustomerCarts - It should return the carts for the logged in user| CartController | Unit       | WB/Statement coverage |
+|addtoCart - It should successfully remove a product from the cart| CartController | Unit       | WB/Statement coverage |
+|addtoCart - It should remove the product completely if the quantity is 1| CartController | Unit       | WB/Statement coverage |
+|removeProductFromCart - It should remove one quantity of the product from the cart| CartController | Unit       | WB/Statement coverage |
+|clearCart - It should clear the cart for the logged-in customer| CartController | Unit       | WB/Statement coverage |
+|deleteAllCarts - It should delete all carts| CartController | Unit       | WB/Statement coverage |
+|deleteAllCarts - It should handle errors when trying to delete all carts| CartController | Unit       | WB/Statement coverage |
+|getAllCarts - It should return all carts| CartController | Unit       | WB/Statement coverage |
+|getAllCarts - It should handle errors when trying to get all carts| CartController | Unit       | WB/Statement coverage |
+
+
+
 # Coverage
 
 ## Coverage of FR
