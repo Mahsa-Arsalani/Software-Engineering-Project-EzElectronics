@@ -200,8 +200,7 @@
 |Scenario 4.4 View the information of all users with a specific role (Customer or Manager)| 3|
 |Scenario 4.5 Ask to view information of users with a role that does not exist| 1|
 | **FR2.4 Update the information of a single user**                 |   **11**      |
-|Scenario 12.1
-Edit user information| 11|
+|Scenario 12.1 Edit user information| 11|
 | **FR2.5 Delete a single non Admin user**                 |  **6**       |
 |Scenario 5.1Delete one user| 5|
 |Scenario 5.2Try to delete a user that does not exist|1 |
