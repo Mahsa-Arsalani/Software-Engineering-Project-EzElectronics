@@ -1,5 +1,5 @@
 import { test, expect, jest, beforeEach} from "@jest/globals"
-import ReviewDAO from "../../src/dao/ReviewDAO"
+import ReviewDAO from "../../src/dao/reviewDAO"
 import db from "../../src/db/db"
 import { User, Role } from "../../src/components/user";
 import { ProductReview } from "../../src/components/review";
