@@ -67,7 +67,7 @@ describe("ProductController unit testing", ()=>{
             expect(response).toBe(undefined); //Check if the response is undefined
         });
 
-        it('It should throws DateError', async () => {
+        test('It should throws DateError', async () => {
 
         // Configure mock to reject the Promise
         const error = new DateError();
@@ -83,7 +83,7 @@ describe("ProductController unit testing", ()=>{
             testAppliance.arrivalDate)).rejects.toThrow(error);
         });
 
-        it('It should throws ProductAlreadyExistsError', async () => {
+        test('It should throws ProductAlreadyExistsError', async () => {
 
             // Configure mock to reject the Promise
             const error = new ProductAlreadyExistsError();
@@ -114,7 +114,7 @@ describe("ProductController unit testing", ()=>{
             expect(response).toBe(55); //Check if the response is the quantity, so 50, + 5
         });
 
-        it('It should reject DateError 1', async () => {
+        test('It should reject DateError 1', async () => {
 
             // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
@@ -124,7 +124,7 @@ describe("ProductController unit testing", ()=>{
             await expect(controller.changeProductQuantity(testAppliance.model, 5, testAppliance.arrivalDate)).rejects.toEqual(new DateError());
         });
 
-        it('It should reject DateError 2', async () => {
+        test('It should reject DateError 2', async () => {
 
             // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
@@ -134,7 +134,7 @@ describe("ProductController unit testing", ()=>{
             await expect(controller.changeProductQuantity(testAppliance.model, 5, "1900/01/01")).rejects.toEqual(new DateError());
         });
 
-        it('It should reject ProductNotFoundError', async () => {
+        test('It should reject ProductNotFoundError', async () => {
 
             // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
@@ -159,7 +159,7 @@ describe("ProductController unit testing", ()=>{
             expect(response).toBe(45); //Check if the response is the quantity, so 50, - 5
         });
 
-        it('It should reject DateError', async () => {
+        test('It should reject DateError', async () => {
 
             // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
@@ -169,7 +169,7 @@ describe("ProductController unit testing", ()=>{
             await expect(controller.sellProduct(testAppliance.model, 5, testAppliance.arrivalDate)).rejects.toEqual(new DateError());
         });
 
-        it('Should reject LowProductStockError', async () => {
+        test('Should reject LowProductStockError', async () => {
 
             // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
@@ -179,7 +179,7 @@ describe("ProductController unit testing", ()=>{
             await expect(controller.sellProduct(testSmartphone.model, 500, testSmartphone.arrivalDate)).rejects.toEqual(new LowProductStockError());
         });
 
-        it('Should reject EmptyProductStockError', async () => {
+        test('Should reject EmptyProductStockError', async () => {
 
             // Configure mock to reject the Promise
             const controller = new ProductController(); //Create a new instance of the controller
@@ -249,25 +249,25 @@ describe("ProductController unit testing", ()=>{
             expect(response).toEqual(requested)
         });
 
-        it('group = model but model is null -> Error', async () => {
+        test('group = model but model is null -> Error', async () => {
             const controller = new ProductController();
             jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
             await expect(controller.getProducts("model", null, null)).rejects.toEqual(new Error());
         });
 
-        it('group = category but category is null -> Error', async () => {
+        test('group = category but category is null -> Error', async () => {
             const controller = new ProductController();
             jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
             await expect(controller.getProducts("category", null, null)).rejects.toEqual(new Error());
         });
 
-        it('group = model but category is not null -> Error', async () => {
+        test('group = model but category is not null -> Error', async () => {
             const controller = new ProductController();
             jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
             await expect(controller.getProducts("model", testSmartphone.model, "bla")).rejects.toEqual(new Error());
         });
 
-        it('group = category but model is not null -> Error', async () => {
+        test('group = category but model is not null -> Error', async () => {
             const controller = new ProductController();
             jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
             await expect(controller.getProducts("category", "bla", testSmartphone.category)).rejects.toEqual(new Error());
@@ -326,25 +326,25 @@ describe("ProductController unit testing", ()=>{
             expect(response).toEqual(requested)
         });
 
-        it('group = model but category is not null -> Error', async () => {
+        test('group = model but category is not null -> Error', async () => {
             const controller = new ProductController();
             jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
             await expect(controller.getAvailableProducts("model", testSmartphone.model, "bla")).rejects.toEqual(new Error());
         });
 
-        it('group = category but model is not null -> Error', async () => {
+        test('group = category but model is not null -> Error', async () => {
             const controller = new ProductController();
             jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
             await expect(controller.getAvailableProducts("category", "bla", testSmartphone.category)).rejects.toEqual(new Error());
         });
 
-        it('group = model but category is not null -> Error', async () => {
+        test('group = model but category is not null -> Error', async () => {
             const controller = new ProductController();
             jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
             await expect(controller.getAvailableProducts("model", testSmartphone.model, testSmartphone.category)).rejects.toEqual(new Error());
         });
 
-        it('group = category but model is not null -> Error', async () => {
+        test('group = category but model is not null -> Error', async () => {
             const controller = new ProductController();
             jest.spyOn(ProductDAO.prototype, "getAllProducts").mockRejectedValueOnce(new Error());
             await expect(controller.getAvailableProducts("category", "bla", testSmartphone.category)).rejects.toEqual(new Error());
