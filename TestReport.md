@@ -362,7 +362,7 @@ DELETE ezelectronics/reviews/ - It should return a 401 success code             
 | DELETE ezelectronics/reviews/:model/all - It should return a 200 success code | ReviewRoute + ReviewController +ReviewDAO | Integration | BB/eq partitioning |
 | DELETE ezelectronics/reviews - It should return a 200 success code | ReviewRoute + ReviewController +ReviewDAO | Integration | BB/eq partitioning |
 
-### UserDAO unit testing
+### CartDAO unit testing
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------: | :--------------: | :--------: | :------------: |           
 |getCart - should resolve with a Cart object when an unpaid cart is found| CartDAO | Unit | WB/Statement coverage |
