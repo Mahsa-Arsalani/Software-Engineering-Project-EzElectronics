@@ -234,71 +234,71 @@
 | getProductByModel - It should throw ProductNotFoundError | ProductDAO | Unit | BB/eq partitioning |
 | getProductByModel - It should throw generic Error | ProductDAO | Unit | BB/eq partitioning |
 
-### Route tests product
+### ProductRoute tests product
 
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------- | :--------------- | :--------- | :------------- |
-| POST /products - It should return a 200 success code | ProductController | Integration | WB/statement coverage |
-| POST /products - It should return a 409 error code | ProductController | Integration | WB/statement coverage |
-| POST /products - It should return a 400 error code | ProductController | Integration | WB/statement coverage |
-| PATCH /products/:model - It should return a 200 success code | ProductController | Integration | WB/statement coverage |
-| PATCH /products/:model - It should return a 400 error code - new arrivalDate before the old one | ProductController | Integration | WB/statement coverage |
-| PATCH /products/:model - It should return a 400 error code - arrivalDate is in the future | ProductController | Integration | WB/statement coverage |
-| PATCH /products/:model - It should return a 404 error code - ProductNotFoundError | ProductController | Integration | WB/statement coverage |
-| PATCH /products/:model/sell - It should return a 200 success code | ProductController | Integration | WB/statement coverage |
-| PATCH /products/:model/sell - It should return a 404 error code - ProductNotFoundError | ProductController | Integration | WB/statement coverage |
-| PATCH /products/:model/sell - It should return a 400 error code - DateError - sellingDate in the future | ProductController | Integration | WB/statement coverage |
-| PATCH /products/:model/sell - It should return a 400 error code - DateError - sellingDate before the arrivalDate | ProductController | Integration | WB/statement coverage |
-| PATCH /products/:model/sell - It should return a 409 error code - LowProductStockError | ProductController | Integration | WB/statement coverage |
-| PATCH /products/:model/sell - It should return a 409 error code - EmptyProductStockError | ProductController | Integration | WB/statement coverage |
-| GET /products - It should return a 200 success code | ProductController | Integration | WB/statement coverage |
-| GET /products - It should return a 404 error code - ProductNotFoundError | ProductController | Integration | WB/statement coverage |
-| GET /products - It should return a 422 error code - Grouping null but model and/or category not null | ProductController | Integration | WB/statement coverage |
-| GET /products - It should return a 422 error code - Grouping = category but category null | ProductController | Integration | WB/statement coverage |
-| GET /products/available - It should return a 200 success code | ProductController | Integration | WB/statement coverage |
-| GET /products/available - It should return a 404 error code - ProductNotFoundError | ProductController | Integration | WB/statement coverage |
-| GET /products/available - It should return a 422 error code - Grouping null but model and/or category not null | ProductController | Integration | WB/statement coverage |
-| GET /products/available - It should return a 422 error code - Grouping = category but category null | ProductController | Integration | WB/statement coverage |
-| DELETE /products/:model - It should return a 200 success code | ProductController | Integration | WB/statement coverage |
-| DELETE /products/:model - It should return a 404 error code | ProductController | Integration | WB/statement coverage |
-| DELETE /products - It should return a 200 success code | ProductController | Integration | WB/statement coverage |
-| DELETE /products - It should return a 404 error code | ProductController | Integration | WB/statement coverage |
+| POST /products - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
+| POST /products - It should return a 409 error code | ProductRoute | Integration | WB/statement coverage |
+| POST /products - It should return a 400 error code | ProductRoute | Integration | WB/statement coverage |
+| PATCH /products/:model - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
+| PATCH /products/:model - It should return a 400 error code - new arrivalDate before the old one | ProductRoute | Integration | WB/statement coverage |
+| PATCH /products/:model - It should return a 400 error code - arrivalDate is in the future | ProductRoute | Integration | WB/statement coverage |
+| PATCH /products/:model - It should return a 404 error code - ProductNotFoundError | ProductRoute | Integration | WB/statement coverage |
+| PATCH /products/:model/sell - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
+| PATCH /products/:model/sell - It should return a 404 error code - ProductNotFoundError | ProductRoute | Integration | WB/statement coverage |
+| PATCH /products/:model/sell - It should return a 400 error code - DateError - sellingDate in the future | ProductRoute | Integration | WB/statement coverage |
+| PATCH /products/:model/sell - It should return a 400 error code - DateError - sellingDate before the arrivalDate | ProductRoute | Integration | WB/statement coverage |
+| PATCH /products/:model/sell - It should return a 409 error code - LowProductStockError | ProductRoute | Integration | WB/statement coverage |
+| PATCH /products/:model/sell - It should return a 409 error code - EmptyProductStockError | ProductRoute | Integration | WB/statement coverage |
+| GET /products - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
+| GET /products - It should return a 404 error code - ProductNotFoundError | ProductRoute | Integration | WB/statement coverage |
+| GET /products - It should return a 422 error code - Grouping null but model and/or category not null | ProductRoute | Integration | WB/statement coverage |
+| GET /products - It should return a 422 error code - Grouping = category but category null | ProductRoute | Integration | WB/statement coverage |
+| GET /products/available - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
+| GET /products/available - It should return a 404 error code - ProductNotFoundError | ProductRoute | Integration | WB/statement coverage |
+| GET /products/available - It should return a 422 error code - Grouping null but model and/or category not null | ProductRoute | Integration | WB/statement coverage |
+| GET /products/available - It should return a 422 error code - Grouping = category but category null | ProductRoute | Integration | WB/statement coverage |
+| DELETE /products/:model - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
+| DELETE /products/:model - It should return a 404 error code | ProductRoute | Integration | WB/statement coverage |
+| DELETE /products - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
+| DELETE /products - It should return a 404 error code | ProductRoute | Integration | WB/statement coverage |
 
 ### Product routes integration tests
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------- | :--------------- | :--------- | :------------- |
-| POST /products - It should return a 200 success code                   | ProductController  | Integration | BB/eq partitioning     |
-| POST /products - It should return a 401 error - Unauthorized           | ProductController  | Integration | BB/eq partitioning     |
-| POST /products - It should return a 400 error - AfterCurrentDateError  | ProductController  | Integration | BB/eq partitioning     |
-| POST /products - It should return a 409 error - ProductAlreadyExistsError| ProductController| Integration | BB/eq partitioning     |
-| PATCH /products/:model - It should return a 200 success code                   | ProductController  | Integration | BB/eq partitioning     |
-| PATCH /products/:model - It should return a 401 error - Unauthorized           | ProductController  | Integration | BB/eq partitioning     |
-| PATCH /products/:model - It should return a 400 error - AfterCurrentDateError  | ProductController  | Integration | BB/eq partitioning     |
-| PATCH /products/:model - It should return a 404 error                          | ProductController  | Integration | BB/eq partitioning     |
-| PATCH /products/:model - It should return a 400 error - New arrivalDate before old arrivalDate| ProductController | Integration | BB/eq partitioning     |
-| PATCH /products/:model/sell - It should return a 200 success code and decrease quantity | ProductController| Integration | BB/eq partitioning     |
-| PATCH /products/:model/sell - It should return a 400 error - AfterCurrentDateError  | ProductController  | Integration | BB/eq partitioning     |
-| PATCH /products/:model/sell - It should return a 400 error - BeforeArrivalDateError | ProductController  | Integration | BB/eq partitioning     |
-| PATCH /products/:model/sell - It should return a 404 error - ProductNotFoundError  | ProductController  | Integration | BB/eq partitioning     |
-| PATCH /products/:model/sell - It should return a 409 error - LowProductStockError   | ProductController  | Integration | BB/eq partitioning     |
-| PATCH /products/:model/sell - It should return a 409 error - EmptyProductStockError | ProductController  | Integration | BB/eq partitioning     |
-| PATCH /products/:model/sell - It should return a 401 error - Unauthorized           | ProductController  | Integration | BB/eq partitioning     |
-| GET /products - It should return a 200 success code and the products  | ProductController  | Integration | BB/eq partitioning     |
-| GET /products - It should return a 200 success code and all the Smartphones| ProductController| Integration | BB/eq partitioning     |
-| GET /products - It should return a 200 success code and the product    | ProductController  | Integration | BB/eq partitioning     |
-| GET /products - It should return a 422 error code - grouping = model but category is not null| ProductController | Integration | BB/eq partitioning     |
-| GET /products - It should return a 422 error code - grouping = category but category is null| ProductController | Integration | BB/eq partitioning     |
-| GET /products - It should return a 404 error code                      | ProductController  | Integration | BB/eq partitioning     |
-| GET /products - It should return a 401 error code - Unauthorized       | ProductController  | Integration | BB/eq partitioning     |
-| GET /products/available - It should return a 200 success code and all the available Smartphone products| ProductController| Integration | BB/eq partitioning     |
-| GET /products/available - It should return a 200 success code and testmodel      | ProductController  | Integration | BB/eq partitioning     |
-| GET /products/available - It should return a 422 error code - grouping = category but category is null| ProductController | Integration | BB/eq partitioning     |
-| GET /products/available - It should return a 404 error code                      | ProductController  | Integration | BB/eq partitioning     |
-| DELETE /products/:model - It should return a 200 success code and delete okproduct| ProductController | Integration | BB/eq partitioning     |
-| DELETE /products/:model - It should return a 404 error code                      | ProductController  | Integration | BB/eq partitioning     |
-| DELETE /products/:model - It should return a 401 error code - Unauthorized       | ProductController  | Integration | BB/eq partitioning     |
-| DELETE /products - It should return a 200 ok code and delete all products | ProductController  | Integration | BB/eq partitioning     |
-| DELETE /products - It should return a 401 error code - Unauthorized       | ProductController  | Integration | BB/eq partitioning     |
+| POST /products - It should return a 200 success code                   | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| POST /products - It should return a 401 error - Unauthorized           | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| POST /products - It should return a 400 error - AfterCurrentDateError  | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| POST /products - It should return a 409 error - ProductAlreadyExistsError| ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| PATCH /products/:model - It should return a 200 success code                   | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| PATCH /products/:model - It should return a 401 error - Unauthorized           | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| PATCH /products/:model - It should return a 400 error - AfterCurrentDateError  | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| PATCH /products/:model - It should return a 404 error                          | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| PATCH /products/:model - It should return a 400 error - New arrivalDate before old arrivalDate| ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| PATCH /products/:model/sell - It should return a 200 success code and decrease quantity | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| PATCH /products/:model/sell - It should return a 400 error - AfterCurrentDateError  | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| PATCH /products/:model/sell - It should return a 400 error - BeforeArrivalDateError | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| PATCH /products/:model/sell - It should return a 404 error - ProductNotFoundError  | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| PATCH /products/:model/sell - It should return a 409 error - LowProductStockError   | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| PATCH /products/:model/sell - It should return a 409 error - EmptyProductStockError | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| PATCH /products/:model/sell - It should return a 401 error - Unauthorized           | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| GET /products - It should return a 200 success code and the products  | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| GET /products - It should return a 200 success code and all the Smartphones| ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| GET /products - It should return a 200 success code and the product    | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| GET /products - It should return a 422 error code - grouping = model but category is not null | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| GET /products - It should return a 422 error code - grouping = category but category is null| ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| GET /products - It should return a 404 error code                      | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| GET /products - It should return a 401 error code - Unauthorized       | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| GET /products/available - It should return a 200 success code and all the available Smartphone products| ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| GET /products/available - It should return a 200 success code and testmodel      | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| GET /products/available - It should return a 422 error code - grouping = category but category is null| ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| GET /products/available - It should return a 404 error code                      | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| DELETE /products/:model - It should return a 200 success code and delete okproduct| ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| DELETE /products/:model - It should return a 404 error code                      | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| DELETE /products/:model - It should return a 401 error code - Unauthorized       | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| DELETE /products - It should return a 200 ok code and delete all products | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
+| DELETE /products - It should return a 401 error code - Unauthorized       | ProductController + ProductDAO + ProductRoute | Integration | BB/eq partitioning     |
 
 
 # Coverage
@@ -329,6 +329,33 @@
 |Scenario 5.2Try to delete a user that does not exist|1 |
 | **FR2.6 Delete all non Admin users**                |     **3**    |
 |Scenario 13.1 Delete all non-Admin users|3|
+| **FR3.1 Register a set of new products** | **4** |
+|Scenario 6.1 Register a new product| 1 |
+|Scenario 6.2 Try to register a product that already exists| 1 |
+|Scenario 6.3 Try to register a product with invalid input| 1 |
+| **FR3.2 Update the quantity of a product** | **5** |
+|Scenario 6.4 Update the quantity of a product | 1 |
+|Scenario 6.5 Try to increase the quantity of a product that does not exist | 1 |
+| **FR3.3 Sell a product** | **7** |
+|Scenario 7.1 Sell a product after an in-store purchase | 1 |
+|Scenario 7.2 Try to sell a product that does not exist | 1 |
+|Scenario 7.3 Try to sell an unavailable product | 1 |
+| **FR3.4 Show the list of all products** | **1** |
+|Scenario 8.4 View information of all products | 1 |
+| **FR3.4.1 Show the list of all available products** | **1** |
+| Scenario 8.7 View information of all available products | 1 |
+| **FR3.5 Show the list of all products with the same category** | **1** |
+|Scenario 8.5 View information of all products of the same category | 1 |
+| **FR3.5.1 Show the list of all available products with the same category** | **1** |
+|Scenario 8.8 View information of all available products of the same category | 1 |
+| **FR3.6 Show the list of all products with the same model** | **1** |
+|Scenario 8.6 View information of all products with the same model | 1 |
+| **FR3.6.1 Show the list of all available products with the same model** | **1** |
+| Scenario 8.9 View information of all available products with the same model | 1 |
+| **FR3.7 Delete a product** | **3** |
+| Scenario 9.1 Delete one product | 1 |
+| Scenario 9.2 Try to delete a product that does not exist | 1 |
+| **FR3.8 Delete all products** | **2** |
 
 
 

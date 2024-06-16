@@ -4,7 +4,6 @@ import { app } from "../index"
 import db from "../src/db/db"
 import { Role } from "../src/components/user"
 import { Category, Product } from "../src/components/product"
-import { ok } from "assert"
 
 const baseURL = "/ezelectronics"
 
