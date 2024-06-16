@@ -127,6 +127,7 @@
 |PATCH /users/:username - it should return 401 error code| UserRoute | Unit       | WB/Statement coverage |
 |PATCH /users/:username - it should return 400 error code| UserRoute | Unit       | WB/Statement coverage |
 
+
 ### User routes integration tests
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------- | :--------------- | :--------- | :------------- |
