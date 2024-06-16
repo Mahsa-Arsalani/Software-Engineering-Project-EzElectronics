@@ -59,73 +59,73 @@
 ### UserDAO unit testing
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------: | :--------------: | :--------: | :------------: |           
-|createUser - It should resolve true| UserDAO | Unit | BB/eq partitioning |
-|createUser - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
-|createUser - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
-|getUserByUsername - it should resolve to the correct user| UserDAO | Unit | BB/eq partitioning |
-|getUserByUsername - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
-|getUserByUsername - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
-|getUserByUsername - it should reject, user not found| UserDAO | Unit | BB/eq partitioning |
-|getUsers - it should resolve to the correct users list| UserDAO | Unit | BB/eq partitioning |
-|getUsers - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
-|getUsers - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
-|getUsersByRole - it should resolve to the correct users list| UserDAO | Unit | BB/eq partitioning |
-|getUsersByRole - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
-|getUsersByRole - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
-|getUsersByRole - deletedeleteAllNonAdmin test cases| UserDAO | Unit | BB/eq partitioning |
-|getUsersByRole - it should resolve to true| UserDAO | Unit | BB/eq partitioning |
-|getUsersByRole - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
-|getUsersByRole - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
-|deleteAllNonAdmin - it should resolve to true| UserDAO | Unit | BB/eq partitioning |                                                      
-|deleteAllNonAdmin - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
-|deleteAllNonAdmin - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
-|updateUserByUsername - it should resolve to true   | UserDAO | Unit | BB/eq partitioning |
-|updateUserByUsername - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |  
-|updateUserByUsername - it should reject, db error | UserDAO | Unit | BB/eq partitioning |
+|createUser - It should resolve true| UserDAO | Unit | WB/Statement coverage |
+|createUser - it should reject, db call exception| UserDAO | Unit | WB/Statement coverage |
+|createUser - it should reject, db error| UserDAO | Unit | WB/Statement coverage |
+|getUserByUsername - it should resolve to the correct user| UserDAO | Unit | WB/Statement coverage |
+|getUserByUsername - it should reject, db call exception| UserDAO | Unit | WB/Statement coverage |
+|getUserByUsername - it should reject, db error| UserDAO | Unit | WB/Statement coverage |
+|getUserByUsername - it should reject, user not found| UserDAO | Unit | WB/Statement coverage |
+|getUsers - it should resolve to the correct users list| UserDAO | Unit | WB/Statement coverage |
+|getUsers - it should reject, db call exception| UserDAO | Unit | WB/Statement coverage |
+|getUsers - it should reject, db error| UserDAO | Unit | WB/Statement coverage |
+|getUsersByRole - it should resolve to the correct users list| UserDAO | Unit | WB/Statement coverage |
+|getUsersByRole - it should reject, db call exception| UserDAO | Unit | WB/Statement coverage |
+|getUsersByRole - it should reject, db error| UserDAO | Unit | WB/Statement coverage |
+|getUsersByRole - deletedeleteAllNonAdmin test cases| UserDAO | Unit | WB/Statement coverage |
+|getUsersByRole - it should resolve to true| UserDAO | Unit | WB/Statement coverage |
+|getUsersByRole - it should reject, db call exception| UserDAO | Unit | WB/Statement coverage |
+|getUsersByRole - it should reject, db error| UserDAO | Unit | WB/Statement coverage |
+|deleteAllNonAdmin - it should resolve to true| UserDAO | Unit | WB/Statement coverage |                                                      
+|deleteAllNonAdmin - it should reject, db call exception| UserDAO | Unit | WB/Statement coverage |
+|deleteAllNonAdmin - it should reject, db error| UserDAO | Unit | WB/Statement coverage |
+|updateUserByUsername - it should resolve to true   | UserDAO | Unit | WB/Statement coverage |
+|updateUserByUsername - it should reject, db call exception| UserDAO | Unit | WB/Statement coverage |  
+|updateUserByUsername - it should reject, db error | UserDAO | Unit | WB/Statement coverage |
 
 ### UserController unit testing
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------: | :--------------: | :--------: | :------------: | 
-|createUser - It should return true| UserController | Unit       | BB/eq partitioning |
-|getUsers - it should resolve to an user list| UserController | Unit       | BB/eq partitioning |
-|getUsersByRole - it should resolve to an user list| UserController | Unit       | BB/eq partitioning |
-|getUserByUsername - it should resolve to an user list| UserController | Unit       | BB/eq partitioning |
-|getUserByUsername - it should resolve to an user list| UserController | Unit       | BB/eq partitioning |
-|getUserByUsername - it should reject| UserController | Unit       | BB/eq partitioning |
-|deleteUser - it should resolve to true| UserController | Unit       | BB/eq partitioning |
-|deleteUser - it should resolve to true| UserController | Unit       | BB/eq partitioning |
-|deleteUser - it should reject| UserController | Unit       | BB/eq partitioning |
-|deleteUser - it should reject| UserController | Unit       | BB/eq partitioning |
-|deleteAll - it should resolve to true| UserController | Unit       | BB/eq partitioning |
-|updateUserInfo - it should resolve to the updated user| UserController | Unit       | BB/eq partitioning |
-|updateUserInfo - it should resolve to the updated user| UserController | Unit       | BB/eq partitioning |
-|updateUserInfo - invalid birthdate, it should reject| UserController | Unit       | BB/eq partitioning |
-|updateUserInfo - it should rejest| UserController | Unit       | BB/eq partitioning |
-|updateUserInfo - it should rejest| UserController | Unit       | BB/eq partitioning | 
+|createUser - It should return true| UserController | Unit       | WB/Statement coverage |
+|getUsers - it should resolve to an user list| UserController | Unit       | WB/Statement coverage |
+|getUsersByRole - it should resolve to an user list| UserController | Unit       | WB/Statement coverage |
+|getUserByUsername - it should resolve to an user list| UserController | Unit       | WB/Statement coverage |
+|getUserByUsername - it should resolve to an user list| UserController | Unit       | WB/Statement coverage |
+|getUserByUsername - it should reject| UserController | Unit       | WB/Statement coverage |
+|deleteUser - it should resolve to true| UserController | Unit       | WB/Statement coverage |
+|deleteUser - it should resolve to true| UserController | Unit       | WB/Statement coverage |
+|deleteUser - it should reject| UserController | Unit       | WB/Statement coverage |
+|deleteUser - it should reject| UserController | Unit       | WB/Statement coverage |
+|deleteAll - it should resolve to true| UserController | Unit       | WB/Statement coverage |
+|updateUserInfo - it should resolve to the updated user| UserController | Unit       | WB/Statement coverage |
+|updateUserInfo - it should resolve to the updated user| UserController | Unit       | WB/Statement coverage |
+|updateUserInfo - invalid birthdate, it should reject| UserController | Unit       | WB/Statement coverage |
+|updateUserInfo - it should rejest| UserController | Unit       | WB/Statement coverage |
+|updateUserInfo - it should rejest| UserController | Unit       | WB/Statement coverage | 
 
 ### UserRoute unit testing
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------: | :--------------: | :--------: | :------------: | 
-|POST/ users - It should return a 200 success code| UserRoute | Unit       | BB/eq partitioning |
-|POST/ users - it should return 409 error code| UserRoute | Unit       | BB/eq partitioning |
-|POST/ users - it should return 422 error code due to some invalid parameter| UserRoute | Unit       | BB/eq partitioning |
-|GET /users - it should return 200 success code| UserRoute | Unit       | BB/eq partitioning |
-|GET /users - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
-|GET /users/:role - it should return 200 success code| UserRoute | Unit       | BB/eq partitioning |
-|GET /users/:role - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
-|GET /users/:username - it should return 200 success code| UserRoute | Unit       | BB/eq partitioning |
-|GET /users/:username - it should return 404 error code| UserRoute | Unit       | BB/eq partitioning |
-|GET /users/:username - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
-|DELETE /users/:username - it should return 200 success code| UserRoute | Unit       | BB/eq partitioning |
-|DELETE /users/:username - it should return 404 error code| UserRoute | Unit       | BB/eq partitioning |
-|DELETE /users/:username - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
-|DELETE /users/:username - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
-|DELETE /users/ - it should return 200 success code| UserRoute | Unit       | BB/eq partitioning |                   
-|DELETE /users/ - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
-|PATCH /users/:username - it should return 200 success code| UserRoute | Unit       | BB/eq partitioning |
-|PATCH /users/:username - it should return 404 error code| UserRoute | Unit       | BB/eq partitioning |
-|PATCH /users/:username - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
-|PATCH /users/:username - it should return 400 error code| UserRoute | Unit       | BB/eq partitioning |
+|POST/ users - It should return a 200 success code| UserRoute | Unit       | WB/Statement coverage |
+|POST/ users - it should return 409 error code| UserRoute | Unit       | WB/Statement coverage |
+|POST/ users - it should return 422 error code due to some invalid parameter| UserRoute | Unit       | WB/Statement coverage |
+|GET /users - it should return 200 success code| UserRoute | Unit       | WB/Statement coverage |
+|GET /users - it should return 401 error code| UserRoute | Unit       | WB/Statement coverage |
+|GET /users/:role - it should return 200 success code| UserRoute | Unit       | WB/Statement coverage |
+|GET /users/:role - it should return 401 error code| UserRoute | Unit       | WB/Statement coverage |
+|GET /users/:username - it should return 200 success code| UserRoute | Unit       | WB/Statement coverage |
+|GET /users/:username - it should return 404 error code| UserRoute | Unit       | WB/Statement coverage |
+|GET /users/:username - it should return 401 error code| UserRoute | Unit       | WB/Statement coverage |
+|DELETE /users/:username - it should return 200 success code| UserRoute | Unit       | WB/Statement coverage |
+|DELETE /users/:username - it should return 404 error code| UserRoute | Unit       | WB/Statement coverage |
+|DELETE /users/:username - it should return 401 error code| UserRoute | Unit       | WB/Statement coverage |
+|DELETE /users/:username - it should return 401 error code| UserRoute | Unit       | WB/Statement coverage |
+|DELETE /users/ - it should return 200 success code| UserRoute | Unit       | WB/Statement coverage |                   
+|DELETE /users/ - it should return 401 error code| UserRoute | Unit       | WB/Statement coverage |
+|PATCH /users/:username - it should return 200 success code| UserRoute | Unit       | WB/Statement coverage |
+|PATCH /users/:username - it should return 404 error code| UserRoute | Unit       | WB/Statement coverage |
+|PATCH /users/:username - it should return 401 error code| UserRoute | Unit       | WB/Statement coverage |
+|PATCH /users/:username - it should return 400 error code| UserRoute | Unit       | WB/Statement coverage |
 
 ### User routes integration tests
 | Test case name | Object(s) tested | Test level | Technique used |
