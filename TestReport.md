@@ -362,6 +362,28 @@ DELETE ezelectronics/reviews/ - It should return a 401 success code             
 | DELETE ezelectronics/reviews/:model/all - It should return a 200 success code | ReviewRoute + ReviewController +ReviewDAO | Integration | BB/eq partitioning |
 | DELETE ezelectronics/reviews - It should return a 200 success code | ReviewRoute + ReviewController +ReviewDAO | Integration | BB/eq partitioning |
 
+### UserDAO unit testing
+| Test case name | Object(s) tested | Test level | Technique used |
+| :------------: | :--------------: | :--------: | :------------: |           
+|getCart - should resolve with a Cart object when an unpaid cart is found| CartDAO | Unit | WB/Statement coverage |
+|getCart - should reject when no unpaid cart is found| CartDAO | Unit | WB/Statement coverage |
+|getCart - should reject with an error if an error occurs during retrieving the cart| CartDAO | Unit | WB/Statement coverage |
+|checkoutCart - should resolve true when cart is checked out successfully| CartDAO | Unit | WB/Statement coverage |
+|checkoutCart - should reject with an error if an error occurs during checkout| CartDAO | Unit | WB/Statement coverage |
+|getCustomerCarts - should resolve with an array of Cart objects when customer carts are retrieved successfully| CartDAO | Unit | WB/Statement coverage |
+|checkoutCart - should reject with an error if an error occurs during retrieving customer carts| CartDAO | Unit | WB/Statement coverage |
+|checkoutCart - should reject with CartNotFoundError if no customer carts are found| CartDAO | Unit | WB/Statement coverage |
+|updateCurrentCart - should resolve true when cart is updated successfully| CartDAO | Unit | WB/Statement coverage |
+|updateCurrentCart - should reject with an error if an error occurs during update| CartDAO | Unit | WB/Statement coverage |
+|createCurrentCart - should resolve true when cart is created successfully| CartDAO | Unit | WB/Statement coverage |
+|clearCart - should resolve true when cart is cleared successfully| CartDAO | Unit | WB/Statement coverage |
+|clearCart - should reject with an error if an error occurs during clearing cart| CartDAO | Unit | WB/Statement coverage |
+|deleteAllCarts - should resolve true when all carts are deleted successfully| CartDAO | Unit | WB/Statement coverage |
+|deleteAllCarts - should reject with an error if an error occurs during deleting carts| CartDAO | Unit | WB/Statement coverage |
+|getAllCarts - should resolve with an array of Cart objects when carts are retrieved successfully| CartDAO | Unit | WB/Statement coverage |
+|getAllCarts - should reject with an error if an error occurs during retrieving carts| CartDAO | Unit | WB/Statement coverage |
+|getAllCarts - should reject with CartNotFoundError if no carts are found| CartDAO | Unit | WB/Statement coverage |
+
 
 # Coverage
 
