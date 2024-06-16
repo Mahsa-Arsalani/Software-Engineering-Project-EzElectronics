@@ -103,7 +103,7 @@
 |updateUserInfo - it should rejest| UserController | Unit       | BB/eq partitioning |
 |updateUserInfo - it should rejest| UserController | Unit       | BB/eq partitioning | 
 
-### RouteController unit testing
+### UserRoute unit testing
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------: | :--------------: | :--------: | :------------: | 
 |POST/ users - It should return a 200 success code| UserRoute | Unit       | BB/eq partitioning |
@@ -126,6 +126,55 @@
 |PATCH /users/:username - it should return 404 error code| UserRoute | Unit       | BB/eq partitioning |
 |PATCH /users/:username - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
 |PATCH /users/:username - it should return 400 error code| UserRoute | Unit       | BB/eq partitioning |
+
+### User routes integration tests
+| Test case name | Object(s) tested | Test level | Technique used |
+| :------------- | :--------------- | :--------- | :------------- |
+|POST /users - valid request, should return 200 and save a new user in the db| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|POST /users - login as new added user, it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|POST /users - Add a Manager, it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|POST /users - login as new added manager, it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|POST /users - invalid username, should return 422| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|POST /users - invalid name, should return 422  | UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|POST /users - invalid surname, should return 422| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|POST /users - invalid password, should return 422| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|POST /users - invalid role, should return 422| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|POST /users - try to post an existing user, should return 409   | UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |                                  
+|GET /users - Acces route as admin, it should return all the existring useres| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|GET /users - Acces route as custumer, it should return 401| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|GET /users - Acces route as Manager, it should return 401             | UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |             
+|GET /users/roles/:role - Acces route as admin, it should return all the existring useres of a specific role| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|GET /users/roles/:role - Invalid Role, it should return 422| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|GET /users/roles/:role - Acces route as custumer, it should return 401| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|GET /users/roles/:role - Acces route as manager, it should return 401  | UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |           
+|GET /users/username - invalid username, it should return 422| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|GET /users/username - access route as admin and request others own information, it should return 200 | UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|GET /users/username - access route as customer and request others own information, it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|GET /users/username - access route as manager and request others own information, it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|GET /users/username - access route as admin and request others information it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|GET /users/username - access route as customer and request others information it should return 401| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|GET /users/username - access route as manager and request others information it should return 401| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|GET /users/username - access route as admin and request non existing user it should return 404    | UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |                   
+|DELETE /users/username - access router as andmin and delete an other no admin user, it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|DELETE /users/username - access router as andmin and delete an other admin user, it should return 401| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|DELETE /users/username - try to delete an non existing user, it should return 404| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|DELETE /users/username - access route as customer and delete own account, it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|DELETE /users/username - access route as manager and delete own account, it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|DELETE /users/username - access route as admin and delete own account, it should return 200 | UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |                 
+|PATCH /users/username - Try to update an non existing user, it should return 404| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|PATCH /users/username - Access router as andmin and update an other non admin user, it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|PATCH /users/username - access router as andmin and update an other admin user, it should return 401| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|PATCH /users/username - Access router as andmin and update own account, it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|PATCH /users/username - Access router as manager and update own account, it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|PATCH /users/username - Access router as customer and update own account, it should return 200| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|PATCH /users/username - invalid name, should return 422| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|PATCH /users/username - invalid surname, should return 422| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|PATCH /users/username - invalid address, should return 422| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|PATCH /users/username - invalid birthdate format, should return 422| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|PATCH /users/username - invalid birthdate is after the current date, should return 400  | UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |                                 
+|DELETE /users - access route as admin, it should delete all users non admin users| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|DELETE /users - access route as customer, it should return 401| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
+|DELETE /users - access route as manager, it should return 401| UserRoute + UserController +UserDAO | Integration | BB/eq partitioning |
 
 ### ProductController unit testing
 | Test case name | Object(s) tested | Test level | Technique used |
