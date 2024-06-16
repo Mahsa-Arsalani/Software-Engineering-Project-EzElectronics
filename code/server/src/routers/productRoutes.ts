@@ -65,7 +65,7 @@ class ProductRoutes {
             body("sellingPrice").isFloat({ min : 1 }),
             body("arrivalDate").optional().isString(),
             this.authenticator.isLoggedIn,
-            this.authenticator.isManager,
+            this.authenticator.isAdminOrManager,
             (req: any, res: any, next: any) => this.controller.registerProducts(req.body.model, req.body.category, req.body.quantity, req.body.details, req.body.sellingPrice, req.body.arrivalDate)
                 .then(() => res.status(200).end())
                 .catch((err) => next(err))
@@ -86,7 +86,7 @@ class ProductRoutes {
             body("quantity").isInt({ min : 1 }),
             body("changeDate").optional().isString(),
             this.authenticator.isLoggedIn,
-            this.authenticator.isManager,
+            this.authenticator.isAdminOrManager,
             (req: any, res: any, next: any) => this.controller.changeProductQuantity(req.params.model, req.body.quantity, req.body.changeDate)
                 .then((quantity: any /**number */) => res.status(200).json({ quantity: quantity }))
                 .catch((err) => next(err))
@@ -107,7 +107,7 @@ class ProductRoutes {
             body("quantity").isInt({ min : 1 }),
             body("sellingDate").optional().isString(),
             this.authenticator.isLoggedIn,
-            this.authenticator.isManager,
+            this.authenticator.isAdminOrManager,
             (req: any, res: any, next: any) => this.controller.sellProduct(req.params.model, req.body.quantity, req.body.sellingDate)
                 .then((quantity: any /**number */) => res.status(200).json({ quantity: quantity }))
                 .catch((err) => {
