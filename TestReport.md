@@ -182,87 +182,87 @@
 ### ProductController unit testing
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------: | :--------------: | :--------: | :------------: |
-| createProduct - It should return undefined        | ProductController | Unit       | BB/eq partitioning |
-| createProduct - It should throw DateError         | ProductController | Unit       | BB/eq partitioning |
-| createProduct - It should throw ProductAlreadyExistsError | ProductController | Unit       | BB/eq partitioning |
-| changeProductQuantity - It should return 55       | ProductController | Unit       | BB/eq partitioning |
-| changeProductQuantity - It should reject DateError 1 | ProductController | Unit       | BB/eq partitioning |
-| changeProductQuantity - It should reject DateError 2 | ProductController | Unit       | BB/eq partitioning |
-| changeProductQuantity - It should reject ProductNotFoundError | ProductController | Unit       | BB/eq partitioning |
-| sellProduct - It should return 45                 | ProductController | Unit       | BB/eq partitioning |
-| sellProduct - It should reject DateError          | ProductController | Unit       | BB/eq partitioning |
-| sellProduct - It should reject LowProductStockError | ProductController | Unit       | BB/eq partitioning |
-| sellProduct - It should reject EmptyProductStockError | ProductController | Unit       | BB/eq partitioning |
-| getProducts - It should resolve to a list of three products | ProductController | Unit       | BB/eq partitioning |
-| getProducts - It should resolve to a list of one product (grouped by model) | ProductController | Unit       | BB/eq partitioning |
-| getProducts - It should resolve to a list of one product (grouped by category) | ProductController | Unit       | BB/eq partitioning |
-| getProducts - group=model but model is null -> Error | ProductController | Unit       | BB/eq partitioning |
-| getProducts - group=category but category is null -> Error | ProductController | Unit       | BB/eq partitioning |
-| getProducts - group=model but category is not null -> Error | ProductController | Unit       | BB/eq partitioning |
-| getProducts - group=category but model is not null -> Error | ProductController | Unit       | BB/eq partitioning |
-| getAvailableProducts - It should resolve to a product list | ProductController | Unit       | BB/eq partitioning |
-| getAvailableProducts - It should resolve to a list of one product (grouped by model) | ProductController | Unit       | BB/eq partitioning |
-| getAvailableProducts - It should resolve to a list of one product (grouped by category) | ProductController | Unit       | BB/eq partitioning |
-| getAvailableProducts - group=model but category is not null -> Error | ProductController | Unit       | BB/eq partitioning |
-| getAvailableProducts - group=category but model is not null -> Error | ProductController | Unit       | BB/eq partitioning |
-| getAvailableProducts - group=model but category is not null -> Error | ProductController | Unit       | BB/eq partitioning |
-| getAvailableProducts - group=category but model is not null -> Error | ProductController | Unit       | BB/eq partitioning |
-| deleteAllProducts - It should return true | ProductController | Unit       | BB/eq partitioning |
-| deleteProduct - It should return true | ProductController | Unit       | BB/eq partitioning |
+| createProduct - It should return undefined        | ProductController | Unit       | WB/Statement coverage |
+| createProduct - It should throw DateError         | ProductController | Unit       | WB/Statement coverage  |
+| createProduct - It should throw ProductAlreadyExistsError | ProductController | Unit       | WB/Statement coverage  |
+| changeProductQuantity - It should return 55       | ProductController | Unit       | WB/Statement coverage  |
+| changeProductQuantity - It should reject DateError 1 | ProductController | Unit       | WB/Statement coverage  |
+| changeProductQuantity - It should reject DateError 2 | ProductController | Unit       | WB/Statement coverage  |
+| changeProductQuantity - It should reject ProductNotFoundError | ProductController | Unit       | WB/Statement coverage  |
+| sellProduct - It should return 45                 | ProductController | Unit       | WB/Statement coverage  |
+| sellProduct - It should reject DateError          | ProductController | Unit       | WB/Statement coverage  |
+| sellProduct - It should reject LowProductStockError | ProductController | Unit       | WB/Statement coverage  |
+| sellProduct - It should reject EmptyProductStockError | ProductController | Unit       | WB/Statement coverage  |
+| getProducts - It should resolve to a list of three products | ProductController | Unit       | WB/Statement coverage  |
+| getProducts - It should resolve to a list of one product (grouped by model) | ProductController | Unit       | WB/Statement coverage  |
+| getProducts - It should resolve to a list of one product (grouped by category) | ProductController | Unit       | WB/Statement coverage  |
+| getProducts - group=model but model is null -> Error | ProductController | Unit       | WB/Statement coverage  |
+| getProducts - group=category but category is null -> Error | ProductController | Unit       | WB/Statement coverage  |
+| getProducts - group=model but category is not null -> Error | ProductController | Unit       | WB/Statement coverage  |
+| getProducts - group=category but model is not null -> Error | ProductController | Unit       | WB/Statement coverage  |
+| getAvailableProducts - It should resolve to a product list | ProductController | Unit       | WB/Statement coverage  |
+| getAvailableProducts - It should resolve to a list of one product (grouped by model) | ProductController | Unit       | WB/Statement coverage  |
+| getAvailableProducts - It should resolve to a list of one product (grouped by category) | ProductController | Unit       | WB/Statement coverage  |
+| getAvailableProducts - group=model but category is not null -> Error | ProductController | Unit       | WB/Statement coverage  |
+| getAvailableProducts - group=category but model is not null -> Error | ProductController | Unit       | WB/Statement coverage  |
+| getAvailableProducts - group=model but category is not null -> Error | ProductController | Unit       | WB/Statement coverage  |
+| getAvailableProducts - group=category but model is not null -> Error | ProductController | Unit       | WB/Statement coverage  |
+| deleteAllProducts - It should return true | ProductController | Unit       | WB/Statement coverage  |
+| deleteProduct - It should return true | ProductController | Unit       | WB/Statement coverage  |
 
 ### ProductDAO unit testing
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------: | :--------------: | :--------: | :------------: |
-| createProduct - It should return undefined | ProductDAO | Unit | BB/eq partitioning |
-| createProduct - It should throw DateError | ProductDAO | Unit | BB/eq partitioning |
-| createProduct - It should throw ProductAlreadyExistsError | ProductDAO | Unit | BB/eq partitioning |
-| updateModel - It should return 55 | ProductDAO | Unit | BB/eq partitioning |
-| updateModel - It should throw ProductNotFoundError | ProductDAO | Unit | BB/eq partitioning |
-| updateModel - It should throw DateError | ProductDAO | Unit | BB/eq partitioning |
-| sellModel - It should return 10 | ProductDAO | Unit | BB/eq partitioning |
-| sellModel - It should throw ProductNotFoundError | ProductDAO | Unit | BB/eq partitioning |
-| sellModel - It should throw DateError | ProductDAO | Unit | BB/eq partitioning |
-| sellModel - It should throw EmptyProductStockError | ProductDAO | Unit | BB/eq partitioning |
-| sellModel - It should throw LowProductStockError | ProductDAO | Unit | BB/eq partitioning |
-| sellModel - It should throw generic Error | ProductDAO | Unit | BB/eq partitioning |
-| getAllProducts - It should return a list of products | ProductDAO | Unit | BB/eq partitioning |
-| getAllProducts - It should throw ProductNotFoundError | ProductDAO | Unit | BB/eq partitioning |
-| getAllProducts - It should throw generic Error | ProductDAO | Unit | BB/eq partitioning |
-| deleteAllProducts - It should throw generic Error | ProductDAO | Unit | BB/eq partitioning |
-| deleteOneProduct - It should return true | ProductDAO | Unit | BB/eq partitioning |
-| deleteOneProduct - It should throw generic Error | ProductDAO | Unit | BB/eq partitioning |
-| getProductByModel - It should throw ProductNotFoundError | ProductDAO | Unit | BB/eq partitioning |
-| getProductByModel - It should throw generic Error | ProductDAO | Unit | BB/eq partitioning |
+| createProduct - It should return undefined | ProductDAO | Unit | WB/Statement coverage |
+| createProduct - It should throw DateError | ProductDAO | Unit | WB/Statement coverage  |
+| createProduct - It should throw ProductAlreadyExistsError | ProductDAO | Unit | WB/Statement coverage  |
+| updateModel - It should return 55 | ProductDAO | Unit | WB/Statement coverage  |
+| updateModel - It should throw ProductNotFoundError | ProductDAO | Unit | WB/Statement coverage  |
+| updateModel - It should throw DateError | ProductDAO | Unit | WB/Statement coverage |
+| sellModel - It should return 10 | ProductDAO | Unit | WB/Statement coverage |
+| sellModel - It should throw ProductNotFoundError | ProductDAO | Unit | WB/Statement coverage |
+| sellModel - It should throw DateError | ProductDAO | Unit | WB/Statement coverage |
+| sellModel - It should throw EmptyProductStockError | ProductDAO | Unit | WB/Statement coverage |
+| sellModel - It should throw LowProductStockError | ProductDAO | Unit | WB/Statement coverage |
+| sellModel - It should throw generic Error | ProductDAO | Unit | WB/Statement coverage |
+| getAllProducts - It should return a list of products | ProductDAO | Unit | WB/Statement coverage |
+| getAllProducts - It should throw ProductNotFoundError | ProductDAO | Unit | WB/Statement coverage |
+| getAllProducts - It should throw generic Error | ProductDAO | Unit | WB/Statement coverage |
+| deleteAllProducts - It should throw generic Error | ProductDAO | Unit | WB/Statement coverage |
+| deleteOneProduct - It should return true | ProductDAO | Unit | WB/Statement coverage |
+| deleteOneProduct - It should throw generic Error | ProductDAO | Unit | WB/Statement coverage |
+| getProductByModel - It should throw ProductNotFoundError | ProductDAO | Unit | WB/Statement coverage |
+| getProductByModel - It should throw generic Error | ProductDAO | Unit | WB/Statement coverage |
 
-### ProductRoute tests product
+### ProductRoute unit testing
 
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------- | :--------------- | :--------- | :------------- |
-| POST /products - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
-| POST /products - It should return a 409 error code | ProductRoute | Integration | WB/statement coverage |
-| POST /products - It should return a 400 error code | ProductRoute | Integration | WB/statement coverage |
-| PATCH /products/:model - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
-| PATCH /products/:model - It should return a 400 error code - new arrivalDate before the old one | ProductRoute | Integration | WB/statement coverage |
-| PATCH /products/:model - It should return a 400 error code - arrivalDate is in the future | ProductRoute | Integration | WB/statement coverage |
-| PATCH /products/:model - It should return a 404 error code - ProductNotFoundError | ProductRoute | Integration | WB/statement coverage |
-| PATCH /products/:model/sell - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
-| PATCH /products/:model/sell - It should return a 404 error code - ProductNotFoundError | ProductRoute | Integration | WB/statement coverage |
-| PATCH /products/:model/sell - It should return a 400 error code - DateError - sellingDate in the future | ProductRoute | Integration | WB/statement coverage |
-| PATCH /products/:model/sell - It should return a 400 error code - DateError - sellingDate before the arrivalDate | ProductRoute | Integration | WB/statement coverage |
-| PATCH /products/:model/sell - It should return a 409 error code - LowProductStockError | ProductRoute | Integration | WB/statement coverage |
-| PATCH /products/:model/sell - It should return a 409 error code - EmptyProductStockError | ProductRoute | Integration | WB/statement coverage |
-| GET /products - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
-| GET /products - It should return a 404 error code - ProductNotFoundError | ProductRoute | Integration | WB/statement coverage |
-| GET /products - It should return a 422 error code - Grouping null but model and/or category not null | ProductRoute | Integration | WB/statement coverage |
-| GET /products - It should return a 422 error code - Grouping = category but category null | ProductRoute | Integration | WB/statement coverage |
-| GET /products/available - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
-| GET /products/available - It should return a 404 error code - ProductNotFoundError | ProductRoute | Integration | WB/statement coverage |
-| GET /products/available - It should return a 422 error code - Grouping null but model and/or category not null | ProductRoute | Integration | WB/statement coverage |
-| GET /products/available - It should return a 422 error code - Grouping = category but category null | ProductRoute | Integration | WB/statement coverage |
-| DELETE /products/:model - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
-| DELETE /products/:model - It should return a 404 error code | ProductRoute | Integration | WB/statement coverage |
-| DELETE /products - It should return a 200 success code | ProductRoute | Integration | WB/statement coverage |
-| DELETE /products - It should return a 404 error code | ProductRoute | Integration | WB/statement coverage |
+| POST /products - It should return a 200 success code | ProductRoute | Unit | WB/statement coverage |
+| POST /products - It should return a 409 error code | ProductRoute | Unit | WB/statement coverage |
+| POST /products - It should return a 400 error code | ProductRoute | Unit | WB/statement coverage |
+| PATCH /products/:model - It should return a 200 success code | ProductRoute | Unit | WB/statement coverage |
+| PATCH /products/:model - It should return a 400 error code - new arrivalDate before the old one | ProductRoute | Unit | WB/statement coverage |
+| PATCH /products/:model - It should return a 400 error code - arrivalDate is in the future | ProductRoute | Unit | WB/statement coverage |
+| PATCH /products/:model - It should return a 404 error code - ProductNotFoundError | ProductRoute | Unit | WB/statement coverage |
+| PATCH /products/:model/sell - It should return a 200 success code | ProductRoute | Unit | WB/statement coverage |
+| PATCH /products/:model/sell - It should return a 404 error code - ProductNotFoundError | ProductRoute | Unit | WB/statement coverage |
+| PATCH /products/:model/sell - It should return a 400 error code - DateError - sellingDate in the future | Unit | Integration | WB/statement coverage |
+| PATCH /products/:model/sell - It should return a 400 error code - DateError - sellingDate before the arrivalDate | Unit | Integration | WB/statement coverage |
+| PATCH /products/:model/sell - It should return a 409 error code - LowProductStockError | ProductRoute | Unit | WB/statement coverage |
+| PATCH /products/:model/sell - It should return a 409 error code - EmptyProductStockError | ProductRoute | Unit | WB/statement coverage |
+| GET /products - It should return a 200 success code | ProductRoute | Unit | WB/statement coverage |
+| GET /products - It should return a 404 error code - ProductNotFoundError | ProductRoute | Unit | WB/statement coverage |
+| GET /products - It should return a 422 error code - Grouping null but model and/or category not null | ProductRoute | Unit | WB/statement coverage |
+| GET /products - It should return a 422 error code - Grouping = category but category null | ProductRoute | Unit | WB/statement coverage |
+| GET /products/available - It should return a 200 success code | ProductRoute | Unit | WB/statement coverage |
+| GET /products/available - It should return a 404 error code - ProductNotFoundError | ProductRoute | Unit | WB/statement coverage |
+| GET /products/available - It should return a 422 error code - Grouping null but model and/or category not null | ProductRoute | Unit | WB/statement coverage |
+| GET /products/available - It should return a 422 error code - Grouping = category but category null | ProductRoute | Unit | WB/statement coverage |
+| DELETE /products/:model - It should return a 200 success code | ProductRoute | Unit | WB/statement coverage |
+| DELETE /products/:model - It should return a 404 error code | ProductRoute | Unit | WB/statement coverage |
+| DELETE /products - It should return a 200 success code | ProductRoute | Unit | WB/statement coverage |
+| DELETE /products - It should return a 404 error code | ProductRoute | Unit | WB/statement coverage |
 
 ### Product routes integration tests
 | Test case name | Object(s) tested | Test level | Technique used |
@@ -418,7 +418,7 @@ DELETE ezelectronics/reviews/ - It should return a 401 success code             
 | Scenario 9.1 Delete one product | 1 |
 | Scenario 9.2 Try to delete a product that does not exist | 1 |
 | **FR3.8 Delete all products** | **2** |
-| **FR4.1 Create/Delete Review** |** 5 **|
+| **FR4.1 Create/Delete Review** | **5** |
 | Scenario 17.1 | Add a review to a product| 5 |
 | Scenario 17.2 | Delete review given to a product | 1 |
 | Scenario 19.1 | Delete all reviews of one product | 1 |
