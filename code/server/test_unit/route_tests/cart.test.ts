@@ -64,7 +64,7 @@ describe("cart routing test",()=>{
 
 
     describe("GET /carts",()=>{
-        test("my test",async ()=>{
+        test("It should return a 200 success code",async ()=>{
             jest.spyOn(Authenticator.prototype,"isLoggedIn").mockImplementation((req,res,next)=>next())
             jest.spyOn(Authenticator.prototype,"isCustomer").mockImplementation((req,res,next)=>next())
             jest.spyOn(CartController.prototype, "getCart").mockResolvedValueOnce(mockCart as Cart)
