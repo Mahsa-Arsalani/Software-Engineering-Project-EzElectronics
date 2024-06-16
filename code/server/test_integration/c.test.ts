@@ -352,7 +352,7 @@ describe("Cart integration testing ", () => {
         })
     })
 
-    describe("scenario 1", () => {
+    describe("scenario 10.3", () => {
         test("Add a product to the cart", async () => {
             await cleanup()
             await postUser(testManager)
@@ -376,8 +376,8 @@ describe("Cart integration testing ", () => {
         })
     })
 
-    describe("scenario 2", () => {
-        test("Make a payment for the items in the cart", async () => {
+    describe("scenario 10.6", () => {
+        test("Pay for the current cart", async () => {
             await cleanup();
             await postUser(testManager)
             ManagerCookie = await login(testManager)
@@ -401,8 +401,8 @@ describe("Cart integration testing ", () => {
         })
     })
 
-    describe("scenario 3", () => {
-        test("View the cart", async () => {
+    describe("scenario 10.1", () => {
+        test("View information of the current cart", async () => {
             await cleanup();
             await postUser(testManager)
             ManagerCookie = await login(testManager)
