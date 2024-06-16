@@ -191,8 +191,6 @@
 |Scenario 3.1 Registration| 1|
 |Scenario 3.2 Username already in use| 1|
 |Scenario 3.3 User provides empty parameters| 5|
-
-
 | **FR2.1 Show the list of all users**             |     3    |
 | **FR2.2 Show the list of all users with a specific role**                |     4    |
 | **FR2.3 Show the information of a single user**             |    8     |
