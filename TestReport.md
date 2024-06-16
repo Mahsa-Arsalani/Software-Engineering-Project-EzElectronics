@@ -18,7 +18,7 @@
      <report the here the dependency graph of EzElectronics>
 
 # Integration approach
-
+<!--
     <Write here the integration sequence you adopted, in general terms (top down, bottom up, mixed) and as sequence
 
     (ex: step1: unit A, step 2: unit A+B, step 3: unit A+B+C, etc)>
@@ -26,12 +26,31 @@
     <Some steps may  correspond to unit testing (ex step1 in ex above)>
 
     <One step will  correspond to API testing, or testing unit route.js>
+-->
 
-    Step 1: Controller tests
-      Step 1.1: 
-    Step 2: Dao tests
-    Step 3: Routes tests
+    Step 1: Dao Unit tests
+      Step 1.1: User Dao Unit tests
+      Step 1.2: Product Dao Unit tests
+      Step 1.3: Reviews Dao Unit tests
+      Step 1.4: Cart Dao Unit tests
+    Step 2: Controller Unit tests
+      Step 2.1: User Controller Unit tests
+      Step 2.2: Product Controller Unit tests
+      Step 2.3: Reviews Controller Unit tests
+      Step 2.4: Cart Controller Unit tests
+    Step 3: Routes Unit tests
+      Step 3.1: User Routes Unit tests
+      Step 3.2: Product Routes Unit tests
+      Step 3.3: Reviews Routes Unit tests
+      Step 3.4: Cart Routes Unit tests
     Step 4: Integration tests
+      Step 4.1 User Routes + User Controller + User Dao
+      Step 4.2 Product Routes + Product Controller + Product Dao
+      Step 4.3 Reviews Routes + Reviews Controller + Reviews Dao
+      Step 4.4 Cart Routes + Cart Controller + Cart Dao
+
+  The intermediate step Controller + Dao was avoided in the integration tests since most of the controllers simply called the DAO
+  
 
 # Tests
 
