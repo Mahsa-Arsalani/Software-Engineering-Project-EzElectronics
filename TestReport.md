@@ -28,6 +28,7 @@
     <One step will  correspond to API testing, or testing unit route.js>
 
     Step 1: Controller tests
+      Step 1.1: 
     Step 2: Dao tests
     Step 3: Routes tests
     Step 4: Integration tests
