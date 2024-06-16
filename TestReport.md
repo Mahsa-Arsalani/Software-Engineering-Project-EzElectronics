@@ -59,8 +59,8 @@
 ### UserDAO unit testing
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------: | :--------------: | :--------: | :------------: |           
-    |createUser - It should resolve true| UserDAO | Unit | BB/eq partitioning |
-    |createUser - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
+|createUser - It should resolve true| UserDAO | Unit | BB/eq partitioning |
+|createUser - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
     |createUser - it should reject, db error| UserDAO | Unit | BB/eq partitioning |
     |getUserByUsername - it should resolve to the correct user| UserDAO | Unit | BB/eq partitioning |
     |getUserByUsername - it should reject, db call exception| UserDAO | Unit | BB/eq partitioning |
