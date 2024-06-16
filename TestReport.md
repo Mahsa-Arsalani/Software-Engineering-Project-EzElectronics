@@ -187,21 +187,26 @@
 
 | Functional Requirement and scenarios  | Test(s) |
 | :--------------------------------: | :-----: |
-|**FR1.3 Create a new user account**| 7|
+|**FR1.3 Create a new user account**| **7**|
 |Scenario 3.1 Registration| 1|
 |Scenario 3.2 Username already in use| 1|
 |Scenario 3.3 User provides empty parameters| 5|
-| **FR2.1 Show the list of all users**             |     3    |
-| **FR2.2 Show the list of all users with a specific role**                |     4    |
-| **FR2.3 Show the information of a single user**             |    8     |
+| **FR2.1 Show the list of all users**             |     **3**    |
+| **FR2.2 Show the list of all users with a specific role**                |     **4**    |
+| **FR2.3 Show the information of a single user**             |    **8**     |
 |Scenario 4.1 View the information of one user| 7|
 |Scenario 4.2 Ask to view information of a user who does not exist| 1|
 |Scenario 4.3 View the information of all users| 3|
 |Scenario 4.4 View the information of all users with a specific role (Customer or Manager)| 3|
 |Scenario 4.5 Ask to view information of users with a role that does not exist| 1|
-| **FR2.4 Update the information of a single user**                 |   11      |
-| **FR2.5 Delete a single non Admin user**                 |  6       |
-| **FR2.6 Delete all non Admin users**                |     3    |
+| **FR2.4 Update the information of a single user**                 |   **11**      |
+|Scenario 12.1
+Edit user information| 11|
+| **FR2.5 Delete a single non Admin user**                 |  **6**       |
+|Scenario 5.1Delete one user| 5|
+|Scenario 5.2Try to delete a user that does not exist|1 |
+| **FR2.6 Delete all non Admin users**                |     **3**    |
+|Scenario 13.1 Delete all non-Admin users|3|
 
 
 
