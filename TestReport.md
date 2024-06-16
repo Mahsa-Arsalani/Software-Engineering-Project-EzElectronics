@@ -329,17 +329,33 @@
 |Scenario 5.2Try to delete a user that does not exist|1 |
 | **FR2.6 Delete all non Admin users**                |     **3**    |
 |Scenario 13.1 Delete all non-Admin users|3|
-| **FR3.1 Register a set of new products** | **** |
-| **FR3.2 Update the quantity of a product** | **** |
-| **FR3.3 Sell a product** | **** |
-| **FR3.4 Show the list of all products** | **** |
-| **FR3.4.1 Show the list of all available products** | **** |
-| **FR3.5 Show the list of all products with the same category** | **** |
-| **FR3.5.1 Show the list of all available products with the same category** | **** |
-| **FR3.6 Show the list of all products with the same model** | **** |
-| **FR3.6.1 Show the list of all available products with the same model** | **** |
-| **FR3.7 Delete a product** | **** |
-| **FR3.8 Delete all products** | **** |
+| **FR3.1 Register a set of new products** | **4** |
+|Scenario 6.1 Register a new product| 1 |
+|Scenario 6.2 Try to register a product that already exists| 1 |
+|Scenario 6.3 Try to register a product with invalid input| 1 |
+| **FR3.2 Update the quantity of a product** | **5** |
+|Scenario 6.4 Update the quantity of a product | 1 |
+|Scenario 6.5 Try to increase the quantity of a product that does not exist | 1 |
+| **FR3.3 Sell a product** | **7** |
+|Scenario 7.1 Sell a product after an in-store purchase | 1 |
+|Scenario 7.2 Try to sell a product that does not exist | 1 |
+|Scenario 7.3 Try to sell an unavailable product | 1 |
+| **FR3.4 Show the list of all products** | **1** |
+|Scenario 8.4 View information of all products | 1 |
+| **FR3.4.1 Show the list of all available products** | **1** |
+| Scenario 8.7 View information of all available products | 1 |
+| **FR3.5 Show the list of all products with the same category** | **1** |
+|Scenario 8.5 View information of all products of the same category | 1 |
+| **FR3.5.1 Show the list of all available products with the same category** | **1** |
+|Scenario 8.8 View information of all available products of the same category | 1 |
+| **FR3.6 Show the list of all products with the same model** | **1** |
+|Scenario 8.6 View information of all products with the same model | 1 |
+| **FR3.6.1 Show the list of all available products with the same model** | **1** |
+| Scenario 8.9 View information of all available products with the same model | 1 |
+| **FR3.7 Delete a product** | **3** |
+| Scenario 9.1 Delete one product | 1 |
+| Scenario 9.2 Try to delete a product that does not exist | 1 |
+| **FR3.8 Delete all products** | **2** |
 
 
 
