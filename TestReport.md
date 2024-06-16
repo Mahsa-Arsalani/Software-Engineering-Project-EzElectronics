@@ -418,6 +418,13 @@ DELETE ezelectronics/reviews/ - It should return a 401 success code             
 | Scenario 9.1 Delete one product | 1 |
 | Scenario 9.2 Try to delete a product that does not exist | 1 |
 | **FR3.8 Delete all products** | **2** |
+| **FR4.1 Create/Delete Review** |** 5 **|
+| Scenario 17.1 | Add a review to a product| 5 |
+| Scenario 17.2 | Delete review given to a product | 1 |
+| Scenario 19.1 | Delete all reviews of one product | 1 |
+| Scenario 19.2 | Delete all reviews of all products | 1 |
+| **FR4.2 Get reviews of a model**  | **1** |
+| Scenario 18.1 | View the reviews of a product | 1 |
 
 
 
