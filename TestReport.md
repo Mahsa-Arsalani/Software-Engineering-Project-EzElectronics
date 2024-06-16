@@ -487,4 +487,4 @@ DELETE ezelectronics/reviews/ - It should return a 401 success code             
 
 ## Coverage white box
 
-![Coverage Image](./Images/coverageImage.png)
+![Coverage Image](./Images/coverageImage.jpg)
