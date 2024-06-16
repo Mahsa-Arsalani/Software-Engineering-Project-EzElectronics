@@ -189,6 +189,7 @@ class CartController {
     async clearCart(user: User)/*:Promise<Boolean> */ { 
         if(user.role !== Role.CUSTOMER)
             throw new UserNotCustomerError
+        await this.dao.getCart(user)
         return this.dao.clearCart(user)
     }
 

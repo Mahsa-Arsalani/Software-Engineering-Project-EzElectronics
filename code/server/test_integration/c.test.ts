@@ -5,6 +5,7 @@ import db from "../src/db/db"
 import { User, Role } from "../src/components/user"
 import { Category, Product } from "../src/components/product"
 import { Cart, ProductInCart } from "../src/components/cart"
+import dayjs from "dayjs"
 
 
 const baseURL = "/ezelectronics"
@@ -219,12 +220,39 @@ describe("Cart integration testing ", () => {
         })
     })
 
-    //10.2
+    describe("GET /carts/all", ()=>{
+        test("View information of the current cart, should resolve 200 ",async()=>{
+            const {body} = await request(app)
+            .get(baseURL + "/carts/all")
+        .set("Cookie", AdminCookie)
+        .expect(200)
+
+            const testCart = {customer: testCustomer.username,
+                paid:0,
+                paymentDate: null as any,
+                total: testproduct.sellingPrice,
+                products: [{model: testproduct.model,
+                             quantity: 1, 
+                             category: testproduct.category as Category,price: 
+                             testproduct.sellingPrice}]}
+
+            expect(body).toEqual([testCart])
+        })
+    })
+
+    
 
     describe("DELETE /carts/products/:model", ()=>{
-        test("Try to remove a non present product, should resolve 200", async()=>{
+        test("Try to remove a non present product, should reject 404", async()=>{
             await request(app)
             .delete(baseURL + "/carts/products/"+"notAv")
+            .set("Cookie", CustomerCookie)
+            .expect(404)
+        })
+
+        test("Try to remove a non existent product, should reject 404", async()=>{
+            await request(app)
+            .delete(baseURL + "/carts/products/"+"notExist")
             .set("Cookie", CustomerCookie)
             .expect(404)
         })
@@ -258,6 +286,69 @@ describe("Cart integration testing ", () => {
                 .patch(baseURL + "/carts")
                 .set("Cookie", CustomerCookie)
                 .expect(404)
+        })
+    })
+
+    describe("GET /carts/history", ()=>{
+        test("get cart history, should resolve 200 ",async()=>{
+            const {body} = await request(app)
+            .get(baseURL + "/carts/history")
+        .set("Cookie", CustomerCookie)
+        .expect(200)
+
+            const testCart = {customer: testCustomer.username,
+                paid:1,
+                paymentDate: dayjs().format("YYYY-MM-DD"),
+                total: testproduct.sellingPrice,
+                products: [{model: testproduct.model,
+                             quantity: 1, 
+                             category: testproduct.category as Category,price: 
+                             testproduct.sellingPrice}]}
+
+            expect(body).toEqual([testCart])
+        })
+    })
+
+    describe("DELETE /carts/products/:model", ()=>{
+        test("Try to remove a product from a non existing cart, should reject 404", async()=>{
+            await request(app)
+            .delete(baseURL + "/carts/products/"+testproduct.model)
+            .set("Cookie", CustomerCookie)
+            .expect(404)
+        })
+    })
+
+    describe("DELETE /carts/current", ()=>{
+        test("delete current cart, should resolve 200", async()=>{
+            await addToCart(testproduct.model, CustomerCookie)
+
+            await request(app)
+            .delete(baseURL + "/carts/current")
+            .set("Cookie", CustomerCookie)
+            .expect(200)
+        })
+
+        test("try to delete an non existing current, should reject 404", async()=>{
+            await addToCart(testproduct.model, CustomerCookie)
+            await request(app)
+                .patch(baseURL + "/carts")
+                .set("Cookie", CustomerCookie)
+                .expect(200)
+
+                await request(app)
+                .delete(baseURL + "/carts/current")
+                .set("Cookie", CustomerCookie)
+                .expect(404)
+            
+        })
+    })
+
+    describe("DELETE /carts", ()=>{
+        test("delete current cart, should resolve 200", async()=>{
+            await request(app)
+            .delete(baseURL + "/carts")
+            .set("Cookie", AdminCookie)
+            .expect(200)
         })
     })
 
