@@ -419,6 +419,31 @@ DELETE ezelectronics/reviews/ - It should return a 401 success code             
 |DELETE /carts - should delete all carts| CartRoute | Unit       | WB/Statement coverage |
 |GET /carts/all - should get all carts| CartRoute | Unit       | WB/Statement coverage |
 
+### Cart Routes Integration Tests 
+
+| Test case name | Object(s) tested | Test level | Technique used |
+| :------------- | :--------------- | :--------- | :------------- |
+|POST /carts - create and add product, should resolve to 200| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|POST /carts - try to add a non existing product, should resolve to 404| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|POST /carts - try to add a non avaiable product, should resolve to 409| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|GET /carts - View information of the current cart, should resolve 200| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|GET /carts/all - View information of the current cart, should resolve 200| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|DELETE /carts/products/:model - Try to remove a non present product, should reject 404| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|DELETE /carts/products/:model - Try to remove a non existent product, should reject 404| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|DELETE /carts/products/:model - Try to remove a product, should resolve 200| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|PATCH /carts - try to pay empty cart, should resolve 400| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|PATCH /carts - pay for the current cart, should resolve 200| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|PATCH /carts - try to pay non existent cart, should resolve 404| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|GET /carts/history - get cart history, should resolve 200| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|DELETE /carts/products/:model - Try to remove a product from a non existing cart, should reject 404| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|DELETE /carts/current - delete current cart, should resolve 200| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|DELETE /carts/current - try to delete an non existing current, should reject 404| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|DELETE /carts - delete current cart, should resolve 200| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|scenario 10.3 - Add a product to the cart| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|scenario 10.6 - Pay for the current cart| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+|scenario 10.1 - View information of the current cart| CartRoute + CartController + CartDAO | Integration | BB/eq partitioning |
+
+
 # Coverage
 
 ## Coverage of FR
