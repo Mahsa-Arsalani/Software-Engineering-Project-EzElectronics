@@ -4,6 +4,7 @@ import { app } from "../index"
 import db from "../src/db/db"
 import { User, Role } from "../src/components/user"
 import { Category, Product } from "../src/components/product"
+import { Cart, ProductInCart } from "../src/components/cart"
 
 
 const baseURL = "/ezelectronics"
@@ -11,27 +12,9 @@ const baseURL = "/ezelectronics"
 function cleanup() {
     return new Promise((resolve, reject)=>{
         db.serialize(() => {
-            db.run("DELETE FROM users", (err)=>{
-                if(err)
-                    reject(err)
-                resolve(true)
-            })
-        })
-        db.serialize(() => {
-            db.run("DELETE FROM products", (err)=>{
-                if(err)
-                    reject(err)
-                resolve(true)
-            })
-        })
-        db.serialize(() => {
-            db.run("DELETE FROM cart", (err)=>{
-                if(err)
-                    reject(err)
-                resolve(true)
-            })
-        })
-        db.serialize(() => {
+            db.run("DELETE FROM cart")
+            db.run("DELETE FROM products")
+            db.run("DELETE FROM users")
             db.run("DELETE FROM reviews", (err)=>{
                 if(err)
                     reject(err)
@@ -80,11 +63,18 @@ const logout = async (cookieInfo: any) => {
         .expect(200)
 }
 
-const addtocart = async (cookieInfo: any) => {
+const addToCart = async (model: string, cookieInfo: any) => {
     await request(app)
-        .post(baseURL + "/carts")
+                .post(baseURL + "/carts")
+                .set("Cookie", cookieInfo)
+                .send({model: model})
+                .expect(200)
+}
+
+const removeFormCart = async (model:string, cookieInfo: any) => {
+    await request(app)
+        .delete(baseURL + "/carts/products/"+model)
         .set("Cookie", cookieInfo)
-        .send({ model: "testmodel" })
         .expect(200)
 }
 
@@ -93,6 +83,14 @@ const makepayment = async (cookieInfo: any) => {
         .patch(baseURL + "/carts")
         .set("Cookie", cookieInfo)
         .expect(200)
+}
+
+const getCurrentCart = async(cookieInfo: any) => {
+    const {body} = await request(app)
+        .get(baseURL + "/carts")
+        .set("Cookie", cookieInfo)
+        .expect(200)
+    return body
 }
 
 const testManager = {
@@ -124,6 +122,8 @@ const testCustomer = {
     birthdate: "testCustomerBirthdate"
 }
 
+
+
 const testAdmin = {
     username: "testAdminUsername",
     name: "testAdminName",
@@ -140,19 +140,137 @@ let AdminCookie = ""
 
 beforeAll(async () => {
     await cleanup();
+    await postUser(testCustomer)
+    await postUser(testManager)
+    await postUser(testAdmin)
+    CustomerCookie = await login(testCustomer)
+    ManagerCookie = await login(testManager)
+    AdminCookie = await login(testAdmin)
+    await postProduct(testproduct, ManagerCookie)
+    
+    
 })
 
 describe("Cart integration testing ", () => {
+    describe("POST /carts", ()=>{
+        test("create and add product, should resolve to 200",async()=>{
+            const actCart = await getCurrentCart(CustomerCookie)
+            expect(actCart).toEqual(new Cart(testCustomer.username,false,null as any,0,[]))
+
+            await request(app)
+                .post(baseURL + "/carts")
+                .set("Cookie", CustomerCookie)
+                .send({model: testproduct.model})
+                .expect(200)
+
+            const newCart = await getCurrentCart(CustomerCookie)
+
+            const testCart = {customer: testCustomer.username,
+                        paid:0,
+                        paymentDate: null as any,
+                        total: testproduct.sellingPrice,
+                        products: [{model: testproduct.model,
+                                     quantity: 1, 
+                                     category: testproduct.category as Category,price: 
+                                     testproduct.sellingPrice}]}
+
+            expect(newCart).toEqual(testCart)
+            
+        })
+
+        test("try to add a non existing product, should resolve to 404",async()=>{
+
+            await request(app)
+                .post(baseURL + "/carts")
+                .set("Cookie", CustomerCookie)
+                .send({model: "fake_model"})
+                .expect(404)
+            
+        })
+
+        test("try to add a non avaiable product, should resolve to 409",async()=>{
+
+            const notAva = {...testproduct, model:"notAv", quantity: 0}
+            await postProduct(notAva, ManagerCookie)
+
+            await request(app)
+                .post(baseURL + "/carts")
+                .set("Cookie", CustomerCookie)
+                .send({model: "notAv"})
+                .expect(409)
+            
+        })
+    })
+
+    describe("GET /carts", ()=>{
+        test("View information of the current cart, should resolve 200 ",async()=>{
+            const newCart = await getCurrentCart(CustomerCookie)
+
+            const testCart = {customer: testCustomer.username,
+                paid:0,
+                paymentDate: null as any,
+                total: testproduct.sellingPrice,
+                products: [{model: testproduct.model,
+                             quantity: 1, 
+                             category: testproduct.category as Category,price: 
+                             testproduct.sellingPrice}]}
+
+            expect(newCart).toEqual(testCart)
+        })
+    })
+
+    //10.2
+
+    describe("DELETE /carts/products/:model", ()=>{
+        test("Try to remove a non present product, should resolve 200", async()=>{
+            await request(app)
+            .delete(baseURL + "/carts/products/"+"notAv")
+            .set("Cookie", CustomerCookie)
+            .expect(404)
+        })
+
+        test("Try to remove a product, should resolve 200", async()=>{
+            await request(app)
+            .delete(baseURL + "/carts/products/"+testproduct.model)
+            .set("Cookie", CustomerCookie)
+            .expect(200)
+        })
+    })
+
+    describe("PATCH /carts", ()=>{
+        test("try to pay empty cart, should resolve 400", async()=>{
+            await request(app)
+                .patch(baseURL + "/carts")
+                .set("Cookie", CustomerCookie)
+                .expect(400)
+        })
+
+        test("pay for the current cart, should resolve 200", async()=>{
+            await addToCart(testproduct.model, CustomerCookie)
+            await request(app)
+                .patch(baseURL + "/carts")
+                .set("Cookie", CustomerCookie)
+                .expect(200)
+        })
+
+        test("try to pay non existent cart, should resolve 404", async()=>{
+            await request(app)
+                .patch(baseURL + "/carts")
+                .set("Cookie", CustomerCookie)
+                .expect(404)
+        })
+    })
 
     describe("scenario 1", () => {
         test("Add a product to the cart", async () => {
+            await cleanup()
             await postUser(testManager)
             ManagerCookie = await login(testManager)
             await postProduct(testproduct, ManagerCookie)
             await logout(ManagerCookie)
             await postUser(testCustomer)
             CustomerCookie = await login(testCustomer)
-            await addtocart(CustomerCookie)
+            await addToCart("testmodel",CustomerCookie)
             const cartResponse = await request(app)
                 .get(baseURL + "/carts")
                 .set("Cookie", CustomerCookie);
@@ -176,7 +294,7 @@ describe("Cart integration testing ", () => {
             await logout(ManagerCookie)
             await postUser(testCustomer)
             CustomerCookie = await login(testCustomer)
-            await addtocart(CustomerCookie)
+            await addToCart("testmodel",CustomerCookie)
             const cartResponse = await request(app)
                 .get(baseURL + "/carts")
                 .set("Cookie", CustomerCookie);
@@ -199,9 +317,11 @@ describe("Cart integration testing ", () => {
             ManagerCookie = await login(testManager)
             await postProduct(testproduct, ManagerCookie)
             await logout(ManagerCookie)
+
             await postUser(testCustomer)
             CustomerCookie = await login(testCustomer)
-            await addtocart(CustomerCookie)
+            
+            await addToCart("testmodel",CustomerCookie)
             const cartResponse = await request(app)
                 .get(baseURL + "/carts")
                 .set("Cookie", CustomerCookie);

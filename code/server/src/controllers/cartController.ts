@@ -80,7 +80,17 @@ class CartController {
     async getCart(user: User): Promise<Cart> { 
         //if(user.role !== Role.CUSTOMER)
         //    throw new UserNotCustomerError
-        return this.dao.getCart(user)
+        let currentCart
+        try{
+            currentCart = await this.dao.getCart(user)
+        }catch(err){
+            if(err instanceof CartNotFoundError){
+                currentCart = new Cart(user.username, false, null, 0, [])
+            }else{
+                throw err
+            }
+        }
+        return currentCart
     }
 
     /**
