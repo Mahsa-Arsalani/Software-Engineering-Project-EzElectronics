@@ -103,6 +103,30 @@
 |updateUserInfo - it should rejest| UserController | Unit       | BB/eq partitioning |
 |updateUserInfo - it should rejest| UserController | Unit       | BB/eq partitioning | 
 
+### RouteController unit testing
+| Test case name | Object(s) tested | Test level | Technique used |
+| :------------: | :--------------: | :--------: | :------------: | 
+|POST/ users - It should return a 200 success code| UserRoute | Unit       | BB/eq partitioning |
+|POST/ users - it should return 409 error code| UserRoute | Unit       | BB/eq partitioning |
+|POST/ users - it should return 422 error code due to some invalid parameter| UserRoute | Unit       | BB/eq partitioning |
+|GET /users - it should return 200 success code| UserRoute | Unit       | BB/eq partitioning |
+|GET /users - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
+|GET /users/:role - it should return 200 success code| UserRoute | Unit       | BB/eq partitioning |
+|GET /users/:role - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
+|GET /users/:username - it should return 200 success code| UserRoute | Unit       | BB/eq partitioning |
+|GET /users/:username - it should return 404 error code| UserRoute | Unit       | BB/eq partitioning |
+|GET /users/:username - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
+|DELETE /users/:username - it should return 200 success code| UserRoute | Unit       | BB/eq partitioning |
+|DELETE /users/:username - it should return 404 error code| UserRoute | Unit       | BB/eq partitioning |
+|DELETE /users/:username - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
+|DELETE /users/:username - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
+|DELETE /users/ - it should return 200 success code| UserRoute | Unit       | BB/eq partitioning |                   
+|DELETE /users/ - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
+|PATCH /users/:username - it should return 200 success code| UserRoute | Unit       | BB/eq partitioning |
+|PATCH /users/:username - it should return 404 error code| UserRoute | Unit       | BB/eq partitioning |
+|PATCH /users/:username - it should return 401 error code| UserRoute | Unit       | BB/eq partitioning |
+|PATCH /users/:username - it should return 400 error code| UserRoute | Unit       | BB/eq partitioning |
+
 ### ProductController unit testing
 | Test case name | Object(s) tested | Test level | Technique used |
 | :------------: | :--------------: | :--------: | :------------: |
