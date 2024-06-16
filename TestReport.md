@@ -187,6 +187,7 @@
 
 | Functional Requirement  | Test(s) |
 | :--------------------------------: | :-----: |
+|FR1.3 Create a new user account| 10|
 | FR2.1 Show the list of all users             |     3    |
 | FR2.2 Show the list of all users with a specific role                |     4    |
 | FR2.3 Show the information of a single user                 |    8     |
