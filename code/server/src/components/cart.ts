@@ -10,6 +10,8 @@ class Cart {
     total: number
     products: ProductInCart[]
 
+    //private existVal: Boolean
+
     /**
      * Creates a new instance of the Cart class.
      * @param customer - The username of the customer who owns the cart.
@@ -24,7 +26,28 @@ class Cart {
         this.paymentDate = paymentDate
         this.total = total
         this.products = products
+
+        /*
+        //this.existVal = true
+        let existVal: Boolean = true
+        
+        this.setExist = (state:Boolean)=>{existVal = state}
+        this.exist = (): Boolean=>{return existVal}
+        */
+        
     }
+/*
+    setExist(state: Boolean){
+        //this.existVal = state
+    }
+
+    exist(): Boolean{
+        return true//return this.existVal
+    }
+        */
+    
+
+
 }
 
 /**

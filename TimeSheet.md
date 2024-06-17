@@ -15,11 +15,11 @@ These figures will not be used to evaluate neither the project nor the team, the
 |  Apr 22 - 28   |           19            |        |        |              |                     |                    |            |           |
 | Apr 29 - May 5 |           20            |        |        |              |                     |                    |            |           |
 |   May 6 - 12   |                         |        |        |              |                     |                    |            |           |
-|  May 13 - 19   |                         |        |        |              |                     |                    |            |           |
-|  May 20 - 26   |                         |        |        |              |                     |                    |            |           |
-| May 27 - Jun 2 |                         |        |        |              |                     |                    |            |           |
-|   Jun 3 - 9    |                         |        |        |              |                     |                    |            |           |
-|  Jun 10 - 16   |                         |        |        |              |                     |                    |            |           |
+|  May 13 - 19   |                         |        |   15   |              |                     |                    |            |           |
+|  May 20 - 26   |                         |        |   20   |              |                     |                    |            |           |
+| May 27 - Jun 2 |                         |        |   20   |      20      |                     |                    |            |           |
+|   Jun 3 - 9    |                         |        |        |      42      |          10         |                    |            |           |
+|  Jun 10 - 16   |                         |        |        |              |          70         |                    |            |           |
 |  Jun 17 - 23   |                         |        |        |              |                     |                    |            |           |
 |  Jun 24 - 30   |                         |        |        |              |                     |                    |            |           |
 |   Jul 1 - 7    |                         |        |        |              |                     |                    |            |           |

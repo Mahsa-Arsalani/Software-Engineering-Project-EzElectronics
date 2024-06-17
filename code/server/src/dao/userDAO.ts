@@ -1,5 +1,5 @@
 import db from "../db/db"
-import { User } from "../components/user"
+import { User, Role } from "../components/user"
 import crypto from "crypto"
 import { UserAlreadyExistsError, UserNotFoundError } from "../errors/userError";
 
@@ -84,15 +84,14 @@ class UserDAO {
                 const sql = "SELECT * FROM users WHERE username = ?"
                 db.get(sql, [username], (err: Error | null, row: any) => {
                     if (err) {
-                        reject(err)
-                        return
+                        return reject(err)
                     }
                     if (!row) {
-                        reject(new UserNotFoundError())
-                        return
+                        return reject(new UserNotFoundError())
+                        
                     }
                     const user: User = new User(row.username, row.name, row.surname, row.role, row.address, row.birthdate)
-                    resolve(user)
+                    return resolve(user)
                 })
             } catch (error) {
                 reject(error)
@@ -100,5 +99,93 @@ class UserDAO {
 
         })
     }
+
+    getUsers(): Promise<User[]> {
+        return new Promise<User[]>((resolve, reject) => {
+            try {
+                const sql = "SELECT * FROM users"
+                db.all(sql, [], (err: Error | null, rows: any) => {
+                    if (err) {
+                        return reject(err)
+                        
+                    }
+                    const users: User[] = rows.map((row: any) => new User(row.username, row.name, row.surname, row.role, row.address, row.birthdate))
+                    return resolve(users)
+                })
+            } catch (error) {
+                return reject(error)
+            }
+
+        })
+    }
+
+    getUsersByRole(role: string): Promise<User[]> {
+        return new Promise<User[]>((resolve, reject) => {
+            try {
+                const sql = "SELECT * FROM users WHERE role = ?"
+                db.all(sql, [role], (err: Error | null, rows: any) => {
+                    if (err) {
+                        return reject(err)
+                    }
+                    const users: User[] = rows.map((row: any) => new User(row.username, row.name, row.surname, row.role, row.address, row.birthdate))
+                    return resolve(users)
+                })
+            } catch (error) {
+                return reject(error)
+            }
+
+        })
+    }
+
+    deleteUserByUsername(username: string): Promise<Boolean>{
+        return new Promise<boolean>((resolve, reject) => {
+            try {
+                const sql = "DELETE FROM users WHERE username = ?"
+                db.run(sql, [username], (err: Error | null) => {
+                    if (err) {
+                        return reject(err)
+                    }
+                    return resolve(true)
+                })
+            } catch (error) {
+                return reject(error)
+            }
+
+        })
+    }
+
+    deleteAllNonAdmin(): Promise<Boolean>{
+        return new Promise<boolean>((resolve, reject) => {
+            try {
+                const sql = "DELETE FROM users WHERE role != ?"
+                db.run(sql, [Role.ADMIN], (err: Error | null) => {
+                    if (err) {
+                        return reject(err)
+                    }
+                    return resolve(true)
+                })
+            } catch (error) {
+                return reject(error)
+            }
+        })
+    }
+
+    updateUserByUsername(name: string, surname: string, address: string, birthdate: string, username: string): Promise<Boolean>{
+        return new Promise<boolean>((resolve, reject) => {
+            try {
+                const sql = "UPDATE users SET name = ?, surname = ?, address = ?, birthdate = ? WHERE username = ?"
+                db.run(sql, [name, surname, address, birthdate, username], (err: Error | null) => {
+                    if (err) {
+                        return reject(err)
+                    }
+                    return resolve(true)
+                })
+            } catch (error) {
+                return reject(error)
+            }
+
+        })
+    }
+
 }
 export default UserDAO

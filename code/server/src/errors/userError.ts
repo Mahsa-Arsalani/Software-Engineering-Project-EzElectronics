@@ -97,4 +97,15 @@ class UnauthorizedUserError extends Error {
     }
 }
 
-export { UserNotFoundError, UserNotManagerError, UserNotCustomerError, UserAlreadyExistsError, UserNotAdminError, UserIsAdminError, UnauthorizedUserError }
+class UserInvalidDate extends Error {
+    customMessage: String;
+    customCode: Number;
+
+    constructor() {
+        super()
+        this.customMessage = "date is after the current date"
+        this.customCode = 400
+    }
+}
+
+export { UserNotFoundError, UserNotManagerError, UserNotCustomerError, UserAlreadyExistsError, UserNotAdminError, UserIsAdminError, UnauthorizedUserError, UserInvalidDate}
